@@ -1,0 +1,12 @@
+{
+  "name": "PuzzleGame.Runtime",
+  "rootNamespace": "PuzzleGame.Runtime",
+  "references": [
+    "PuzzleGame.Core",
+    "Unity.InputSystem",
+    "Unity.ugui",
+    "Unity.TextMeshPro",
+    "Unity.RenderPipelines.Universal.Runtime",
+    "Unity.RenderPipelines.Core.Runtime"
+  ]
+}

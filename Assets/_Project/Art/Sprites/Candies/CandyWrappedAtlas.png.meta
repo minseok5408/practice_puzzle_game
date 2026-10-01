@@ -1,0 +1,333 @@
+fileFormatVersion: 2
+guid: d91961cc96cab72408036ca915c59d11
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6858757606414985180
+    second: CandyWrappedAtlas_0
+  - first:
+      213: 3304317488743129723
+    second: CandyWrappedAtlas_1
+  - first:
+      213: -7907045706569135737
+    second: CandyWrappedAtlas_2
+  - first:
+      213: 3069446135765407783
+    second: CandyWrappedAtlas_3
+  - first:
+      213: 488959519165988458
+    second: CandyWrappedAtlas_4
+  - first:
+      213: 1032855463866022170
+    second: CandyWrappedAtlas_5
+  - first:
+      213: 4782919956798482455
+    second: CandyWrappedAtlas_6
+  - first:
+      213: -4051639303642928584
+    second: CandyWrappedAtlas_7
+  - first:
+      213: -1827833495309103982
+    second: CandyWrappedAtlas_8
+  - first:
+      213: 5757004312774992613
+    second: CandyWrappedAtlas_9
+  - first:
+      213: 6217235879238718425
+    second: CandyWrappedAtlas_10
+  - first:
+      213: 1327748518915924391
+    second: CandyWrappedAtlas_11
+  - first:
+      213: -978588503574954558
+    second: CandyWrappedAtlas_12
+  - first:
+      213: 4266899862099072364
+    second: CandyWrappedAtlas_13
+  - first:
+      213: -2730617760327124551
+    second: CandyWrappedAtlas_14
+  - first:
+      213: 3263720639869982104
+    second: BombRedHeart
+  - first:
+      213: 2239859310405971919
+    second: BombOrangeGem
+  - first:
+      213: -1545420169299343170
+    second: BombYellowDrop
+  - first:
+      213: -4871261754583022229
+    second: BombGreenPillow
+  - first:
+      213: -4683877211972931899
+    second: BombBlueOrb
+  - first:
+      213: 2560649638349307629
+    second: BombPurpleFlower
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 544
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BombRedHeart
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 512
+        height: 512
+      alignment: 9
+      pivot: {x: 0.51464844, y: 0.4267578}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8959f8941a01b4d20800000000000000
+      internalID: 3263720639869982104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombOrangeGem
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 512
+        height: 512
+      alignment: 9
+      pivot: {x: 0.5029297, y: 0.4375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcf699fec24951f10800000000000000
+      internalID: 2239859310405971919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombYellowDrop
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 512
+        width: 512
+        height: 512
+      alignment: 9
+      pivot: {x: 0.49023438, y: 0.4423828}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb840344b809d8ae0800000000000000
+      internalID: -1545420169299343170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombGreenPillow
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 512
+        height: 512
+      alignment: 9
+      pivot: {x: 0.52441406, y: 0.53515625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6502264e3dc56cb0800000000000000
+      internalID: -4871261754583022229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombBlueOrb
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 512
+        height: 512
+      alignment: 9
+      pivot: {x: 0.4951172, y: 0.54589844}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ce6ec0fd768ffeb0800000000000000
+      internalID: -4683877211972931899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BombPurpleFlower
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 512
+        height: 512
+      alignment: 9
+      pivot: {x: 0.49804688, y: 0.546875}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: deefa087741498320800000000000000
+      internalID: 2560649638349307629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      BombBlueOrb: -4683877211972931899
+      BombGreenPillow: -4871261754583022229
+      BombOrangeGem: 2239859310405971919
+      BombPurpleFlower: 2560649638349307629
+      BombRedHeart: 3263720639869982104
+      BombYellowDrop: -1545420169299343170
+      CandyWrappedAtlas_0: 6858757606414985180
+      CandyWrappedAtlas_1: 3304317488743129723
+      CandyWrappedAtlas_10: 6217235879238718425
+      CandyWrappedAtlas_11: 1327748518915924391
+      CandyWrappedAtlas_12: -978588503574954558
+      CandyWrappedAtlas_13: 4266899862099072364
+      CandyWrappedAtlas_14: -2730617760327124551
+      CandyWrappedAtlas_2: -7907045706569135737
+      CandyWrappedAtlas_3: 3069446135765407783
+      CandyWrappedAtlas_4: 488959519165988458
+      CandyWrappedAtlas_5: 1032855463866022170
+      CandyWrappedAtlas_6: 4782919956798482455
+      CandyWrappedAtlas_7: -4051639303642928584
+      CandyWrappedAtlas_8: -1827833495309103982
+      CandyWrappedAtlas_9: 5757004312774992613
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

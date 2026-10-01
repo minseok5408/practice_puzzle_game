@@ -1,0 +1,17 @@
+{
+  "name": "PuzzleGame.Editor",
+  "rootNamespace": "PuzzleGame.Editor",
+  "references": [
+    "PuzzleGame.Core",
+    "PuzzleGame.Runtime",
+    "Unity.RenderPipelines.Universal.Runtime",
+    "Unity.RenderPipelines.Universal.2D.Runtime",
+    "Unity.RenderPipelines.Core.Runtime",
+    "Unity.InputSystem",
+    "Unity.TextMeshPro",
+    "Unity.ugui"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

@@ -4,47 +4,152 @@
 프로젝트 루트: `C:\project\minseok5408\practice_puzzle_game`  
 작업 순서: [TODO.md](TODO.md)
 
-아래는 앞으로 사용할 구조다. **현재 존재하는 파일 목록과 목표 구조를 분리**했다. 문서 작성 단계에서는 게임 폴더나 빈 C# 파일을 미리 생성하지 않으며, TODO의 해당 단계에서 실제로 추가한다. 파일·폴더 이름은 영어로 작성하고 설명은 한국어로 유지한다.
+**현재 구현한 구조와 앞으로 사용할 목표 구조를 분리**했다. 2026-10-01에 보드·드래그·연쇄와 점수 목표·결과 UI, 매치 그룹·특수 블록 파일을 추가했다. 나머지는 TODO의 해당 단계에서 실제로 생성한다. 파일·폴더 이름은 영어로 작성하고 설명은 한국어로 유지한다.
 
 ## 1. 현재 확인한 구조
 
-자동 생성 폴더와 패키지 내부 파일은 생략했다.
+점수 목표 스테이지와 특수 블록 구현 후 상태다. 각 에셋의 `.meta`와 Unity 자동 생성 폴더는 생략했다.
 
 ```text
 practice_puzzle_game/
+├─ AGENTS.md
+├─ README.md
+├─ .gitignore
+├─ .gitattributes
+├─ .git/                                 # GitHub origin 연결, dev·test·master 브랜치
 ├─ Assets/
-│  ├─ Scenes/
-│  │  └─ SampleScene.unity
-│  ├─ Scripts/
-│  │  └─ SetupCheck.cs
-│  └─ Settings/
-│     ├─ InputSystem_Actions.inputactions
-│     ├─ UniversalRP.asset
-│     ├─ Renderer2D.asset
-│     ├─ DefaultVolumeProfile.asset
-│     ├─ UniversalRenderPipelineGlobalSettings.asset
-│     └─ Scenes/
-│        └─ URP2DSceneTemplate.unity
+│  ├─ _Project/
+│  │  ├─ Scenes/
+│  │  │  ├─ Game.unity
+│  │  │  └─ Sandbox/SetupCheck.unity
+│  │  ├─ Scripts/
+│  │  │  ├─ Core/
+│  │  │  │  ├─ PuzzleGame.Core.asmdef
+│  │  │  │  ├─ Board/
+│  │  │  │  │  ├─ GridPosition.cs
+│  │  │  │  │  ├─ PieceColor.cs
+│  │  │  │  │  ├─ SpecialPieceType.cs
+│  │  │  │  │  ├─ PieceState.cs
+│  │  │  │  │  ├─ CellState.cs
+│  │  │  │  │  ├─ BoardState.cs
+│  │  │  │  │  ├─ BoardGenerator.cs
+│  │  │  │  │  ├─ MatchFinder.cs
+│  │  │  │  │  ├─ MatchResult.cs
+│  │  │  │  │  ├─ SpecialPieceRules.cs
+│  │  │  │  │  ├─ SpecialEffectResolver.cs
+│  │  │  │  │  ├─ MoveFinder.cs
+│  │  │  │  │  ├─ BoardResolver.cs
+│  │  │  │  │  ├─ ResolutionStep.cs
+│  │  │  │  │  └─ BoardShuffler.cs
+│  │  │  │  └─ Levels/
+│  │  │  │     ├─ LevelRules.cs
+│  │  │  │     └─ LevelProgress.cs
+│  │  │  └─ Runtime/
+│  │  │     ├─ PuzzleGame.Runtime.asmdef
+│  │  │     ├─ Board/
+│  │  │     │  ├─ BoardController.cs
+│  │  │     │  ├─ BoardView.cs
+│  │  │     │  ├─ BoardEffects.cs          # 타격 시간·빛 이동·폭발 입자 풀
+│  │  │     │  ├─ PieceView.cs
+│  │  │     │  ├─ CellView.cs
+│  │  │     │  └─ BoardInput.cs
+│  │  │     ├─ Config/PieceCatalog.cs
+│  │  │     ├─ Levels/
+│  │  │     │  ├─ LevelDefinition.cs
+│  │  │     │  └─ LevelSession.cs
+│  │  │     ├─ UI/
+│  │  │     │  ├─ HUDView.cs
+│  │  │     │  ├─ ResultPopup.cs
+│  │  │     │  ├─ SettingsPopup.cs        # 설정 버튼/ESC·화면 적용·일시정지·종료
+│  │  │     │  ├─ DisplaySettings.cs      # 해상도 목록·settings.json 저장/복구
+│  │  │     │  ├─ CandyLayout.cs
+│  │  │     │  └─ CandyButtonMotion.cs
+│  │  │     └─ Debug/
+│  │  │        ├─ SetupCheck.cs
+│  │  │        ├─ BoardSmokeCheck.cs
+│  │  │        ├─ LevelSmokeCheck.cs
+│  │  │        └─ EffectsSmokeCheck.cs     # 7개 연출의 실제 실행·프레임 캡처
+│  │  ├─ Prefabs/Board/
+│  │  │  ├─ Piece.prefab
+│  │  │  └─ Cell.prefab
+│  │  ├─ Input/PuzzleInput.inputactions
+│  │  ├─ Data/Pieces/PieceCatalog.asset
+│  │  ├─ Data/Levels/Definitions/Level_001.asset
+│  │  ├─ UI/Fonts/                       # 각 원본 글꼴과 OFL.txt 동봉
+│  │  │  ├─ Jua/Jua-Regular.ttf
+│  │  │  ├─ BagelFatOne/BagelFatOne-Regular.ttf
+│  │  │  ├─ CandyBody.asset               # Jua TMP 글꼴
+│  │  │  ├─ CandyTitle.asset              # Bagel Fat One TMP 글꼴
+│  │  │  └─ NanumGothic/, PuzzleUI.asset  # 이전 글꼴 보관
+│  │  ├─ UI/Theme/                       # 코드로 생성한 둥근 패널·원·별
+│  │  ├─ Art/
+│  │  │  ├─ Backgrounds/SugarGarden.png
+│  │  │  ├─ Sprites/Candies/CandyAtlas.png # 3×2 투명 사탕 시트, Unity 다중 스프라이트
+│  │  │  ├─ Sprites/Candies/CandyRowAtlas.png     # 가로 크림 줄무늬 6종
+│  │  │  ├─ Sprites/Candies/CandyColumnAtlas.png  # 세로 크림 줄무늬 6종
+│  │  │  ├─ Sprites/Candies/CandyWrappedAtlas.png # 봉지 사탕 6종
+│  │  │  ├─ Sprites/Candies/CandyRainbow.png      # 색 제거 무지개 사탕
+│  │  │  ├─ Sprites/Pieces/               # 이전 도형 에셋 보관
+│  │  │  ├─ Sprites/Board/Cell.png
+│  │  │  └─ Materials/                   # 도형별 재질과 셀 재질
+│  │  ├─ Editor/
+│  │  │  ├─ PuzzleGame.Editor.asmdef
+│  │  │  └─ Build/
+│  │  │     ├─ BuildCommands.cs
+│  │  │     ├─ StageSetup.cs
+│  │  │     ├─ CandyThemeSetup.cs
+│  │  │     ├─ SpecialCandySetup.cs
+│  │  │     ├─ CandySpriteAlignment.cs     # 투명 여백을 제외한 그림 중심 보정
+│  │  │     └─ SettingsSetup.cs            # 기존 Game 씬에 설정 UI 추가
+│  │  └─ Tests/
+│  │     ├─ EditMode/
+│  │     │  ├─ PuzzleGame.EditModeTests.asmdef
+│  │     │  ├─ BoardGeneratorTests.cs
+│  │     │  ├─ MatchFinderTests.cs
+│  │     │  ├─ MoveFinderTests.cs
+│  │     │  ├─ BoardResolverTests.cs
+│  │     │  ├─ SpecialPieceRulesTests.cs
+│  │     │  └─ LevelProgressTests.cs
+│  │     └─ PlayMode/
+│  │        ├─ PuzzleGame.PlayModeTests.asmdef
+│  │        ├─ BoardInteractionTests.cs
+│  │        ├─ BoardDragTests.cs
+│  │        ├─ LevelSessionTests.cs
+│  │        └─ DisplaySettingsTests.cs     # 해상도 목록·저장·손상 복구
+│  ├─ TextMesh Pro/                      # Unity 번들 TMP Essential Resources
+│  ├─ Settings/                          # 기존 URP·입력 설정 유지
+│  ├─ Scenes/                            # 이동 후 빈 기존 폴더
+│  └─ Scripts/                           # 이동 후 빈 기존 폴더
 ├─ Packages/
-│  ├─ manifest.json
-│  └─ packages-lock.json
 ├─ ProjectSettings/
-│  └─ ProjectVersion.txt                 # 6000.3.25f1
 ├─ docs/
 │  ├─ installation.md
 │  ├─ integration.md
-│  ├─ TODO.md                            # 이번에 추가
-│  └─ TREE.md                            # 이 문서
-├─ .vscode/                              # 현재 로컬 IDE 설정
-├─ Library/                              # Unity 자동 생성
-├─ Logs/                                 # Unity 자동 생성
-├─ Temp/                                 # Unity 자동 생성
-├─ UserSettings/                         # 사용자별 설정
-├─ Assembly-CSharp.csproj                # IDE 자동 생성
-└─ practice_puzzle_game.slnx              # IDE 자동 생성
+│  ├─ TODO.md
+│  ├─ TREE.md
+│  ├─ testing.md
+│  ├─ asset-licenses.md
+│  └─ generated-assets.md
+└─ Builds/                               # 로컬 출력, Git 제외
+   ├─ Windows/0.5.1/practice_puzzle_game.exe
+   ├─ Preview/Board.png                  # 이전 보드
+   ├─ Preview/Candy/                     # 16:10·16:9·세로 화면 및 결과창
+   ├─ Preview/Specials/                  # 특수 표식·색 제거 교환·결과창
+   ├─ Preview/SpecialArt/                # 새 특수 캔디 19종·색 제거 교환·결과창
+   └─ Validation/
 ```
 
-현재 게임 코드로 확인된 파일은 실행 확인용 `SetupCheck.cs`다. Git 저장소·게임 로직·아래 목표 폴더는 아직 구현 완료 상태가 아니다.
+드래그 선택·교환, 실패 복귀, 일반 매치 제거·낙하·보충·연쇄와 이동 불가 셔플까지 연결했다. 점수·이동수·목표·성공/실패·재시작에 이어 특수 블록 생성·발동·직접 조합을 구현했다. 색상별 목표·장애물·저장은 아직 없다. `CellState`의 확장용 데이터가 있어도 장애물 게임 기능이 구현된 것은 아니다.
+
+`MatchResult`는 연속 구간·교차 그룹·좌표를 보관한다. `SpecialPieceRules`는 생성 종류·위치와 특수 교환 여부를 결정하고, `SpecialEffectResolver`는 생성 칸을 보호하며 효과 큐로 중복 발동을 막는다. `ResolutionStep`에 생성·발동 기록을 추가했고 `BoardResolver`는 첫 해결 단계에만 교환 좌표를 받는다. `PieceCatalog`는 색과 특수 종류를 함께 조회하며 `PieceView`가 전용 캔디 그림으로 교체한다. `SpecialCandySetup`은 특수 스프라이트 19종·재질 4개를 가져오고 카탈로그에 연결한다. `SpecialPieceView`와 벡터 표식은 0.5.1에서 제거했다. 새 특수 블록도 같은 ID를 유지하고 실제 제거된 ID만 채점한다.
+
+`BoardSmokeCheck.cs`는 에디터·개발 빌드에서 명시적인 `-puzzleSmokeTest` 인자를 받았을 때만 가상 마우스로 드래그 1회와 보드 안정화를 확인한다. `BuildCommands.cs`와 PlayMode 테스트는 초기 빌드·화면 검증을 위해 계획보다 먼저 추가했다.
+
+`LevelRules`·`LevelProgress`가 점수·이동수·결과를 계산한다. `LevelSession`은 이 상태를 UI에 알리고 재시작한다. `BoardController`는 유효 교환 시작·제거 단계·연쇄 완료·중단을 전달한다. `HUDView`와 `ResultPopup`은 Game 씬의 LevelCanvas에 연결했다. `LevelDefinition`은 현재 점수 목표용 최소 설정이며, 보드 배치·여러 목표는 이후 확장한다.
+
+`LevelSmokeCheck.cs`는 명시적 `-puzzleLevelSmokeTest` 인자로 성공·실패·실제 재시작 버튼을 검사한다. `-puzzleSpecialSmokeTest`는 특수 표식 캡처와 색 제거 드래그 검사도 추가한다. 두 진단은 에디터·개발 빌드에만 포함된다. `StageSetup.cs`는 첫 UI·폰트·레벨 데이터 연결용 편집기 도구다. 한글 폰트와 TMP 번들 리소스의 출처는 [asset-licenses.md](asset-licenses.md)에 기록한다.
+
+사탕 테마는 `CandyThemeSetup`에서 스프라이트 가져오기·프리팹·씬 UI를 연결한다. `CandyLayout`은 보드 프레임의 실제 화면 좌표에 점수판 높이를 맞추며, 큰 영문 제목과 아이템용 빈 슬롯 4개를 점수판 안에 배치한다. 슬롯은 씬의 `LevelCanvas/ScoreCard/ItemSlots/ItemSlot1~4`에 있으며 아직 아이템 스크립트·클릭 동작은 없다. 창 비율에 맞춰 패널·보드·배경을 조정한다. `CandyButtonMotion`은 버튼 호버·눌림 효과다. 기존 `PieceCatalog`를 통해 그림을 교체했으며 Core 게임 규칙은 변경하지 않았다.
 
 ## 2. 목표 루트 구조
 
@@ -53,7 +158,7 @@ practice_puzzle_game/
 ```text
 practice_puzzle_game/
 ├─ Assets/
-│  ├─ _Project/                          # [예정] 직접 만드는 게임의 코드와 에셋
+│  ├─ _Project/                          # [구현 시작] 직접 만드는 게임의 코드와 에셋
 │  ├─ Settings/                          # [유지] 템플릿의 URP·렌더러·입력 설정
 │  └─ ThirdParty/                        # [선택] 외부 에셋의 원본·라이선스
 ├─ Packages/                             # [유지] 의존 패키지와 확정 버전
@@ -64,7 +169,7 @@ practice_puzzle_game/
 │  ├─ TODO.md
 │  ├─ TREE.md
 │  ├─ game-design.md                     # [예정] 최종 테마·규칙·범위
-│  ├─ testing.md                         # [예정] OS별 검사 결과와 버그 재현
+│  ├─ testing.md                         # [생성] OS별 검사 결과와 버그 재현
 │  ├─ release.md                         # [예정] 빌드·Steam·출시·롤백 절차
 │  ├─ asset-licenses.md                  # [예정] 그림·음원·폰트 출처와 조건
 │  └─ CHANGELOG.md                       # [예정] 버전별 사용자 변경 사항
@@ -86,9 +191,9 @@ practice_puzzle_game/
 ├─ Builds/                               # [예정·Git 제외] 배포용 출력
 │  ├─ Windows/<version>/
 │  └─ macOS/<version>/
-├─ .gitignore                            # [예정] Unity 자동 생성 파일 제외
-├─ .gitattributes                        # [예정] 줄바꿈 규칙, 필요 시 LFS
-└─ README.md                             # [예정] 프로젝트 소개·여는 법·문서 링크
+├─ .gitignore                            # [생성] Unity 자동 생성 파일 제외
+├─ .gitattributes                        # [생성] 줄바꿈 규칙, 필요 시 LFS
+└─ README.md                             # [생성] 프로젝트 소개·여는 법·문서 링크
 ```
 
 `Library`·`Temp` 등 자동 생성 폴더는 실제로 계속 존재할 수 있지만 목표 트리에서는 생략했다. 외부 패키지가 지정 경로에 설치되는 경우 억지로 ThirdParty로 옮기지 않는다. Package Manager 패키지는 `Packages`에서 관리한다.
@@ -247,7 +352,7 @@ Scripts/Runtime/
 │  └─ LevelSession.cs                   # 시작·성공·실패·기록 반영
 ├─ Config/
 │  ├─ GameConfig.cs                     # 공통 속도·점수·힌트 등 설정 타입
-│  └─ PieceCatalog.cs                   # 블록 종류와 Sprite·표현 매핑 타입
+│  └─ PieceCatalog.cs                   # 블록 종류와 Sprite·Material·색 매핑
 ├─ UI/
 │  ├─ MainMenuView.cs
 │  ├─ LevelSelectView.cs
@@ -272,7 +377,8 @@ Scripts/Runtime/
 │     ├─ LocalizationTable.cs           # JSON 항목 배열의 직렬화 타입
 │     └─ LocalizationService.cs         # 언어 선택·키 조회·누락 fallback
 └─ Debug/
-   └─ SetupCheck.cs                     # 기존 스크립트 이동 위치
+   ├─ SetupCheck.cs                     # 기존 스크립트 이동 완료
+   └─ BoardSmokeCheck.cs                # CLI 인자로 실행하는 개발 빌드 진단
 ```
 
 | 담당 | 하는 일 | 맡기지 않을 일 |
@@ -284,6 +390,8 @@ Scripts/Runtime/
 | UI 스크립트 | 표시 갱신, 버튼 입력 전달 | 저장 파일 직접 수정·매치 판정 |
 | SaveService | OS 경로·파일·JSON·복구 | Unity 씬이나 보드 객체 통째로 직렬화 |
 | GameBootstrap | 공통 서비스 1회 초기화와 수명 관리 | 모든 게임 기능을 한 클래스에 구현 |
+
+현재 보드 입력은 `BoardInput`의 Point·Press·Cancel 액션으로 처리하며, Game 씬의 BoardRoot에 입력 에셋이 연결되어 있다. 원본 InputActionAsset을 복제해 활성화하고 비활성화 시 정리한다. `SettingsPopup`은 ESC 액션을 별도로 소유하며 보드 입력보다 먼저 설정 열기/닫기를 처리한다. 설정 중 보드 입력과 진행 시간을 멈추되 BoardController를 비활성화하지 않는다. PlayMode 입력 검사는 `InputTestFixture`로 실제 장치와 격리한다.
 
 BoardController의 초기 상태는 `Idle / Swapping / Resolving / Shuffling / Finished`로 충분하다. 일시정지는 별도 상태값으로 관리하고, 메뉴를 닫은 뒤 기존 처리 단계가 안전하게 이어지게 한다.
 
@@ -393,14 +501,14 @@ Assets/
 5. 개발용 AppID 파일·로그인 정보·인증서 개인키를 출시 결과물에 잘못 넣지 않는다.
 6. SteamPipe 업로드 SDK 전체는 개발 장치에 별도 보관한다. `Tools/Steam`에는 재현 가능한 설정과 설명만 둔다.
 
-## 10. 기존 파일 이동 계획
+## 10. 기존 파일 이동 기록
 
-| 현재 | 변경할 위치 | 시점 |
+| 기존 위치 | 변경 위치 | 상태 |
 | --- | --- | --- |
-| `Assets/Scenes/SampleScene.unity` | `Assets/_Project/Scenes/Sandbox/SetupCheck.unity` | TODO 2단계 |
-| `Assets/Scripts/SetupCheck.cs` | `Assets/_Project/Scripts/Runtime/Debug/SetupCheck.cs` | TODO 2단계 |
+| `Assets/Scenes/SampleScene.unity` | `Assets/_Project/Scenes/Sandbox/SetupCheck.unity` | 완료, GUID 유지 |
+| `Assets/Scripts/SetupCheck.cs` | `Assets/_Project/Scripts/Runtime/Debug/SetupCheck.cs` | 완료, GUID 유지 |
 | `Assets/Settings/*` | 현재 위치 유지 | 이동 없음 |
-| `Assets/Settings/InputSystem_Actions.inputactions` | 원본 유지, 게임용 PuzzleInput 별도 생성 | TODO 5단계 |
+| `Assets/Settings/InputSystem_Actions.inputactions` | 원본 유지, `_Project/Input/PuzzleInput.inputactions` 별도 생성 | 완료 |
 
 1. 이동 전 실행 모드를 종료하고 씬을 저장한다.
 2. 이동·이름 변경은 Unity 프로젝트 창에서 한다. 외부에서 옮기면 에셋과 `.meta`를 반드시 함께 옮긴다.

@@ -1,0 +1,79 @@
+{
+  "name": "PuzzleInput",
+  "maps": [
+    {
+      "name": "Board",
+      "id": "17d95866-6920-4920-81f6-317c35351a37",
+      "actions": [
+        {
+          "name": "Point",
+          "type": "Value",
+          "id": "e1343e48-b413-46bf-bb47-c0b9a9725877",
+          "expectedControlType": "Vector2",
+          "initialStateCheck": true
+        },
+        {
+          "name": "Press",
+          "type": "Button",
+          "id": "6fca95d6-4927-4b1c-b499-9bbf4f93681f",
+          "expectedControlType": "Button",
+          "initialStateCheck": false
+        },
+        {
+          "name": "Cancel",
+          "type": "Button",
+          "id": "c07ca492-7975-4b50-8a34-92190f437763",
+          "expectedControlType": "Button",
+          "initialStateCheck": false
+        }
+      ],
+      "bindings": [
+        {
+          "name": "",
+          "id": "7a2a9f70-7676-4c0d-a427-a0d812d387ea",
+          "path": "<Mouse>/position",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Point",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "caa63312-69de-4290-ac1b-4941e7da25a6",
+          "path": "<Mouse>/leftButton",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Press",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "cc7c047a-8737-425c-a9e2-64aa41cfb3ea",
+          "path": "<Mouse>/rightButton",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Cancel",
+          "isComposite": false,
+          "isPartOfComposite": false
+        },
+        {
+          "name": "",
+          "id": "362e98ba-623c-4973-9296-24b4940ded4c",
+          "path": "<Keyboard>/escape",
+          "interactions": "",
+          "processors": "",
+          "groups": "",
+          "action": "Cancel",
+          "isComposite": false,
+          "isPartOfComposite": false
+        }
+      ]
+    }
+  ],
+  "controlSchemes": []
+}

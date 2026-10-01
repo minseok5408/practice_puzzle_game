@@ -1,0 +1,140 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c06eda363a5f1804b9347891e7e30e6a, type: 3}
+  m_Name: PieceCatalog
+  m_EditorClassIdentifier: PuzzleGame.Runtime::PuzzleGame.Runtime.Config.PieceCatalog
+  entries:
+  - color: 1
+    specialType: 0
+    sprite: {fileID: 8723305048639064192, guid: 6af48c246236c2541a657b66c780e364, type: 3}
+    material: {fileID: 2100000, guid: 146faf9d975542a41aa4326d0c6caa03, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 2
+    specialType: 0
+    sprite: {fileID: -3372215332362508185, guid: 6af48c246236c2541a657b66c780e364, type: 3}
+    material: {fileID: 2100000, guid: 146faf9d975542a41aa4326d0c6caa03, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 3
+    specialType: 0
+    sprite: {fileID: 4707762963247108477, guid: 6af48c246236c2541a657b66c780e364, type: 3}
+    material: {fileID: 2100000, guid: 146faf9d975542a41aa4326d0c6caa03, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 4
+    specialType: 0
+    sprite: {fileID: 3233620636200491325, guid: 6af48c246236c2541a657b66c780e364, type: 3}
+    material: {fileID: 2100000, guid: 146faf9d975542a41aa4326d0c6caa03, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 5
+    specialType: 0
+    sprite: {fileID: -4475517087328623916, guid: 6af48c246236c2541a657b66c780e364, type: 3}
+    material: {fileID: 2100000, guid: 146faf9d975542a41aa4326d0c6caa03, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 6
+    specialType: 0
+    sprite: {fileID: -889794815797621241, guid: 6af48c246236c2541a657b66c780e364, type: 3}
+    material: {fileID: 2100000, guid: 146faf9d975542a41aa4326d0c6caa03, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 1
+    specialType: 1
+    sprite: {fileID: -1009791741313559572, guid: a7f4ed480b56cbe4b837b2dfa42ca62e, type: 3}
+    material: {fileID: 2100000, guid: 309631e65c876ad458e84d43a9b6af53, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 2
+    specialType: 1
+    sprite: {fileID: -2390356358663847187, guid: a7f4ed480b56cbe4b837b2dfa42ca62e, type: 3}
+    material: {fileID: 2100000, guid: 309631e65c876ad458e84d43a9b6af53, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 3
+    specialType: 1
+    sprite: {fileID: 4122274778731524431, guid: a7f4ed480b56cbe4b837b2dfa42ca62e, type: 3}
+    material: {fileID: 2100000, guid: 309631e65c876ad458e84d43a9b6af53, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 4
+    specialType: 1
+    sprite: {fileID: 2418280408208812894, guid: a7f4ed480b56cbe4b837b2dfa42ca62e, type: 3}
+    material: {fileID: 2100000, guid: 309631e65c876ad458e84d43a9b6af53, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 5
+    specialType: 1
+    sprite: {fileID: -6184390779645730998, guid: a7f4ed480b56cbe4b837b2dfa42ca62e, type: 3}
+    material: {fileID: 2100000, guid: 309631e65c876ad458e84d43a9b6af53, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 6
+    specialType: 1
+    sprite: {fileID: -6760064429289101582, guid: a7f4ed480b56cbe4b837b2dfa42ca62e, type: 3}
+    material: {fileID: 2100000, guid: 309631e65c876ad458e84d43a9b6af53, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 1
+    specialType: 2
+    sprite: {fileID: 4945887896239469923, guid: a574bf199ca989a488701b9d36c75435, type: 3}
+    material: {fileID: 2100000, guid: fe432fdfc10a39b4f9d9a8af46c6bf34, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 2
+    specialType: 2
+    sprite: {fileID: 783287257551820894, guid: a574bf199ca989a488701b9d36c75435, type: 3}
+    material: {fileID: 2100000, guid: fe432fdfc10a39b4f9d9a8af46c6bf34, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 3
+    specialType: 2
+    sprite: {fileID: 2844353617558757460, guid: a574bf199ca989a488701b9d36c75435, type: 3}
+    material: {fileID: 2100000, guid: fe432fdfc10a39b4f9d9a8af46c6bf34, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 4
+    specialType: 2
+    sprite: {fileID: 6843537542217547985, guid: a574bf199ca989a488701b9d36c75435, type: 3}
+    material: {fileID: 2100000, guid: fe432fdfc10a39b4f9d9a8af46c6bf34, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 5
+    specialType: 2
+    sprite: {fileID: -3608507309096018197, guid: a574bf199ca989a488701b9d36c75435, type: 3}
+    material: {fileID: 2100000, guid: fe432fdfc10a39b4f9d9a8af46c6bf34, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 6
+    specialType: 2
+    sprite: {fileID: -844009630802589067, guid: a574bf199ca989a488701b9d36c75435, type: 3}
+    material: {fileID: 2100000, guid: fe432fdfc10a39b4f9d9a8af46c6bf34, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 1
+    specialType: 3
+    sprite: {fileID: 3263720639869982104, guid: d91961cc96cab72408036ca915c59d11, type: 3}
+    material: {fileID: 2100000, guid: 3a677898b1527dc468afb4ffcf3262b2, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 2
+    specialType: 3
+    sprite: {fileID: 2239859310405971919, guid: d91961cc96cab72408036ca915c59d11, type: 3}
+    material: {fileID: 2100000, guid: 3a677898b1527dc468afb4ffcf3262b2, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 3
+    specialType: 3
+    sprite: {fileID: -1545420169299343170, guid: d91961cc96cab72408036ca915c59d11, type: 3}
+    material: {fileID: 2100000, guid: 3a677898b1527dc468afb4ffcf3262b2, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 4
+    specialType: 3
+    sprite: {fileID: -4871261754583022229, guid: d91961cc96cab72408036ca915c59d11, type: 3}
+    material: {fileID: 2100000, guid: 3a677898b1527dc468afb4ffcf3262b2, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 5
+    specialType: 3
+    sprite: {fileID: -4683877211972931899, guid: d91961cc96cab72408036ca915c59d11, type: 3}
+    material: {fileID: 2100000, guid: 3a677898b1527dc468afb4ffcf3262b2, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 6
+    specialType: 3
+    sprite: {fileID: 2560649638349307629, guid: d91961cc96cab72408036ca915c59d11, type: 3}
+    material: {fileID: 2100000, guid: 3a677898b1527dc468afb4ffcf3262b2, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+  - color: 0
+    specialType: 4
+    sprite: {fileID: 21300000, guid: 96a26a5664e91c04a95907f38ad13c2f, type: 3}
+    material: {fileID: 2100000, guid: 2155ce9ca4108d3458bf944700a8c214, type: 2}
+    tint: {r: 1, g: 1, b: 1, a: 1}

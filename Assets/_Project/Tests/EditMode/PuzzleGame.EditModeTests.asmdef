@@ -1,0 +1,14 @@
+{
+  "name": "PuzzleGame.EditModeTests",
+  "rootNamespace": "PuzzleGame.Tests",
+  "references": [
+    "PuzzleGame.Core"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ],
+  "autoReferenced": false
+}

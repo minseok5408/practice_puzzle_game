@@ -1,0 +1,16 @@
+{
+  "name": "PuzzleGame.PlayModeTests",
+  "rootNamespace": "PuzzleGame.Tests",
+  "references": [
+    "PuzzleGame.Core",
+    "PuzzleGame.Runtime",
+    "Unity.InputSystem",
+    "Unity.ugui",
+    "Unity.InputSystem.TestFramework",
+    "Unity.TextMeshPro"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ],
+  "autoReferenced": false
+}

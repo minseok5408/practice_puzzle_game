@@ -1,0 +1,6 @@
+{
+  "name": "PuzzleGame.Core",
+  "rootNamespace": "PuzzleGame.Core",
+  "references": [],
+  "noEngineReferences": true
+}
