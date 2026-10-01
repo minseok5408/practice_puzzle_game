@@ -1,7 +1,5 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using PuzzleGame.Runtime.Board;
 using TMPro;
 using UnityEngine;
@@ -61,27 +59,10 @@ namespace PuzzleGame.Runtime.UI
 
         private IEnumerator Start()
         {
-            settingsPath = Path.Combine(Application.persistentDataPath, "settings.json");
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-            // Opt-in diagnostics use an isolated file, never the player's preferences.
-            string[] args = Environment.GetCommandLineArgs();
-            int index = Array.IndexOf(args, "-puzzleSettingsPath");
-            if (index >= 0 && index + 1 < args.Length) settingsPath = args[index + 1];
-#endif
+            settingsPath = DisplaySettings.SavePath;
+            if (DisplaySettings.RestoreSavedDisplay()) { yield return null; yield return null; }
             appliedSize = new Vector2Int(Screen.width,Screen.height);
             appliedWindowed = Screen.fullScreenMode == FullScreenMode.Windowed;
-            if (!Application.isEditor)
-            {
-                DisplaySettings saved = DisplaySettings.Load(settingsPath);
-                if (saved != null)
-                {
-                    var desktop = DesktopSize();
-                    appliedSize = new Vector2Int(Mathf.Min(saved.width,desktop.x),Mathf.Min(saved.height,desktop.y));
-                    appliedWindowed = saved.windowed;
-                    Screen.SetResolution(appliedSize.x,appliedSize.y,appliedWindowed ? FullScreenMode.Windowed : FullScreenMode.FullScreenWindow);
-                    yield return null; yield return null;
-                }
-            }
         }
 
         private void Update()
@@ -102,10 +83,10 @@ namespace PuzzleGame.Runtime.UI
         public void Open()
         {
             if (IsVisible) return;
-            board.GetComponent<BoardInput>().CancelGesture();
+            if (board) board.GetComponent<BoardInput>().CancelGesture();
             previousTimeScale = Time.timeScale;
             ownsPause = true;
-            board.SetPaused(true);
+            if (board) board.SetPaused(true);
             Time.timeScale = 0;
             overlay.SetActive(true);
             overlay.transform.SetAsLastSibling();

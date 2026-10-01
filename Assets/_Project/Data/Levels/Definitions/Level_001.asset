@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Level_001
   m_EditorClassIdentifier: PuzzleGame.Runtime::PuzzleGame.Runtime.Levels.LevelDefinition
   levelId: level_001
-  displayName: "\uC5F0\uC2B5 \uC2A4\uD14C\uC774\uC9C0"
+  displayName: 1-1
+  number: 1
+  seed: 5408
+  collectionTargets: 000000000000000000000000000000000000000000000000
   startingMoves: 20
   targetScore: 1000
   pointsPerPiece: 10

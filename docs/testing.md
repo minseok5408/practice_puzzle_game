@@ -4,6 +4,57 @@
 Unity: 6.3 LTS `6000.3.25f1`  
 환경: Windows 11, x64 개발 빌드
 
+## 0.9.4 보석 버튼·윗면 중앙 숫자
+
+선택된 초록/분홍/연보라 보석 버튼을 64×64로 적용했다. 숫자의 정렬을 TMP `MidlineGeoAligned`로 바꾸고 텍스트 중심을 버튼 높이의 55%에 맞춰 아래 테두리를 제외한 둥근 윗면에 배치했다. 1~10과 완료·도전·잠금 세 가지 상태를 실제 지도 캡처로 확인했다. 기존 106×76 클릭 영역을 유지한다.
+
+Windows 빌드 및 실제 플레이어 검사를 통과했다. 로딩→지도, ESC 설정, 잠금 클릭 무시, 버튼 그림 바깥의 확장 영역 클릭, 1-1 실제 클리어·저장·1-2 해금을 확인했다. Direct3D 11과 격리된 진행 파일을 사용했고 게임 규칙 변경은 없다.
+
+실행 파일: `Builds/Windows/0.9.4/practice_puzzle_game.exe`. 기록: `Builds/Validation/jewel-map-final/{setup.log,build.log,native-smoke.txt}`. 최종 화면: `Builds/Preview/JewelButtonsFinal/UnlockedMap.png`. 승인 전 목업은 `Builds/Preview/JewelButtons/JewelButtonsMockup.png`에 보관한다.
+
+## 0.9.3 지도 발판 크기 조정
+
+발판을 106×76에서 74.2×53.2로 줄였다(가로·세로 30% 축소). 숫자·현재 위치 표시·빛도 함께 줄이고, 음수 raycast padding으로 기존 106×76 클릭 영역을 유지한다.
+
+Windows 빌드와 실제 플레이어 검사를 통과했다. 축소한 첫 발판의 중심에서 오른쪽 45만큼 떨어진 지점(그림 사각형 바깥)을 마우스로 눌러 입장했고, 잠금·클리어·저장·다음 스테이지·지도 해금을 확인했다. 별도 프로세스로 다시 실행해 완료 기록·최고 점수·선택 위치를 복원하고 1-2에 이어서 진입했다. 실제 지도 캡처에서 크기와 숫자 가독성을 확인했다. 런타임 검사는 Direct3D 11과 격리된 저장 경로를 사용했다. 레벨 규칙 변경은 없다.
+
+5개 월드 지도에서도 축소한 발판을 캡처해 배치와 숫자를 확인했다. 실행 파일: `Builds/Windows/0.9.3/practice_puzzle_game.exe`. 검사 기록: `Builds/Validation/world-map-v4/{setup.log,build.log,native-smoke.txt,reload-smoke.txt,preview-smoke.txt}`. 화면: `Builds/Preview/WorldMapV4/FreshMap.png`, `Builds/Preview/WorldMapV4/Worlds`.
+
+## 0.9.2 50개 스테이지·사탕 발판 지도·진행 저장
+
+1. 월드당 10개, 총 **50개**의 초기 보드가 서로 다르며 즉시 매치 없이 유효 이동을 갖는지 확인했다. Core의 특수 효과·보충·셔플·수집 규칙으로 **50개 모두 실제 클리어 경로**를 찾았다. 경로와 CSV를 저장했다. 전략 표본의 결과이므로 사람의 승률이나 체감 난이도를 의미하지 않는다.
+2. 최종 PlayMode **44개 전부 통과**: 기존 조작·설정·로딩 회귀와 캠페인 잠금·선택·다음·최종 스테이지·저장 복구, 이전 v1의 100개 기록을 새 v2 50개로 변환하는 7개 경계 사례를 포함한다. Core는 수집 목표 구현 시 EditMode **65개 통과**했고 이후 지도 변경에서 규칙 코드는 바꾸지 않았다.
+3. Windows **0.9.2** 빌드와 실제 플레이어 검사 통과. Boot → 로드맵, ESC 설정, 잠긴 발판 클릭 무시, 첫 발판 마우스 선택, 저장한 실제 교환 경로로 1-1 클리어, 즉시 JSON 저장, 1-2 진입, 로드맵 해금을 검사했다. 사용자 저장 대신 격리된 JSON 경로를 사용했다.
+4. 로드맵은 전용 일러스트 5종의 크림 길과 같은 좌표계로 배치한다. 정면 금테 메달을 낮은 아이싱 쿠키 발판으로 교체하고 Bagel Fat One 숫자 1~10을 크게 표시했다. 1280×800의 첫 지도·클리어·해금 화면을 눈으로 확인했다.
+
+실행 파일: `Builds/Windows/0.9.2/practice_puzzle_game.exe`
+
+검사 기록: `Builds/Validation/world-map-v3/{PlayMode.xml,balance.csv,winning-routes.txt,native-smoke.txt}`. Core 기록: `Builds/Validation/campaign/EditMode.xml`.
+
+캡처: `Builds/Preview/WorldMapV3`. Mac 실기기·실제 계정 로그인·기기 간 동기화는 미검증/미구현이며 체감 난이도 조정은 실제 플레이로 진행한다.
+
+### 이전 캠페인 작업
+
+0.9.0에서 100개·5월드·로드맵·저장을 구현하고 Windows 재실행 복원을 확인했다. 0.9.1에서 전용 지도·금테 메달로 교체하고 캠페인 6개 검사를 다시 통과했다. 이후 사용자 요청에 따라 0.9.2의 50개·발판 디자인으로 변경했다. 이전 기록과 그림은 보관한다.
+
+## 0.8.0 시작 로딩 화면
+
+1. PlayMode **31개 통과**. 기존 26개와 신규 5개로 기본 5초 실시간 대기, timeScale=0에서도 진행, 5초 이전 완료, 5초 이후에도 미완료 작업 대기, 실패/재시도, 씬 종료 취소와 늦게 오는 콜백 무시를 확인했다. 재시도 취소 보강 후 로딩 검사 5개를 다시 통과했다. Core 변경은 없다.
+2. Windows **0.8.0** 빌드·실행 성공. 시작 씬 Boot에서 진행 바가 증가하고 **5.13초 뒤 Game**으로 전환했다. 준비 전에 보드가 생성되지 않으며 완료 후 보드 입력·재시작·설정이 정상 동작한다.
+3. 1280×720, 1280×800, 800×1000 캡처를 눈으로 확인했다. 제목·사탕·진행 바·문구가 잘리지 않게 비율을 유지하며 남는 공간은 분홍색으로 채운다. 16:10·세로 캡처는 Windows에서의 오프스크린 UI 검사이며 Mac 실기기 검증을 의미하지 않는다.
+4. 실제 플레이어에서 로딩 후 기존 설정 동작(버튼/ESC·해상도·창/전체 화면·일시정지/재개·파일 저장·실제 종료)을 다시 검사했다. 진단은 별도 `display-smoke.json`을 사용한다.
+5. 시안 a~d 원본과 실제 a 배경을 소스에 보관한다. 빌드 에셋 목록에는 사용하는 `loading_screen_a_background.png`만 포함되고 시안 원본 네 장은 포함되지 않는다.
+
+빌드: `Builds/Windows/0.8.0/practice_puzzle_game.exe`
+
+자동 검사: `Builds/Validation/loading/PlayMode.xml`, `StartupFinal.xml`
+
+실행 결과: `Builds/Validation/loading/windows-smoke.txt`, `settings-smoke.txt`, `settings-reload.txt`
+
+화면: `Builds/Preview/Loading/{LoadingEarly,LoadingWide,LoadingMacRatio,LoadingNarrow}.png`
+
+시작 검사 인자: `-batchmode -puzzleLoadingSmokeTest -puzzleSettingsPath <별도 설정 JSON> -puzzleSmokeReport <결과 경로> -puzzleCaptureFolder <화면 폴더>`
+
 ## 0.7.0 설정 버튼·ESC·화면 설정·종료
 
 1. 기존 Game 씬의 점수판 아래에 설정 버튼과 크림/보라색 설정창을 추가했다. 해상도 목록·창모드 체크박스·적용·계속하기·게임 종료를 연결했다. ESC는 드래그를 취소하고 설정을 열며, 해상도 목록→설정창 순으로 닫는다.

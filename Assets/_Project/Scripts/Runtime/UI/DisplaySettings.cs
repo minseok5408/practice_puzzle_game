@@ -13,6 +13,32 @@ namespace PuzzleGame.Runtime.UI
         public bool windowed;
         public bool IsValid => version == 1 && width >= 640 && height >= 480 && width <= 16384 && height <= 16384;
 
+        public static string SavePath
+        {
+            get
+            {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                string[] args = Environment.GetCommandLineArgs();
+                int index = Array.IndexOf(args, "-puzzleSettingsPath");
+                if (index >= 0 && index + 1 < args.Length) return args[index + 1];
+#endif
+                return Path.Combine(Application.persistentDataPath, "settings.json");
+            }
+        }
+
+        public static bool RestoreSavedDisplay()
+        {
+            if (Application.isEditor) return false;
+            var saved = Load(SavePath);
+            if (saved == null) return false;
+            int w = Mathf.Min(saved.width, Mathf.Max(960, Screen.currentResolution.width));
+            int h = Mathf.Min(saved.height, Mathf.Max(600, Screen.currentResolution.height));
+            var mode = saved.windowed ? FullScreenMode.Windowed : FullScreenMode.FullScreenWindow;
+            if (Screen.width == w && Screen.height == h && Screen.fullScreenMode == mode) return false;
+            Screen.SetResolution(w, h, mode);
+            return true;
+        }
+
         public static List<Vector2Int> Resolutions(Vector2Int desktop, Vector2Int current, Resolution[] supported)
         {
             var sizes = new HashSet<Vector2Int>();

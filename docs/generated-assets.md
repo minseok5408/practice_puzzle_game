@@ -11,6 +11,22 @@
 
 원본 생성 파일은 별도로 유지하며, 게임은 프로젝트 내부 복사본만 참조한다. UI의 둥근 패널·원·별은 `CandyThemeSetup`의 코드로 생성한다. 설치형 유료 에셋·플러그인은 추가하지 않았다.
 
+## 0.9.0 월드 배경
+
+기존 SugarGarden을 참고해 OrangeOrchard·IceSoda·GrapeNightGarden·RainbowPalace 네 배경을 새로 생성해 `Art/Backgrounds`에 저장했다. 로드맵과 게임이 동일한 월드 그림을 사용한다. [전체 최종 프롬프트·경로](campaign-art-prompts.md).
+
+## 0.9.1 일러스트 로드맵
+
+사용자의 지도 참고 이미지에 맞춰 로드맵 전용 그림 5종과 보석 메달 3종을 새로 만들었다. `Art/WorldMaps`의 사탕 마을·과수원·얼음 소다·포도 밤정원·무지개 궁전 지도는 그림 속 크림 길과 런타임 스테이지 좌표를 함께 사용한다. 하단 월드 이동·현재 위치·빛나는 설탕 입자를 연결했다. 초록 완료 메달의 분홍 하단은 초록/민트색으로 다시 수정했다. 이전 `Art/Backgrounds` 그림은 실제 게임 보드의 배경으로 유지한다. [전체 생성/수정 프롬프트](world-map-art-prompts.md).
+
+## 0.9.2 지면과 어울리는 사탕 발판
+
+월드당 10개로 축소하면서 정면 금테 메달을 사용하지 않고 낮은 타원형 아이싱 쿠키 발판 3종으로 교체했다. `StagePlatformReady.png`, `StagePlatformLocked.png`, `StagePlatformComplete.png`는 지도와 같은 조명·시점을 참고해 내장 image_gen으로 생성한 투명 PNG다. 접지 그림자가 포함된다. 숫자는 별도 Bagel Fat One 텍스트로 렌더링한다. 이전 금테 메달 파일은 대안으로 보관한다. [발판 최종 프롬프트](world-map-platform-prompts.md).
+
+## 0.9.4 로드맵 보석 버튼 선택
+
+사용자가 다시 첨부한 초록·연보라·분홍 보석 PNG를 각각 `LevelMedallionComplete.png`, `LevelMedallionLocked.png`, `LevelMedallion.png`에 원본 그대로 저장했다. 각 파일은 1254×1254 투명 PNG다. 64×64 버튼으로 축소한 목업을 확인한 뒤 숫자를 윗면 중심으로 보정해 실제 지도에 적용했다. 원본 이미지를 변형하지 않고 Unity의 크기와 TMP 정렬을 조정한다. 이전 `StagePlatform*.png` 발판은 대안으로 보관한다.
+
 ## 0.6.0 사용자 선택 디자인·중심 정렬
 
 포장 사탕은 사용자가 다시 첨부하고 선택한 넓은 포장 날개 디자인으로 교체했다. 입력은 `codex-clipboard-7fadf9ab-4369-4057-b1bc-74ab77d9012a.png`(1536×1024 RGBA)이며 `CandyWrappedAtlas.png`로 원본 바이트를 그대로 복사했다. 아래 0.5.1의 짧은 포장 끝 비율 보정 결과 대신 사용한다.
@@ -63,6 +79,10 @@ Use case: precise-object-edit. EDIT the provided wrapped candy sprite atlas. Mak
 ```text
 Use case: precise-object-edit. The attached six-candy sheet is the EDIT TARGET and style reference. Transform the sheet into ONE new special candy sprite for this exact game: a single premium RAINBOW GLASS MARBLE CANDY for a five-in-a-row color-clear effect. Square composition 1024x1024. One entire perfectly centered spherical hard candy, filling 78% of the square with even generous transparent padding. Match the reference's near-frontal view, luscious thick translucent edible glass/sugar material, rich jewel-toned edges, gentle internal microbubbles, clean broad creamy upper-left studio highlights, highly polished rounded 3D volume. The sphere is made of six broad vividly colored curved candy ribbons that swirl organically into a mesmerizing pinwheel at its center: strawberry red, orange, lemon yellow, lime green, blue, purple. Colors are physically fused IN the candy, with some translucency and subtle depth, not painted graphics. Thin milky ivory seams between colored sugar ribbons, tasteful and edible, like a luxurious rainbow swirl jawbreaker. Keep the globe round and compact; no stick or wrapper. Silhouette and lighting feel like the blue orb in the reference, with the new multicolor sculpted swirl. It must be readable at a 60-pixel game scale and look like one delicious candy, not a magic orb or icon. TRUE transparent RGBA background, clean alpha cutout, no haze, no colored backdrop, no floor, no drop shadow, no star, no badge, no arrows, no text, no checkerboard, no sparkles outside the silhouette, no extra candy objects.
 ```
+
+## 시작 로딩 화면 0.8.0
+
+시안 `loading_screen_a`~`loading_screen_d`와 기본 a의 실제 게임 배경을 `Assets/_Project/Art/Loading/`에 보관한다. 사용자가 첫 번째 시안을 선택했다. 내장 `image_gen` 입력·전체 프롬프트·파생 배경은 [loading-art-prompts.md](loading-art-prompts.md)에 기록했다. 실제 진행률과 문구는 Unity UI로 표시한다.
 
 ## CandyAtlas 최종 프롬프트
 

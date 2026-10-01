@@ -42,7 +42,7 @@ namespace PuzzleGame.Runtime.UI
         {
             var p = session.Progress;
             if (p == null) return;
-            titleText.text = session.DisplayName;
+            titleText.text = session.Catalog ? session.DisplayName + " / 맵 보기" : session.DisplayName;
             scoreText.text = p.Score.ToString("N0", CultureInfo.InvariantCulture);
             targetText.text = p.Rules.TargetScore.ToString("N0", CultureInfo.InvariantCulture);
             movesText.text = p.MovesRemaining.ToString();

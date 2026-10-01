@@ -32,7 +32,7 @@ namespace PuzzleGame.Editor
             Debug.Log("SETTINGS READY: button, ESC, resolution, windowed toggle, pause/resume and quit.");
         }
 
-        public static void Install(GameObject canvas)
+        public static void Install(GameObject canvas, Transform toolbar = null)
         {
             font = AssetDatabase.LoadAssetAtPath<TMP_FontAsset>(Root + "/UI/Fonts/CandyBody.asset");
             rounded = AssetDatabase.LoadAssetAtPath<Sprite>(Root + "/UI/Theme/Rounded.png");
@@ -45,11 +45,12 @@ namespace PuzzleGame.Editor
             EditorUtility.SetDirty(font);
             var previous = canvas.GetComponent<SettingsPopup>();
             if (previous) UnityEngine.Object.DestroyImmediate(previous);
-            var sidebar = canvas.transform.Find("ScoreCard");
+            var sidebar = toolbar ? toolbar : canvas.transform.Find("ScoreCard");
             foreach (var old in new[] { canvas.transform.Find("SettingsOverlay"), sidebar.Find("SettingsButton") })
                 if (old) UnityEngine.Object.DestroyImmediate(old.gameObject);
             Button open = Button("SettingsButton",sidebar,.635f,.025f,.925f,.095f,"설정",Purple);
-            canvas.GetComponent<CandyLayout>().ConfigureSettings((RectTransform)open.transform);
+            if (toolbar) Place((RectTransform)open.transform,0,0,1,1);
+            else canvas.GetComponent<CandyLayout>().ConfigureSettings((RectTransform)open.transform);
 
             RectTransform overlay = Rect("SettingsOverlay",canvas.transform,0,0,1,1);
             overlay.gameObject.AddComponent<Image>().color = new Color(.24f,.10f,.32f,.76f);
@@ -107,7 +108,7 @@ namespace PuzzleGame.Editor
             canvas.AddComponent<SettingsPopup>().Configure(UnityEngine.Object.FindFirstObjectByType<BoardController>(),overlay.gameObject,
                 card,open,close,apply,quit,dropdown,toggle,status);
             overlay.gameObject.SetActive(false);
-            canvas.GetComponent<CandyLayout>().ApplyLayout();
+            canvas.GetComponent<CandyLayout>()?.ApplyLayout();
         }
 
         private static Sprite Glyph(string name,bool arrow)

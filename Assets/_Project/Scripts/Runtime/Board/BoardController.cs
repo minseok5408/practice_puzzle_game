@@ -31,7 +31,13 @@ namespace PuzzleGame.Runtime.Board
         public int CompletedMoves { get; private set; }
 
         private void Awake() => view = GetComponent<BoardView>();
-        private void Start() => GenerateBoard();
+        private void Start()
+        {
+            if (levelSession) levelSession.StartInitialLevel();
+            else GenerateBoard();
+        }
+
+        public void ConfigureLevel(int boardSeed) => seed = boardSeed;
 
         public void GenerateBoard()
         {

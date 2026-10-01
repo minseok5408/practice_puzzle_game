@@ -5,11 +5,19 @@ namespace PuzzleGame.Core.Board
     public sealed class ResolutionStep
     {
         public List<int> RemovedIds { get; } = new List<int>();
+        public List<RemovedPiece> RemovedPieces { get; } = new List<RemovedPiece>();
         public List<int> InitialHitIds { get; } = new List<int>();
         public List<PieceMovement> Moves { get; } = new List<PieceMovement>();
         public List<PieceMovement> Spawns { get; } = new List<PieceMovement>();
         public List<SpecialCreation> SpecialCreations { get; } = new List<SpecialCreation>();
         public List<SpecialActivation> SpecialActivations { get; } = new List<SpecialActivation>();
+    }
+
+    public readonly struct RemovedPiece
+    {
+        public int Id { get; }
+        public PieceColor Color { get; }
+        public RemovedPiece(int id, PieceColor color) { Id = id; Color = color; }
     }
 
     public readonly struct SpecialCreation

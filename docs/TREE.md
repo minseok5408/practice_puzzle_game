@@ -8,7 +8,7 @@
 
 ## 1. 현재 확인한 구조
 
-점수 목표 스테이지와 특수 블록 구현 후 상태다. 각 에셋의 `.meta`와 Unity 자동 생성 폴더는 생략했다.
+50개 스테이지·로드맵·진행 저장 구현 후 상태다. 각 에셋의 `.meta`와 Unity 자동 생성 폴더는 생략했다.
 
 ```text
 practice_puzzle_game/
@@ -20,6 +20,8 @@ practice_puzzle_game/
 ├─ Assets/
 │  ├─ _Project/
 │  │  ├─ Scenes/
+│  │  │  ├─ Boot.unity                  # 시작 로딩 후 WorldMap 진입
+│  │  │  ├─ WorldMap.unity              # 5개 월드·클리어 순서대로 해제
 │  │  │  ├─ Game.unity
 │  │  │  └─ Sandbox/SetupCheck.unity
 │  │  ├─ Scripts/
@@ -54,11 +56,21 @@ practice_puzzle_game/
 │  │  │     │  ├─ CellView.cs
 │  │  │     │  └─ BoardInput.cs
 │  │  │     ├─ Config/PieceCatalog.cs
+│  │  │     ├─ Startup/
+│  │  │     │  ├─ StartupDataLoader.cs    # 실제 사용자 정보 로더 연결 계약
+│  │  │     │  ├─ PrototypeStartupLoader.cs # 현재 약 5초 임시 로딩
+│  │  │     │  ├─ StartupLoadingScreen.cs # 완료/실패/취소·게임 진입
+│  │  │     │  └─ LoadingScreenView.cs    # 그림·진행 바·문구·화면 비율
 │  │  │     ├─ Levels/
 │  │  │     │  ├─ LevelDefinition.cs
+│  │  │     │  ├─ LevelCatalog.cs        # 50개 레벨·5개 배경 참조
+│  │  │     │  ├─ CampaignProgress.cs    # progress.json·백업·검증
+│  │  │     │  ├─ CampaignState.cs       # 씬 사이에 유지하는 진행도
 │  │  │     │  └─ LevelSession.cs
 │  │  │     ├─ UI/
 │  │  │     │  ├─ HUDView.cs
+│  │  │     │  ├─ CampaignHUD.cs         # 월드 배경·수집 목표·맵 복귀
+│  │  │     │  ├─ WorldMapView.cs        # 경로·완료/잠김·스테이지 선택
 │  │  │     │  ├─ ResultPopup.cs
 │  │  │     │  ├─ SettingsPopup.cs        # 설정 버튼/ESC·화면 적용·일시정지·종료
 │  │  │     │  ├─ DisplaySettings.cs      # 해상도 목록·settings.json 저장/복구
@@ -68,13 +80,16 @@ practice_puzzle_game/
 │  │  │        ├─ SetupCheck.cs
 │  │  │        ├─ BoardSmokeCheck.cs
 │  │  │        ├─ LevelSmokeCheck.cs
+│  │  │        ├─ LoadingSmokeCheck.cs    # 시작 시간·진행·화면 비율 검사
+│  │  │        ├─ CampaignSmokeCheck.cs   # 실제 클리어·저장·재실행 검사
 │  │  │        └─ EffectsSmokeCheck.cs     # 7개 연출의 실제 실행·프레임 캡처
 │  │  ├─ Prefabs/Board/
 │  │  │  ├─ Piece.prefab
 │  │  │  └─ Cell.prefab
 │  │  ├─ Input/PuzzleInput.inputactions
 │  │  ├─ Data/Pieces/PieceCatalog.asset
-│  │  ├─ Data/Levels/Definitions/Level_001.asset
+│  │  ├─ Data/Levels/LevelCatalog.asset
+│  │  ├─ Data/Levels/Definitions/Level_001.asset ~ Level_050.asset
 │  │  ├─ UI/Fonts/                       # 각 원본 글꼴과 OFL.txt 동봉
 │  │  │  ├─ Jua/Jua-Regular.ttf
 │  │  │  ├─ BagelFatOne/BagelFatOne-Regular.ttf
@@ -83,7 +98,11 @@ practice_puzzle_game/
 │  │  │  └─ NanumGothic/, PuzzleUI.asset  # 이전 글꼴 보관
 │  │  ├─ UI/Theme/                       # 코드로 생성한 둥근 패널·원·별
 │  │  ├─ Art/
-│  │  │  ├─ Backgrounds/SugarGarden.png
+│  │  │  ├─ Backgrounds/                # SugarGarden, OrangeOrchard, IceSoda,
+│  │  │  │                              # GrapeNightGarden, RainbowPalace
+│  │  │  ├─ WorldMaps/                  # 전용 지도 5장·현재 보석 버튼 3장·이전 발판 3장 보관
+│  │  │  ├─ Loading/                    # loading_screen_a~d.png 원본 시안
+│  │  │  │  └─ loading_screen_a_background.png # 실제 UI용 배경 레이어
 │  │  │  ├─ Sprites/Candies/CandyAtlas.png # 3×2 투명 사탕 시트, Unity 다중 스프라이트
 │  │  │  ├─ Sprites/Candies/CandyRowAtlas.png     # 가로 크림 줄무늬 6종
 │  │  │  ├─ Sprites/Candies/CandyColumnAtlas.png  # 세로 크림 줄무늬 6종
@@ -100,6 +119,10 @@ practice_puzzle_game/
 │  │  │     ├─ CandyThemeSetup.cs
 │  │  │     ├─ SpecialCandySetup.cs
 │  │  │     ├─ CandySpriteAlignment.cs     # 투명 여백을 제외한 그림 중심 보정
+│  │  │     ├─ LoadingSetup.cs             # Boot 씬·로딩 UI·빌드 순서 생성
+│  │  │     ├─ CampaignSetup.cs            # 50개 레벨·로드맵·게임 UI 생성
+│  │  │     ├─ WorldMapSetup.cs            # 일러스트 길의 좌표·메달·지도 UI
+│  │  │     ├─ CampaignValidation.cs       # 50개 초기 보드·클리어 경로 검사
 │  │  │     └─ SettingsSetup.cs            # 기존 Game 씬에 설정 UI 추가
 │  │  └─ Tests/
 │  │     ├─ EditMode/
@@ -115,6 +138,7 @@ practice_puzzle_game/
 │  │        ├─ BoardInteractionTests.cs
 │  │        ├─ BoardDragTests.cs
 │  │        ├─ LevelSessionTests.cs
+│  │        ├─ StartupLoadingTests.cs     # 5초/빠른 완료/늦은 완료·실패·취소
 │  │        └─ DisplaySettingsTests.cs     # 해상도 목록·저장·손상 복구
 │  ├─ TextMesh Pro/                      # Unity 번들 TMP Essential Resources
 │  ├─ Settings/                          # 기존 URP·입력 설정 유지
@@ -129,9 +153,12 @@ practice_puzzle_game/
 │  ├─ TREE.md
 │  ├─ testing.md
 │  ├─ asset-licenses.md
+│  ├─ loading-screen.md                  # 화면 교체·사용자 정보 로더 연결
+│  ├─ loading-art-prompts.md             # a~d 시안·실제 배경 생성 프롬프트
 │  └─ generated-assets.md
 └─ Builds/                               # 로컬 출력, Git 제외
-   ├─ Windows/0.5.1/practice_puzzle_game.exe
+   ├─ Windows/0.9.4/practice_puzzle_game.exe # 현재 Windows 개발 빌드, 이전 버전도 보관
+   ├─ Preview/Loading/                  # 로딩 초기·진행·16:9/16:10/세로 화면
    ├─ Preview/Board.png                  # 이전 보드
    ├─ Preview/Candy/                     # 16:10·16:9·세로 화면 및 결과창
    ├─ Preview/Specials/                  # 특수 표식·색 제거 교환·결과창
@@ -139,13 +166,13 @@ practice_puzzle_game/
    └─ Validation/
 ```
 
-드래그 선택·교환, 실패 복귀, 일반 매치 제거·낙하·보충·연쇄와 이동 불가 셔플까지 연결했다. 점수·이동수·목표·성공/실패·재시작에 이어 특수 블록 생성·발동·직접 조합을 구현했다. 색상별 목표·장애물·저장은 아직 없다. `CellState`의 확장용 데이터가 있어도 장애물 게임 기능이 구현된 것은 아니다.
+드래그 선택·교환, 실패 복귀, 일반 매치 제거·낙하·보충·연쇄와 이동 불가 셔플까지 연결했다. 점수·색상 수집 목표·성공/실패·재시작·특수 블록 생성/발동/조합·50개 스테이지·로드맵·진행 저장을 구현했다. 장애물·튜토리얼·자동 힌트·소리는 미구현이다. `CellState`의 확장용 데이터가 있어도 장애물 게임 기능이 구현된 것은 아니다. 남은 작업은 [TODO.md](TODO.md)의 0.9.4 기준 요약을 따른다.
 
 `MatchResult`는 연속 구간·교차 그룹·좌표를 보관한다. `SpecialPieceRules`는 생성 종류·위치와 특수 교환 여부를 결정하고, `SpecialEffectResolver`는 생성 칸을 보호하며 효과 큐로 중복 발동을 막는다. `ResolutionStep`에 생성·발동 기록을 추가했고 `BoardResolver`는 첫 해결 단계에만 교환 좌표를 받는다. `PieceCatalog`는 색과 특수 종류를 함께 조회하며 `PieceView`가 전용 캔디 그림으로 교체한다. `SpecialCandySetup`은 특수 스프라이트 19종·재질 4개를 가져오고 카탈로그에 연결한다. `SpecialPieceView`와 벡터 표식은 0.5.1에서 제거했다. 새 특수 블록도 같은 ID를 유지하고 실제 제거된 ID만 채점한다.
 
 `BoardSmokeCheck.cs`는 에디터·개발 빌드에서 명시적인 `-puzzleSmokeTest` 인자를 받았을 때만 가상 마우스로 드래그 1회와 보드 안정화를 확인한다. `BuildCommands.cs`와 PlayMode 테스트는 초기 빌드·화면 검증을 위해 계획보다 먼저 추가했다.
 
-`LevelRules`·`LevelProgress`가 점수·이동수·결과를 계산한다. `LevelSession`은 이 상태를 UI에 알리고 재시작한다. `BoardController`는 유효 교환 시작·제거 단계·연쇄 완료·중단을 전달한다. `HUDView`와 `ResultPopup`은 Game 씬의 LevelCanvas에 연결했다. `LevelDefinition`은 현재 점수 목표용 최소 설정이며, 보드 배치·여러 목표는 이후 확장한다.
+`LevelRules`·`LevelProgress`가 점수·색상별 수집량·이동수·결과를 계산한다. `LevelSession`은 이 상태를 UI에 알리고 재시작·다음 레벨·클리어 저장을 연결한다. `BoardController`는 유효 교환 시작·제거 단계·연쇄 완료·중단을 전달한다. `HUDView`와 `ResultPopup`은 Game 씬의 LevelCanvas에 연결했다. `LevelDefinition`에는 번호·고정 ID·seed·이동수·점수/수집 목표가 있고, 고정 초기 배치·장애물 데이터·격자 편집기는 이후 확장한다.
 
 `LevelSmokeCheck.cs`는 명시적 `-puzzleLevelSmokeTest` 인자로 성공·실패·실제 재시작 버튼을 검사한다. `-puzzleSpecialSmokeTest`는 특수 표식 캡처와 색 제거 드래그 검사도 추가한다. 두 진단은 에디터·개발 빌드에만 포함된다. `StageSetup.cs`는 첫 UI·폰트·레벨 데이터 연결용 편집기 도구다. 한글 폰트와 TMP 번들 리소스의 출처는 [asset-licenses.md](asset-licenses.md)에 기록한다.
 
@@ -470,7 +497,7 @@ Application.persistentDataPath/          # 프로젝트 안의 폴더가 아님
 ```
 
 1. Windows와 macOS의 실제 경로를 직접 붙이지 않고 API로 얻는다.
-2. 저장 파일에는 schemaVersion과 고정 레벨 ID를 넣는다.
+2. 현재 진행도 v2는 고정 번호 1~50과 배열을 사용한다. 번호와 `level_001`~`level_050` ID의 대응은 변경하지 않는다. 레벨 재정렬·추가 시 버전 변경과 마이그레이션이 필요하다.
 3. JsonUtility를 사용할 경우 Dictionary·다차원 배열을 그대로 저장하지 않고 직렬화 가능한 항목 배열/리스트로 변환한다.
 4. 플레이 중 보드는 첫 출시 저장 대상에서 제외하고 완료 기록을 저장한다.
 5. Cloud 채택 시 진행도만 우선 동기화한다. 설정·백업·임시 파일은 의도 없이 함께 동기화하지 않는다.

@@ -36,7 +36,15 @@ namespace PuzzleGame.Runtime.Diagnostics
 
         private IEnumerator Start()
         {
+            DontDestroyOnLoad(gameObject);
             Application.runInBackground = true;
+            float startupDeadline = Time.realtimeSinceStartup + 30;
+            while (!FindFirstObjectByType<BoardController>() && Time.realtimeSinceStartup < startupDeadline)
+            {
+                var map = FindFirstObjectByType<PuzzleGame.Runtime.UI.WorldMapView>();
+                if (map) map.Enter(1);
+                yield return null;
+            }
             yield return null; yield return null;
             if (!Check(() => {
                 board = FindFirstObjectByType<BoardController>();

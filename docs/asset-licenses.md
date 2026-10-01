@@ -10,6 +10,10 @@
 | PuzzleUI TMP 폰트 | 나눔고딕 원본으로 생성한 게임용 폰트 에셋 | `Assets/_Project/UI/Fonts/PuzzleUI.asset` |
 | TMP Essential Resources | 설치된 Unity uGUI 패키지의 번들 리소스 | `Assets/TextMesh Pro`, 포함된 LiberationSans OFL·EmojiOne Attribution 유지 |
 | 사탕 6종·정원 배경 | 내장 image_gen으로 새로 생성, [프롬프트·파일 기록](generated-assets.md) | `Art/Sprites/Candies`, `Art/Backgrounds` |
+| 시작 로딩 시안 a~d·a 배경 | 기존 게임 그림을 참고해 내장 image_gen으로 생성, [전체 프롬프트](loading-art-prompts.md) | `Art/Loading` |
+| 2~5월드 배경 4종 | 기존 SugarGarden을 참고해 내장 image_gen으로 생성, [전체 프롬프트](campaign-art-prompts.md) | `Art/Backgrounds/OrangeOrchard.png`, `IceSoda.png`, `GrapeNightGarden.png`, `RainbowPalace.png` |
+| 일러스트 지도 5종·스테이지 보석 메달 3종 | 기존 게임의 재질·테마를 참고해 내장 image_gen으로 생성, 초록 메달 하단 재수정, [최종 프롬프트](world-map-art-prompts.md) | `Art/WorldMaps` |
+| 사탕 발판 3종 | 지도 시점·조명을 참고해 내장 image_gen으로 생성, [최종 프롬프트](world-map-platform-prompts.md) | `Art/WorldMaps/StagePlatformReady.png`, `StagePlatformLocked.png`, `StagePlatformComplete.png` |
 | 특수 캔디 19종 | 기존 사탕 시트를 참고해 내장 image_gen으로 새로 그린 파생 이미지, [프롬프트·파일 기록](generated-assets.md) | `Art/Sprites/Candies/CandyRowAtlas.png`, `CandyColumnAtlas.png`, `CandyWrappedAtlas.png`, `CandyRainbow.png` |
 | 둥근 패널·원·별 | 프로젝트 코드로 생성 | `UI/Theme` |
 | 블록·셀 임시 그림 | 프로젝트에서 절차적으로 생성 | `Assets/_Project/Art/Sprites` |

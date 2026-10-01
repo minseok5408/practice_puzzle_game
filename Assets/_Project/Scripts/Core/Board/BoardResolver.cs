@@ -35,6 +35,7 @@ namespace PuzzleGame.Core.Board
             foreach (var position in removed)
             {
                 step.RemovedIds.Add(board.GetPiece(position).Id);
+                step.RemovedPieces.Add(new RemovedPiece(board.GetPiece(position).Id, board.GetPiece(position).Color));
                 board.SetPiece(position, null);
             }
             if (removed.Count == 0) return step;

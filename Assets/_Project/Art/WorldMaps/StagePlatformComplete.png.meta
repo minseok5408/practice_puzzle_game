@@ -1,0 +1,1469 @@
+fileFormatVersion: 2
+guid: f251ecb406a818d42a3a65c29d41728a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4387592113024580674
+    second: StagePlatformComplete_0
+  - first:
+      213: 765495210371686455
+    second: StagePlatformComplete_1
+  - first:
+      213: 2560677854420821023
+    second: StagePlatformComplete_2
+  - first:
+      213: -3912727184621756957
+    second: StagePlatformComplete_3
+  - first:
+      213: 7424813149305629269
+    second: StagePlatformComplete_4
+  - first:
+      213: -4185210651769975451
+    second: StagePlatformComplete_5
+  - first:
+      213: 7538772987639850633
+    second: StagePlatformComplete_6
+  - first:
+      213: 77956709119506686
+    second: StagePlatformComplete_7
+  - first:
+      213: -8800458863156260865
+    second: StagePlatformComplete_8
+  - first:
+      213: -4805187685604331973
+    second: StagePlatformComplete_9
+  - first:
+      213: 4666013523201816660
+    second: StagePlatformComplete_10
+  - first:
+      213: 6315100880504846295
+    second: StagePlatformComplete_11
+  - first:
+      213: 4187882430384249984
+    second: StagePlatformComplete_12
+  - first:
+      213: -7672772851561612191
+    second: StagePlatformComplete_13
+  - first:
+      213: 8196010261539112245
+    second: StagePlatformComplete_14
+  - first:
+      213: 5920625853425661297
+    second: StagePlatformComplete_15
+  - first:
+      213: 3814108864570258520
+    second: StagePlatformComplete_16
+  - first:
+      213: 5248537075584141046
+    second: StagePlatformComplete_17
+  - first:
+      213: 1328825736115642810
+    second: StagePlatformComplete_18
+  - first:
+      213: -8422021511841582132
+    second: StagePlatformComplete_19
+  - first:
+      213: -2411548794607540667
+    second: StagePlatformComplete_20
+  - first:
+      213: 3315573361558599248
+    second: StagePlatformComplete_21
+  - first:
+      213: -6830690779489216
+    second: StagePlatformComplete_22
+  - first:
+      213: -4989683962780425558
+    second: StagePlatformComplete_23
+  - first:
+      213: 6739452227178262515
+    second: StagePlatformComplete_24
+  - first:
+      213: -6351421229815364348
+    second: StagePlatformComplete_25
+  - first:
+      213: 4373709240415653116
+    second: StagePlatformComplete_26
+  - first:
+      213: -1996749417708119807
+    second: StagePlatformComplete_27
+  - first:
+      213: -6008559585997052751
+    second: StagePlatformComplete_28
+  - first:
+      213: 1142868321577942566
+    second: StagePlatformComplete_29
+  - first:
+      213: -2654592901899000742
+    second: StagePlatformComplete_30
+  - first:
+      213: 6325641672543652553
+    second: StagePlatformComplete_31
+  - first:
+      213: -2200608621913442906
+    second: StagePlatformComplete_32
+  - first:
+      213: -596932125971678730
+    second: StagePlatformComplete_33
+  - first:
+      213: -4751752854564406222
+    second: StagePlatformComplete_34
+  - first:
+      213: 512865503637503278
+    second: StagePlatformComplete_35
+  - first:
+      213: 4956469813647241595
+    second: StagePlatformComplete_36
+  - first:
+      213: -4528757621259519288
+    second: StagePlatformComplete_37
+  - first:
+      213: 1910054825928358546
+    second: StagePlatformComplete_38
+  - first:
+      213: 5872249265669404596
+    second: StagePlatformComplete_39
+  - first:
+      213: -2940226886201427159
+    second: StagePlatformComplete_40
+  - first:
+      213: -902705900963043987
+    second: StagePlatformComplete_41
+  - first:
+      213: -5352641529236407331
+    second: StagePlatformComplete_42
+  - first:
+      213: 1917764707453755684
+    second: StagePlatformComplete_43
+  - first:
+      213: -7675596704116902007
+    second: StagePlatformComplete_44
+  - first:
+      213: -9207902872743903790
+    second: StagePlatformComplete_45
+  - first:
+      213: -9184004003383112854
+    second: StagePlatformComplete_46
+  - first:
+      213: -7926113502456633449
+    second: StagePlatformComplete_47
+  - first:
+      213: -4487949915267406129
+    second: StagePlatformComplete_48
+  - first:
+      213: -9093782863961390134
+    second: StagePlatformComplete_49
+  - first:
+      213: -8082604122597148825
+    second: StagePlatformComplete_50
+  - first:
+      213: 5627999128773456318
+    second: StagePlatformComplete_51
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: StagePlatformComplete_0
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 1008
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24cb224c7cbd3ec30800000000000000
+      internalID: 4387592113024580674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_1
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 992
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 730a77b86d59f9a00800000000000000
+      internalID: 765495210371686455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_2
+      rect:
+        serializedVersion: 2
+        x: 797
+        y: 1004
+        width: 33
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1466f801fa598320800000000000000
+      internalID: 2560677854420821023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_3
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 976
+        width: 24
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ed1b992b5333b9c0800000000000000
+      internalID: -3912727184621756957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_4
+      rect:
+        serializedVersion: 2
+        x: 785
+        y: 990
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55ae200983c3a0760800000000000000
+      internalID: 7424813149305629269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_5
+      rect:
+        serializedVersion: 2
+        x: 1165
+        y: 984
+        width: 24
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56dc11f16152be5c0800000000000000
+      internalID: -4185210651769975451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_6
+      rect:
+        serializedVersion: 2
+        x: 1343
+        y: 974
+        width: 31
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9866592171a1f9860800000000000000
+      internalID: 7538772987639850633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_7
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 915
+        width: 42
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef83de2c635f41100800000000000000
+      internalID: 77956709119506686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_8
+      rect:
+        serializedVersion: 2
+        x: 1256
+        y: 957
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fff02217a4d7ed580800000000000000
+      internalID: -8800458863156260865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_9
+      rect:
+        serializedVersion: 2
+        x: 1262
+        y: 951
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3ee878424b805db0800000000000000
+      internalID: -4805187685604331973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_10
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 927
+        width: 34
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 458fc97e39201c040800000000000000
+      internalID: 4666013523201816660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 23
+        width: 1467
+        height: 875
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d77f3fbaceb3a750800000000000000
+      internalID: 6315100880504846295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_12
+      rect:
+        serializedVersion: 2
+        x: 1397
+        y: 870
+        width: 25
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08c1720d1e85e1a30800000000000000
+      internalID: 4187882430384249984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 736
+        width: 66
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16cb86c5eb5d48590800000000000000
+      internalID: -7672772851561612191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_14
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 760
+        width: 18
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 535ce7698e31eb170800000000000000
+      internalID: 8196010261539112245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_15
+      rect:
+        serializedVersion: 2
+        x: 1512
+        y: 683
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1753e6948d94a2250800000000000000
+      internalID: 5920625853425661297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 306
+        width: 7
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 854f067edcf6ee430800000000000000
+      internalID: 3814108864570258520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_17
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 305
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f609ac89ac86d840800000000000000
+      internalID: 5248537075584141046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_18
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 267
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab1e19177ffe07210800000000000000
+      internalID: 1328825736115642810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_19
+      rect:
+        serializedVersion: 2
+        x: 1415
+        y: 233
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc3fbf78e08fe1b80800000000000000
+      internalID: -8422021511841582132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_20
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 211
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54665e2f525788ed0800000000000000
+      internalID: -2411548794607540667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_21
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 78
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 056b27ad768430e20800000000000000
+      internalID: 3315573361558599248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_22
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 78
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04c948ed58bb7eff0800000000000000
+      internalID: -6830690779489216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_23
+      rect:
+        serializedVersion: 2
+        x: 870
+        y: 82
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa262015fd411cab0800000000000000
+      internalID: -4989683962780425558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_24
+      rect:
+        serializedVersion: 2
+        x: 1097
+        y: 50
+        width: 64
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ffecade718578d50800000000000000
+      internalID: 6739452227178262515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_25
+      rect:
+        serializedVersion: 2
+        x: 1198
+        y: 88
+        width: 19
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4050bf1fa083bd7a0800000000000000
+      internalID: -6351421229815364348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_26
+      rect:
+        serializedVersion: 2
+        x: 1256
+        y: 83
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cfc81d9916982bc30800000000000000
+      internalID: 4373709240415653116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_27
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 74
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1091a0cdbfe1a44e0800000000000000
+      internalID: -1996749417708119807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_28
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 63
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b4a0e824ee4d9ca0800000000000000
+      internalID: -6008559585997052751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_29
+      rect:
+        serializedVersion: 2
+        x: 359
+        y: 72
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62e33bceea84cdf00800000000000000
+      internalID: 1142868321577942566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_30
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 63
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a54690302ddf82bd0800000000000000
+      internalID: -2654592901899000742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_31
+      rect:
+        serializedVersion: 2
+        x: 389
+        y: 35
+        width: 25
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ca4f54269139c750800000000000000
+      internalID: 6325641672543652553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_32
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 0
+        width: 271
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a5ff212e1ed571e0800000000000000
+      internalID: -2200608621913442906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_33
+      rect:
+        serializedVersion: 2
+        x: 449
+        y: 60
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f97074e46547b7f0800000000000000
+      internalID: -596932125971678730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_34
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 70
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23c7d3364f16e0eb0800000000000000
+      internalID: -4751752854564406222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_35
+      rect:
+        serializedVersion: 2
+        x: 978
+        y: 0
+        width: 96
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2d7dd155701e1700800000000000000
+      internalID: 512865503637503278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_36
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 61
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b71f366f80be8c440800000000000000
+      internalID: 4956469813647241595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_37
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 29
+        width: 48
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cabbf610fe9621c0800000000000000
+      internalID: -4528757621259519288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_38
+      rect:
+        serializedVersion: 2
+        x: 733
+        y: 45
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29afaf88eb0e18a10800000000000000
+      internalID: 1910054825928358546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_39
+      rect:
+        serializedVersion: 2
+        x: 827
+        y: 45
+        width: 29
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b7f5c8389b6e7150800000000000000
+      internalID: 5872249265669404596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_40
+      rect:
+        serializedVersion: 2
+        x: 956
+        y: 43
+        width: 15
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92b39e899373237d0800000000000000
+      internalID: -2940226886201427159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_41
+      rect:
+        serializedVersion: 2
+        x: 381
+        y: 53
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d65e27c04c1f873f0800000000000000
+      internalID: -902705900963043987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_42
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 45
+        width: 23
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddb3cdf73e897b5b0800000000000000
+      internalID: -5352641529236407331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_43
+      rect:
+        serializedVersion: 2
+        x: 918
+        y: 13
+        width: 37
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 421ef8637d44d9a10800000000000000
+      internalID: 1917764707453755684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_44
+      rect:
+        serializedVersion: 2
+        x: 972
+        y: 45
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 987f3f3f67dca7590800000000000000
+      internalID: -7675596704116902007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_45
+      rect:
+        serializedVersion: 2
+        x: 1117
+        y: 47
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ddfccf6f15f63080800000000000000
+      internalID: -9207902872743903790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_46
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 29
+        width: 23
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6b8592940ddb8080800000000000000
+      internalID: -9184004003383112854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_47
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 0
+        width: 231
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79725ac83c9c00290800000000000000
+      internalID: -7926113502456633449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_48
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 37
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc6edba845997b1c0800000000000000
+      internalID: -4487949915267406129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_49
+      rect:
+        serializedVersion: 2
+        x: 814
+        y: 14
+        width: 43
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac30c098aa46cc180800000000000000
+      internalID: -9093782863961390134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_50
+      rect:
+        serializedVersion: 2
+        x: 848
+        y: 9
+        width: 62
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7673d7cbf52d4df80800000000000000
+      internalID: -8082604122597148825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StagePlatformComplete_51
+      rect:
+        serializedVersion: 2
+        x: 952
+        y: 13
+        width: 36
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb1ffb2a36baa1e40800000000000000
+      internalID: 5627999128773456318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      StagePlatformComplete_0: 4387592113024580674
+      StagePlatformComplete_1: 765495210371686455
+      StagePlatformComplete_10: 4666013523201816660
+      StagePlatformComplete_11: 6315100880504846295
+      StagePlatformComplete_12: 4187882430384249984
+      StagePlatformComplete_13: -7672772851561612191
+      StagePlatformComplete_14: 8196010261539112245
+      StagePlatformComplete_15: 5920625853425661297
+      StagePlatformComplete_16: 3814108864570258520
+      StagePlatformComplete_17: 5248537075584141046
+      StagePlatformComplete_18: 1328825736115642810
+      StagePlatformComplete_19: -8422021511841582132
+      StagePlatformComplete_2: 2560677854420821023
+      StagePlatformComplete_20: -2411548794607540667
+      StagePlatformComplete_21: 3315573361558599248
+      StagePlatformComplete_22: -6830690779489216
+      StagePlatformComplete_23: -4989683962780425558
+      StagePlatformComplete_24: 6739452227178262515
+      StagePlatformComplete_25: -6351421229815364348
+      StagePlatformComplete_26: 4373709240415653116
+      StagePlatformComplete_27: -1996749417708119807
+      StagePlatformComplete_28: -6008559585997052751
+      StagePlatformComplete_29: 1142868321577942566
+      StagePlatformComplete_3: -3912727184621756957
+      StagePlatformComplete_30: -2654592901899000742
+      StagePlatformComplete_31: 6325641672543652553
+      StagePlatformComplete_32: -2200608621913442906
+      StagePlatformComplete_33: -596932125971678730
+      StagePlatformComplete_34: -4751752854564406222
+      StagePlatformComplete_35: 512865503637503278
+      StagePlatformComplete_36: 4956469813647241595
+      StagePlatformComplete_37: -4528757621259519288
+      StagePlatformComplete_38: 1910054825928358546
+      StagePlatformComplete_39: 5872249265669404596
+      StagePlatformComplete_4: 7424813149305629269
+      StagePlatformComplete_40: -2940226886201427159
+      StagePlatformComplete_41: -902705900963043987
+      StagePlatformComplete_42: -5352641529236407331
+      StagePlatformComplete_43: 1917764707453755684
+      StagePlatformComplete_44: -7675596704116902007
+      StagePlatformComplete_45: -9207902872743903790
+      StagePlatformComplete_46: -9184004003383112854
+      StagePlatformComplete_47: -7926113502456633449
+      StagePlatformComplete_48: -4487949915267406129
+      StagePlatformComplete_49: -9093782863961390134
+      StagePlatformComplete_5: -4185210651769975451
+      StagePlatformComplete_50: -8082604122597148825
+      StagePlatformComplete_51: 5627999128773456318
+      StagePlatformComplete_6: 7538772987639850633
+      StagePlatformComplete_7: 77956709119506686
+      StagePlatformComplete_8: -8800458863156260865
+      StagePlatformComplete_9: -4805187685604331973
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

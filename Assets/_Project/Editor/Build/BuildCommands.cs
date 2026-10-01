@@ -128,23 +128,24 @@ namespace PuzzleGame.Editor
         [MenuItem("Puzzle Game/Build Windows Prototype")]
         public static void BuildWindows()
         {
-            if (!File.Exists(GameScene)) throw new InvalidOperationException("Prepare the first board before building.");
-            Directory.CreateDirectory("Builds/Windows/0.7.0");
+            if (!File.Exists(GameScene) || !File.Exists(LoadingSetup.BootScene) || !File.Exists(CampaignSetup.MapScene))
+                throw new InvalidOperationException("Prepare the board, loading screen and campaign before building.");
+            Directory.CreateDirectory("Builds/Windows/0.9.4");
             var options = new BuildPlayerOptions {
-                scenes = new[] { GameScene },
-                locationPathName = "Builds/Windows/0.7.0/practice_puzzle_game.exe",
+                scenes = new[] { LoadingSetup.BootScene, CampaignSetup.MapScene, GameScene },
+                locationPathName = "Builds/Windows/0.9.4/practice_puzzle_game.exe",
                 target = BuildTarget.StandaloneWindows64,
                 options = BuildOptions.Development
             };
             BuildReport report = BuildPipeline.BuildPlayer(options);
             if (report.summary.result != BuildResult.Succeeded)
                 throw new InvalidOperationException($"Windows build failed: {report.summary.result}.");
-            File.Copy(Root + "/UI/Fonts/NanumGothic/OFL.txt", "Builds/Windows/0.7.0/Font-LICENSE.txt", true);
-            Directory.CreateDirectory("Builds/Windows/0.7.0/ThirdPartyNotices");
-            File.Copy(Root + "/UI/Fonts/Jua/OFL.txt", "Builds/Windows/0.7.0/ThirdPartyNotices/Jua-OFL.txt", true);
-            File.Copy(Root + "/UI/Fonts/BagelFatOne/OFL.txt", "Builds/Windows/0.7.0/ThirdPartyNotices/BagelFatOne-OFL.txt", true);
-            File.Copy("Assets/TextMesh Pro/Fonts/LiberationSans - OFL.txt", "Builds/Windows/0.7.0/ThirdPartyNotices/LiberationSans-OFL.txt", true);
-            File.Copy("Assets/TextMesh Pro/Sprites/EmojiOne Attribution.txt", "Builds/Windows/0.7.0/ThirdPartyNotices/EmojiOne-Attribution.txt", true);
+            File.Copy(Root + "/UI/Fonts/NanumGothic/OFL.txt", "Builds/Windows/0.9.4/Font-LICENSE.txt", true);
+            Directory.CreateDirectory("Builds/Windows/0.9.4/ThirdPartyNotices");
+            File.Copy(Root + "/UI/Fonts/Jua/OFL.txt", "Builds/Windows/0.9.4/ThirdPartyNotices/Jua-OFL.txt", true);
+            File.Copy(Root + "/UI/Fonts/BagelFatOne/OFL.txt", "Builds/Windows/0.9.4/ThirdPartyNotices/BagelFatOne-OFL.txt", true);
+            File.Copy("Assets/TextMesh Pro/Fonts/LiberationSans - OFL.txt", "Builds/Windows/0.9.4/ThirdPartyNotices/LiberationSans-OFL.txt", true);
+            File.Copy("Assets/TextMesh Pro/Sprites/EmojiOne Attribution.txt", "Builds/Windows/0.9.4/ThirdPartyNotices/EmojiOne-Attribution.txt", true);
             Debug.Log($"Windows build succeeded: {report.summary.totalSize} bytes.");
         }
 
