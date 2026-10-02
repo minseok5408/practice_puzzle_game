@@ -11,7 +11,17 @@ namespace PuzzleGame.Runtime.UI
         public int version = 1;
         public int width, height;
         public bool windowed;
-        public bool IsValid => version == 1 && width >= 640 && height >= 480 && width <= 16384 && height <= 16384;
+        public float musicVolume = .35f, effectsVolume = .65f;
+        public bool musicMuted, effectsMuted, reducedEffects, colorLabels;
+        public string language = "ko";
+        public bool autoHints = true;
+        public float hintDelay = 6f, animationSpeed = 1f;
+        public bool IsValid => version == 1 && width >= 640 && height >= 480 && width <= 16384 && height <= 16384
+            && !float.IsNaN(musicVolume) && musicVolume >= 0 && musicVolume <= 1
+            && !float.IsNaN(effectsVolume) && effectsVolume >= 0 && effectsVolume <= 1
+            && (language == "ko" || language == "en")
+            && !float.IsNaN(hintDelay) && hintDelay >= 3 && hintDelay <= 15
+            && !float.IsNaN(animationSpeed) && animationSpeed >= 1 && animationSpeed <= 2;
 
         public static string SavePath
         {
@@ -26,17 +36,20 @@ namespace PuzzleGame.Runtime.UI
             }
         }
 
-        public static bool RestoreSavedDisplay()
+        // Display state belongs to the player process, not to a scene or popup.
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void RestoreOnStartup() => RestoreSavedDisplay();
+
+        private static void RestoreSavedDisplay()
         {
-            if (Application.isEditor) return false;
+            if (Application.isEditor) return;
             var saved = Load(SavePath);
-            if (saved == null) return false;
+            if (saved == null) return;
             int w = Mathf.Min(saved.width, Mathf.Max(960, Screen.currentResolution.width));
             int h = Mathf.Min(saved.height, Mathf.Max(600, Screen.currentResolution.height));
             var mode = saved.windowed ? FullScreenMode.Windowed : FullScreenMode.FullScreenWindow;
-            if (Screen.width == w && Screen.height == h && Screen.fullScreenMode == mode) return false;
+            if (Screen.width == w && Screen.height == h && Screen.fullScreenMode == mode) return;
             Screen.SetResolution(w, h, mode);
-            return true;
         }
 
         public static List<Vector2Int> Resolutions(Vector2Int desktop, Vector2Int current, Resolution[] supported)

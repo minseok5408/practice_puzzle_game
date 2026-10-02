@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using PuzzleGame.Runtime.Startup;
+using PuzzleGame.Runtime.Levels;
 using TMPro;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -73,7 +74,8 @@ namespace PuzzleGame.Editor
             recovery.gameObject.SetActive(false);
             var view = canvasObject.AddComponent<LoadingScreenView>();
             view.Configure(artwork, fill, sparkle, status, recovery.gameObject, retry, quit);
-            var loader = canvasObject.AddComponent<PrototypeStartupLoader>();
+            var loader = canvasObject.AddComponent<LocalStartupLoader>();
+            loader.Configure(AssetDatabase.LoadAssetAtPath<LevelCatalog>(CampaignSetup.CatalogPath));
             canvasObject.AddComponent<StartupLoadingScreen>().Configure(loader, view);
             canvasObject.GetComponent<StartupLoadingScreen>().ConfigureDestination("WorldMap");
             view.ResetLoading(); view.ApplyLayout();
@@ -84,7 +86,7 @@ namespace PuzzleGame.Editor
                 new EditorBuildSettingsScene(BootScene, true), new EditorBuildSettingsScene(CampaignSetup.MapScene, true), new EditorBuildSettingsScene(BuildCommands.GameScene, true)
             };
             AssetDatabase.SaveAssets();
-            Debug.Log("LOADING READY: approved design a, simulated 5-second provider, Boot -> WorldMap -> Game.");
+            Debug.Log("LOADING READY: approved design a, local data preparation, Boot -> WorldMap -> Game.");
         }
 
         private static void Import(string path)

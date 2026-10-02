@@ -59,6 +59,7 @@ namespace PuzzleGame.Runtime.Board
                 }
             }
             Duration = step.SpecialCreations.Count > 0 ? .62f : 0;
+            if (step.FrostDamage.Count > 0) Duration = Mathf.Max(Duration,.35f);
             foreach (int id in step.RemovedIds)
             {
                 if (float.IsPositiveInfinity(hits[id])) hits[id] = 0;

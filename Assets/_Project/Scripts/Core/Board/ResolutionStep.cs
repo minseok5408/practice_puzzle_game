@@ -4,6 +4,7 @@ namespace PuzzleGame.Core.Board
 {
     public sealed class ResolutionStep
     {
+        public List<FrostDamage> FrostDamage { get; } = new List<FrostDamage>();
         public List<int> RemovedIds { get; } = new List<int>();
         public List<RemovedPiece> RemovedPieces { get; } = new List<RemovedPiece>();
         public List<int> InitialHitIds { get; } = new List<int>();
@@ -11,6 +12,14 @@ namespace PuzzleGame.Core.Board
         public List<PieceMovement> Spawns { get; } = new List<PieceMovement>();
         public List<SpecialCreation> SpecialCreations { get; } = new List<SpecialCreation>();
         public List<SpecialActivation> SpecialActivations { get; } = new List<SpecialActivation>();
+    }
+
+    public readonly struct FrostDamage
+    {
+        public GridPosition Position { get; }
+        public int RemainingHealth { get; }
+        public FrostDamage(GridPosition position, int remainingHealth)
+        { Position = position; RemainingHealth = remainingHealth; }
     }
 
     public readonly struct RemovedPiece

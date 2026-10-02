@@ -104,3 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 780627a422de06047a0fc5a77f24c1ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: PuzzleGame.Runtime::PuzzleGame.Runtime.Board.CellView
+  frostStages:
+  - {fileID: -4225523100219523421, guid: 95131f28edd3eff40a029f5229b1fbbf, type: 3}
+  - {fileID: 3181142328113648946, guid: fc7f4e660fabd6d4c88f74b3530d9641, type: 3}
+  - {fileID: 979797502391311402, guid: a256c1843bce8ee44b56ebafa3eae193, type: 3}

@@ -37,16 +37,8 @@ namespace PuzzleGame.Runtime.Diagnostics
                 if (FindFirstObjectByType<BoardController>()) throw new InvalidOperationException("Board ran before loading completed.");
             })) yield break;
             yield return Capture(loading.View, "LoadingEarly.png", 1280, 720);
-            float earlier = loading.View.Progress;
-            while (loading && loading.View.Progress < .42f && Time.realtimeSinceStartup - began < 15) yield return null;
-            if (!Check(() => {
-                if (!loading || loading.HasFailed || loading.View.Progress <= earlier)
-                    throw new InvalidOperationException("Loading progress did not advance.");
-                if (FindFirstObjectByType<BoardController>()) throw new InvalidOperationException("Gameplay input became active during loading.");
-            })) yield break;
-            yield return Capture(loading.View, "LoadingWide.png", 1280, 720);
-            yield return Capture(loading.View, "LoadingMacRatio.png", 1280, 800);
-            yield return Capture(loading.View, "LoadingNarrow.png", 800, 1000);
+            // Real local work may finish in a fraction of a second. Never require a fake delay
+            // or hold a destroyed loading view merely to capture additional aspect ratios.
             while (SceneManager.GetActiveScene().name != "WorldMap" && Time.realtimeSinceStartup - began < 25) yield return null;
             float duration = Time.realtimeSinceStartup - began;
             yield return null; yield return null;
@@ -61,7 +53,7 @@ namespace PuzzleGame.Runtime.Diagnostics
                 var board = FindFirstObjectByType<BoardController>();
                 if (SceneManager.GetActiveScene().name != "Game" || !board || !board.CanSelect(new GridPosition(0, 0)))
                     throw new InvalidOperationException("Loading did not enter a playable board.");
-                if (duration < 4.8f || duration > 20) throw new InvalidOperationException("Unexpected loading duration: " + duration);
+                if (duration > 20) throw new InvalidOperationException("Unexpected loading duration: " + duration);
                 if (FindFirstObjectByType<StartupLoadingScreen>()) throw new InvalidOperationException("Loading UI survived game entry.");
                 board.Session.RestartLevel();
                 if (board.Session.Progress.MovesRemaining != 20 || board.Session.Progress.Score != 0)
@@ -71,7 +63,7 @@ namespace PuzzleGame.Runtime.Diagnostics
                 settings.Close();
             })) yield break;
             if (failed) yield break;
-            Finish(0, $"PASS: Boot first, animated progress, no early gameplay, {duration:F2}s until WorldMap, selection enters Game, 16:9/16:10/narrow captures, restart and settings after loading.");
+            Finish(0, $"PASS: Boot first, local data ready, no early gameplay, {duration:F2}s until WorldMap, selection enters Game, restart and settings after loading.");
         }
 
         private IEnumerator Capture(LoadingScreenView view, string name, int width, int height)

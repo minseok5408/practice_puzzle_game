@@ -1,5 +1,42 @@
 # 생성 이미지 기록
 
+## 소비형 아이템 4종 — 2026-10-02
+
+내장 `image_gen` 모드로 각 이미지를 개별 생성했다. 원본 RGBA PNG를 그대로 복사하고 Unity에서 512px / Full Rect / Bilinear / 무압축 스프라이트로 가져왔다. 수량·이름·설명은 이미지에 굽지 않고 한국어/영어 UI에서 표시한다. 최종 경로는 `Assets/_Project/Art/UI/Items/`이다.
+
+### Hammer
+
+`Assets/_Project/Art/UI/Items/Hammer.png`
+
+```text
+Use case: stylized-concept. Production game item sprite, one glossy 3D CANDY HAMMER for a premium jewel-candy match-3 game. A chunky raspberry pink translucent sugar mallet head with rounded beveled ends and a short ivory-and-gold striped candy-stick handle, tilted diagonally with head at upper left and handle at lower right. Strong simple recognizable silhouette at 48 pixels. Plump edible hard-candy material, rich dimensional refractions, creamy upper-left studio highlights, subtle lavender ambient bounce matching glossy heart, gem and flower candies. Near-frontal camera with slight top bevel. One complete isolated object, centered, occupies 78 percent of square canvas, wide transparent gutter. True RGBA transparent background. No ground or external shadow, no text, letters, numbers, interface frame, thin graphic outline, extra objects or sparks.
+```
+
+### Bomb
+
+`Assets/_Project/Art/UI/Items/Bomb.png`
+
+```text
+Use case: stylized-concept. Production game item sprite: one plump orange translucent wrapped CANDY BONBON with a golden sugar star embedded in its spherical center and two short raspberry-pink twisted candy-wrapper ends, easy to recognize as an area burst candy booster; no fuse, no weapon. Premium 3D jewel-candy match-3 game aesthetic. Rich dimensional refractions, plump edible hard-candy material, creamy upper-left studio highlights and subtle lavender ambient bounce, near-frontal camera with slight top bevel. Strong clear silhouette at 48 pixels. One complete isolated object centered, occupies 78 percent of square canvas with generous transparent gutter. True RGBA transparent background. No ground or external shadow, no text, letters, numbers, interface frame, thin graphic outline, extra scattered objects or sparkles.
+```
+
+### Shuffle
+
+`Assets/_Project/Art/UI/Items/Shuffle.png`
+
+```text
+Use case: stylized-concept. Production game item sprite: one violet translucent glossy CANDY POUCH overflowing with three small colorful jewel candies, with a chunky pale-gold molded circular arrow sitting on its front, simple bold silhouette, no thin diagram lines. Premium 3D jewel-candy match-3 game aesthetic. Rich dimensional refractions, plump edible hard-candy material, creamy upper-left studio highlights and subtle lavender ambient bounce, near-frontal camera with slight top bevel. Strong clear silhouette at 48 pixels. One complete isolated object centered, occupies 78 percent of square canvas with generous transparent gutter. True RGBA transparent background. No ground or external shadow, no text, letters, numbers, interface frame, thin graphic outline, extra scattered objects or sparkles.
+```
+
+### ExtraMoves
+
+`Assets/_Project/Art/UI/Items/ExtraMoves.png`
+
+```text
+Use case: stylized-concept. Production game item sprite: one mint-green translucent glossy ROUND SUGAR TOKEN with a thick gold beveled rim and one chunky ivory molded plus sign at its center, slightly tilted, no numbers, no clock hands. Premium 3D jewel-candy match-3 game aesthetic. Rich dimensional refractions, plump edible hard-candy material, creamy upper-left studio highlights and subtle lavender ambient bounce, near-frontal camera with slight top bevel. Strong clear silhouette at 48 pixels. One complete isolated object centered, occupies 78 percent of square canvas with generous transparent gutter. True RGBA transparent background. No ground or external shadow, no text, letters, numbers, interface frame, thin graphic outline, extra scattered objects or sparkles.
+```
+
+
 생성일: 2026-10-01  
 도구: 내장 `image_gen` (`imagegen` 스킬)  
 용도: Unity에 실제 적용한 사탕 테마. 참고 이미지는 분위기 참고용이며 아래 에셋은 새로 생성했다.
@@ -10,6 +47,44 @@
 | `Assets/_Project/Art/Backgrounds/SugarGarden.png` | 사탕 정원 배경. 화면 비율에 맞춰 채우고 가장자리를 잘라 표시 |
 
 원본 생성 파일은 별도로 유지하며, 게임은 프로젝트 내부 복사본만 참조한다. UI의 둥근 패널·원·별은 `CandyThemeSetup`의 코드로 생성한다. 설치형 유료 에셋·플러그인은 추가하지 않았다.
+
+## 2026-10-02 결과창 배지
+
+내장 `image_gen`으로 각각 신규 생성했다(`transparent_background: true`). 실제 저장 경로는 `Assets/_Project/Art/UI/Results/VictoryBadge.png`, `RetryBadge.png`, `CompletionCrown.png`다. 원본 RGBA를 그대로 복사하고 Unity에서 최대 512 크기의 스프라이트로 가져온다. 성공/재도전/50스테이지 완주에 각각 사용한다. 결과 입자는 기존 캔디 아트를 재사용하며 배지 영역 안에만 표시한다.
+
+최종 프롬프트:
+
+1. **VictoryBadge**
+
+   Use case: stylized-concept. Asset type: a single production 3D candy-game victory badge sprite on true transparent RGBA. A plump, glossy translucent golden-yellow five-point sugar star, thick beautifully beveled glass-candy body with luminous honey interior, sits on a small folded raspberry-pink satin-candy ribbon with two short tails. One star, not a star-rating row. Soft cream studio light from upper left and lavender ambient bounce, dimensional highlights matching polished jewel candies. Straight-on front view with a very slight visible upper bevel, compact symmetrical silhouette, no floor or cast shadow outside the object. Refined playful premium casual-puzzle artwork, not a flat vector icon. Center within a square canvas and occupy 78% of width/height, clear transparent gutters on all sides. No text, lettering, numerals, badges with labels, faces, extra objects or background.
+
+2. **RetryBadge**
+
+   Use case: stylized-concept. Asset type: one production 3D retry badge for a glossy candy match-3 puzzle, true transparent RGBA. A plump raspberry pink translucent glass-candy heart, with a thick pearly lavender curved arrow gently wrapping behind and around its lower half to suggest try again. The arrow is a rounded 3D sugar ribbon with one clear chunky arrowhead, never a thin line. Friendly and encouraging, intact heart, no damage, no face. Rich polished beveled surfaces, soft upper-left cream studio light and lavender ambient reflections. Match jewel-like hard candy art, not a vector symbol. Front-facing compact centered balanced silhouette, complete object with transparent gutters on a square canvas, occupies about 78 percent. No lettering, numerals, logos, background, floor, outer drop shadow or additional objects.
+
+3. **CompletionCrown**
+
+   Use case: stylized-concept. Asset type: one premium 3D candy-game campaign-completion crown sprite, true transparent RGBA. A compact five-point royal crown made of thick glossy translucent honey-gold sugar, with five tiny jewel candies embedded across its front band in pink, orange, yellow, emerald green and sapphire blue. The crown has rounded plump points topped with small golden sugar pearls and a deep raspberry pink cushion visible inside. Polished glass-candy beveled surfaces, gorgeous cream studio light from upper left, subtle lavender ambient reflections. Front view with slightly visible top and rich dimensional depth, symmetric centered silhouette occupying 78 percent of square canvas with generous transparent gutters. Match a glossy golden candy star victory badge and pink candy heart retry badge. No pedestal, background, floor, outer cast shadow, lettering, numbers, logos or extra objects. A refined joyful final victory reward, never a flat vector icon.
+
+## 2026-10-02 입체 얼음
+
+내장 `image_gen`으로 투명 PNG를 생성하고 원본을 프로젝트에 복사했다. `Art/Sprites/Frost/IceIntact.png`, `IceChipped.png`, `IceCracked.png`는 각각 내구도 3/2/1에 해당한다. `VisualPolishSetup`이 같은 영역을 스프라이트로 가져오고 셀의 뒤층/앞 유리층에 배치한다. 비트맵 픽셀과 알파는 수정하지 않으며, 앞 유리의 투명도와 셀 크기 정렬은 Unity 렌더러가 처리한다. 목표·미리보기도 같은 입체 얼음 그림을 사용한다.
+
+최종 프롬프트 세트 (내장 도구, `transparent_background: true`):
+
+1. **IceIntact — 신규 생성**
+
+   Use case: stylized-concept. Asset type: a single production game sprite for a glossy 3D candy match-3 puzzle. Create ONE thick translucent pale-blue ICE TILE, square with smoothly rounded corners, viewed straight on orthographically with a very shallow top/front bevel. The ice must look like a richly rendered physical frozen-glass block, with dimensional cyan side walls, rounded bevels, white studio reflections from upper left, tiny trapped air bubbles and delicate frosty crystals concentrated at corners. The flat center is crystal-clear and almost invisible, with very low alpha, because a colorful candy sprite will be composited behind it at runtime. This is an empty ice shell, NO candy inside. Real RGBA transparency both outside the silhouette and through the clear center. All four edges form the same gently rounded square; aligned horizontal and vertical, no isometric tilt, no perspective diamond. Glossy polished casual-game 3D material, soft pink/cream environment reflections to harmonize with jewel-like red heart, green cushion, orange gem candies. Pristine strong ice, no cracks. Center the tile symmetrically, occupies 84% of image width and height, ample transparent gutter. Square 1024x1024. No lettering, no symbols, no numerals, no border strokes, no drawn outlines, no background, no floor, no drop shadow outside the tile, no extra objects.
+
+2. **IceChipped — IceIntact 편집**
+
+   Use case: precise-object-edit. Edit this production ice tile sprite into its moderately damaged state (2 hits remaining). Preserve the exact square canvas, transparent alpha outside AND the nearly transparent center, identical outer silhouette, dimensions, tile position, straight-on orthographic camera, glossy volumetric blue ice bevel, lighting, color and tiny bubbles. Change ONLY ice damage: add 2 short natural internal hairline frost fractures extending inward from the upper right and lower left corners, with subtle refractive branching and a little chipped ice at those corners. Leave most of the central clear window untouched. Cracks must look physically embedded in 3D frozen glass, not drawn white vector lines. Keep the same thick dimensional border. No detached shards outside the sprite, no candy, no text, no symbols, no background. Output one RGBA transparent sprite, pixel-aligned to the input.
+
+3. **IceCracked — IceIntact 편집**
+
+   Use case: precise-object-edit. This is a game sprite. Make a heavily cracked weakened version of this exact 3D ice tile, one hit left before breaking. Keep identical canvas size, tile position, square rounded outer footprint, straight-on camera, cyan glossy dimensional bevel, soft pink reflected highlights and realistic rendered ice material. Preserve real RGBA transparency outside the silhouette and make the central 55 percent window NEARLY TRANSPARENT so a candy behind it remains visible. Change only damage: several connected refractive fractures radiate from the lower-right edge and upper-left corner, small chipped dents along those two corners, leaving big coherent glass sections. The fractures have tiny shaded inner surfaces and specular sparkle, naturally embedded in ice, never uniform flat drawn lines. Less milky frost in the central window than the original. No detached floating shards, no background, no candy, no labels, no numerals, no UI stroke outline. Output one transparent sprite aligned exactly to the reference.
+
+요청 크기와 달리 생성된 실제 원본은 각 1254×1254다. 가져올 때 최대 1024 크기를 사용하며 원본 PNG는 그대로 보존한다.
 
 ## 0.9.0 월드 배경
 

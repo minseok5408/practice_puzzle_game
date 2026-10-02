@@ -1,11 +1,76 @@
 # 프로젝트 폴더 구조
 
-작성 기준: 2026-10-01  
+작성 기준: 2026-10-02  
 프로젝트 루트: `C:\project\minseok5408\practice_puzzle_game`  
 작업 순서: [TODO.md](TODO.md)
 
 **현재 구현한 구조와 앞으로 사용할 목표 구조를 분리**했다. 2026-10-01에 보드·드래그·연쇄와 점수 목표·결과 UI, 매치 그룹·특수 블록 파일을 추가했다. 나머지는 TODO의 해당 단계에서 실제로 생성한다. 파일·폴더 이름은 영어로 작성하고 설명은 한국어로 유지한다.
 
+## 0.11.0 추가 구조 — 2026-10-02
+
+- `Core/Levels/StageRating.cs`: 기본 이동 기반 별·메달 판정. `Runtime/Levels/CampaignProgress.cs`는 v4 별/메달 배열과 v1/v2/v3 이전, `LevelSession`은 실제 완료한 아이템 사용과 이전 최고 기록을 연결한다.
+- `Core/Board/GoalMoveFinder.cs`: 별도 보드·난수로 첫 제거만 평가하는 목표 기반 추천. 라이브 보드/난수를 변경하지 않는다.
+- `Runtime/Board/BoardInput.Keyboard.cs`: 방향키 커서·Enter·H·F1·1~4. `BoardGuidance`는 수동/자동 힌트, `BoardView`는 보드 연출 배속을 적용한다.
+- `Runtime/UI/HUDTools.cs`: 스테이지 제목·힌트·도움말·초반 별 안내. `CandyLayout`과 `GoalPanel`은 목표 우선 배치를 담당한다.
+- `Runtime/UI/ProgressWidgets.cs`: 별 및 보상 그림 공통 표시. `ResultPopup.Details.cs`는 결과별 목표 부족량·기록·메달·보상 본문이다.
+- `Runtime/UI/WorldMapView.Upgrades.cs`: 월드 진행·별·다음 보상·경로 해금 연출. `CampaignState.PendingUnlock`은 한 번 표시할 해금을 전달한다.
+- `Runtime/UI/PlayerDialogs.Upgrades.cs`: 통합 설정의 화면/힌트/배속 선택. `SettingsPopup`은 해상도 적용과 ESC를 담당하고 단일 `PlayerDialogs` 창에서 UI를 표시한다. 이전 씬의 화면 설정 컨트롤은 드롭다운 복제 원본으로 유지한다.
+- `Editor/Build/UpgradeSetup.cs`: 레벨 재생성 없이 새 문구 글리프와 0.11.0 버전 갱신.
+- `Tests/EditMode/UpgradeRulesTests.cs`, `Tests/PlayMode/FeatureUpgradeTests.cs`, `BoardDragTests`의 키보드 검사: 판정·이전·입력·통합 설정·중단 확인 회귀.
+- `Runtime/Debug/ItemsSmokeCheck.Upgrades.cs`: 격리 저장을 사용하는 Windows 실제 입력·정상 클리어·화면 캡처. `-puzzleUpgradeSmokeTest`로만 실행한다.
+
+## 0.10.0 추가 구조 — 2026-10-02
+
+- `Core/Board/BoardState`, `MoveFinder`, `MatchFinder`, `BoardShuffler`, `BoardResolver`: `frozen-2` 얼음 속 캔디 고정, 타격 흡수, 얼음으로 나눈 낙하 구간과 구간 내 보충.
+- `Tests/EditMode/FrozenCandyTests.cs`, `Tests/PlayMode/FrozenIntegrationTests.cs`, `Scripts/Runtime/Debug/ItemsSmokeCheck.Frozen.cs`: 얼음 이동 금지·해동·특수 발동 제한·중단 복구·막힌 보드와 Windows 실제 입력/캠페인 검사.
+- `Builds/Validation/frozen/`: 새 얼음 규칙의 캠페인 경로·밸런스·회귀 검사·네이티브 실행 기록. 이전 `quality-1` 통계와 구분한다.
+
+- `Editor/Build/BalanceAudit.cs`, `PlaytestReport.cs`: 아이템 사용 유무와 이동수 대안의 자동 비교, 실제 JSONL 기록의 출처별 CSV 집계.
+- `Scripts/Runtime/Services/PlaytestRecord.cs`, `PlaytestAnalysis.cs`: 시도 ID·출처·규칙 버전 DTO, P 제외·중복 제거·실패 의견 연결·아이템별 집계.
+- `Scripts/Runtime/UI/PlayerDialogs.Guide.cs`: 기본·특수·얼음·아이템의 입체 그림 도움말 4페이지.
+- `Editor/Build/QualitySetup.cs`: 도움말 그림과 `BoardView`의 숫자 표식용 글꼴·배지 연결. `PieceView`와 `GoalPanel`은 동일 색을 동일 숫자로 표시한다.
+- `Tests/PlayMode/QualityTests.cs`, `Scripts/Runtime/Debug/QualitySmokeCheck.cs`: 집계·안내·접근성·오디오 회귀, 격리 Windows 반복 플레이·메모리·해상도·이전 저장 복구·재실행 검사.
+- `docs/quality-pass.md`, `docs/balance-items-before-quality-1.csv`: 개선 기준, 분석 방법과 조정 전 3,456회 비교 원자료.
+
+- `Scripts/Core/Levels/ItemType.cs`: 망치·폭탄·셔플·이동 +5와 재고/획득 규칙 상수. `BoardResolver.ResolveItem`은 제거·얼음·특수 연쇄·낙하를 재사용한다.
+- `Scripts/Runtime/Board/BoardController.Items.cs`: 아이템 대상 선택·사용 잠금·효과 코루틴·중단 환불. `BoardInput`은 UI 차단과 대상 클릭/취소, `BoardView`는 적용 범위를 표시한다.
+- `Scripts/Runtime/Levels/CampaignProgress.cs`: 저장 v3의 재고 4개·첫 보상 수령 플래그, v1/v2 변환. `CampaignState`는 저장 실패 시 차감을 복구한다.
+- `Scripts/Runtime/UI/ItemToolbar.cs`, `PlayerDialogs.Items.cs`: 실제 슬롯 4개·재고·입체 아이콘·설명·대상 선택 안내. `ResultPopup`은 첫 클리어 보상을 표시한다.
+- `Art/UI/Items/`: `Hammer`, `Bomb`, `Shuffle`, `ExtraMoves` 투명 PNG. `Editor/Build/ItemSetup.cs`로 그림/글꼴/씬 연결을 갱신한다.
+- `Tests/EditMode/ItemEffectTests.cs`, `Tests/PlayMode/ItemInventoryTests.cs`, `Scripts/Runtime/Debug/ItemsSmokeCheck.cs`: 범위·특수·얼음·무료 이동, 저장/환불/이전/보상과 실제 마우스 사용/재실행 검사.
+
+- `Scripts/Runtime/Services/GamePreferences.cs`: 화면·음량·언어·이펙트 설정과 변경 알림.
+- `Scripts/Runtime/UI/DisplaySettings.cs`: 저장 파일·해상도 목록과 프로세스 시작 시 한 번의 화면 설정 복원. 씬 진입은 화면 설정을 다시 적용하지 않는다.
+- `Scripts/Runtime/Debug/DisplaySettingsSmokeCheck.cs`: 실제 Windows 해상도/창 모드의 매 프레임 유지, 씬 왕복·재실행 복원과 P 키 클리어/저장 검사.
+- `BoardInput`의 P 키 → `BoardController.CompleteStageForEasterEgg` → `LevelSession`의 공통 결과 처리: 연쇄 정리, 목표 완료, 클리어 저장/해금. 로컬 플레이 기록은 `easter_egg`로 구분한다.
+- `Scripts/Runtime/Services/Localization.cs`: 한국어/영어 문자열 키.
+- `Scripts/Runtime/Services/GameAudio.cs`: 자체 합성 144초 배경음·효과음, 최대 3개 효과음·중복 억제·결과음 우선·배경음 낮춤.
+- `Scripts/Runtime/Services/PlaytestJournal.cs`: 로컬 플레이 결과·교환 순서·실패 이유 JSONL.
+- `Scripts/Runtime/Startup/LocalStartupLoader.cs`: Boot의 실제 설정·진행·레벨·오디오 준비. `PrototypeStartupLoader`는 격리된 테스트용으로 보관.
+- `Scripts/Runtime/Board/BoardGuidance.cs`: 무입력 힌트·첫 5개 안내와 입력/일시정지/포커스에 따른 취소.
+- `Scripts/Runtime/Board/BoardHintView.cs`: 사탕 위치를 유지하는 두 칸 테두리·교환 방향 화살표.
+- `Scripts/Runtime/UI/GoalPanel.cs`: 수집·얼음 목표 카드, 진행 막대·완료 체크·완료 반응과 가로/세로 배치.
+- `Scripts/Runtime/Board/CellView.cs`: 내구도에 따른 입체 얼음 3종, 캔디 앞뒤 합성과 피해/파괴 표시.
+- `Art/Sprites/Frost/`: 내구도 3/2/1의 `IceIntact`, `IceChipped`, `IceCracked` 투명 PNG.
+- `Art/UI/Results/`: 성공 별, 재도전 하트, 완주 왕관의 입체 PNG 3종.
+- `Scripts/Runtime/UI/ResultPresentation.cs`: 결과 배지·등장·캔디 입자와 효과 감소 대응.
+- `Tests/PlayMode/ResultPresentationTests.cs`: 성공/실패/완주 아트, 재시작 초기화와 설정 변경 시 재생/정지 검사.
+- `Editor/Build/VisualPolishSetup.cs`: 레벨을 다시 생성하지 않고 목표·보드·연출 아트를 연결하는 도구.
+- `Tests/PlayMode/GoalAndHintTests.cs`: 목표 완료/취소 표시와 힌트의 좌표·선택 상태 보존 검사.
+- `Scripts/Runtime/UI/PlayerDialogs.cs`: 스크롤 본문·고정 제목/하단 버튼·일시정지/키보드 선택을 관리하는 공통 팝업.
+- `Scripts/Runtime/UI/PlayerDialogs.Views.cs`: 소리/언어·효과/기타 설정 탭, 음량 슬라이더·음소거 스위치, 사탕 그림·얼음 목표·이동수·최고 기록 미리보기.
+- `Editor/Build/DialogSetup.cs`: 레벨을 다시 생성하지 않고 설정/미리보기의 글꼴과 사탕 아트 참조만 갱신.
+- `Tests/PlayMode/PlayerDialogTests.cs`: 음소거 후 음량 유지, 언어·효과 변경과 중첩 일시정지, 미리보기 목표 데이터·고정 시작/취소 동작 검사.
+- `Scripts/Runtime/UI/LocalizedText.cs`: 씬의 정적 문구를 언어 키로 갱신.
+- `Scripts/Runtime/UI/CandyUIStyle.cs`: 공통 버튼 역할·색상·팝업 여백·작업 버튼 배치·고정 제목·닫기 아이콘. `CandyButtonMotion`은 키보드 선택 테두리와 효과 감소 설정을 함께 처리한다.
+- `Tests/PlayMode/CommonUIStyleTests.cs`: 중첩 팝업의 새 닫기 버튼, 일시정지 복원, 키보드 선택 표시·효과 감소·비활성 버튼 상태 검사.
+- `Scripts/Runtime/UI/GameplayCelebration.cs`: 특수 조합 문구. 완주 아트와 축하 연출은 `ResultPresentation`이 담당한다.
+- `Scripts/Runtime/Debug/ExpansionSmokeCheck.cs`: 격리 저장 경로에서 신규 기능·실제 클리어·화면 캡처 검사.
+- `docs/balance-0.10.0.csv`: 최종 1,600회 자동 플레이의 150개 조건별 수치.
+- `Editor/Build/FeatureSetup.cs`: 50개 레벨 조정, 글리프·씬·튜토리얼·로더 연결.
+- `Tests/EditMode/FrostTests.cs`, `Tests/PlayMode/ExpansionTests.cs`: Frost와 기능 통합 회귀 검사.
+
+기존 `CellState`/`BoardState`/`BoardResolver`/`ResolutionStep`에 고정 바닥의 피해 기록을 연결하고, `LevelRules`/`LevelProgress`에 Frost 목표와 취소 복구를 추가했다. `LevelDefinition`은 고정 초기 색 배열과 Frost 좌표·내구도를 저장하며 플레이 전에 검증한다. `CampaignState`는 복구 결과 안내와 명시적 초기화를 제공한다. 아래 0.9.4 구조 설명보다 이 추가 기록이 우선한다.
 ## 1. 현재 확인한 구조
 
 50개 스테이지·로드맵·진행 저장 구현 후 상태다. 각 에셋의 `.meta`와 Unity 자동 생성 폴더는 생략했다.
@@ -176,7 +241,7 @@ practice_puzzle_game/
 
 `LevelSmokeCheck.cs`는 명시적 `-puzzleLevelSmokeTest` 인자로 성공·실패·실제 재시작 버튼을 검사한다. `-puzzleSpecialSmokeTest`는 특수 표식 캡처와 색 제거 드래그 검사도 추가한다. 두 진단은 에디터·개발 빌드에만 포함된다. `StageSetup.cs`는 첫 UI·폰트·레벨 데이터 연결용 편집기 도구다. 한글 폰트와 TMP 번들 리소스의 출처는 [asset-licenses.md](asset-licenses.md)에 기록한다.
 
-사탕 테마는 `CandyThemeSetup`에서 스프라이트 가져오기·프리팹·씬 UI를 연결한다. `CandyLayout`은 보드 프레임의 실제 화면 좌표에 점수판 높이를 맞추며, 큰 영문 제목과 아이템용 빈 슬롯 4개를 점수판 안에 배치한다. 슬롯은 씬의 `LevelCanvas/ScoreCard/ItemSlots/ItemSlot1~4`에 있으며 아직 아이템 스크립트·클릭 동작은 없다. 창 비율에 맞춰 패널·보드·배경을 조정한다. `CandyButtonMotion`은 버튼 호버·눌림 효과다. 기존 `PieceCatalog`를 통해 그림을 교체했으며 Core 게임 규칙은 변경하지 않았다.
+사탕 테마는 `CandyThemeSetup`에서 스프라이트 가져오기·프리팹·씬 UI를 연결한다. `CandyLayout`은 보드 프레임의 실제 화면 좌표에 점수판 높이를 맞춘다. 기존 `ItemSlots` 장식은 숨기고 `ItemToolbar`가 `LevelCanvas/ScoreCard/ItemBar` 아래 실제 슬롯 4개를 생성한다. 목표 카드와 아이템·재시작/설정 버튼은 각각 다른 영역을 사용한다. 창 비율에 맞춰 패널·보드·배경을 조정한다. `CandyButtonMotion`은 버튼 호버·눌림 효과다.
 
 ## 2. 목표 루트 구조
 
@@ -497,7 +562,7 @@ Application.persistentDataPath/          # 프로젝트 안의 폴더가 아님
 ```
 
 1. Windows와 macOS의 실제 경로를 직접 붙이지 않고 API로 얻는다.
-2. 현재 진행도 v2는 고정 번호 1~50과 배열을 사용한다. 번호와 `level_001`~`level_050` ID의 대응은 변경하지 않는다. 레벨 재정렬·추가 시 버전 변경과 마이그레이션이 필요하다.
+2. 현재 진행도 v3는 고정 번호 1~50·재고 4개·첫 아이템 보상 수령 배열을 사용한다. v1/v2는 진행을 유지해 변환한다. 번호와 `level_001`~`level_050` ID의 대응은 변경하지 않는다. 레벨 재정렬·추가 시 별도 마이그레이션이 필요하다.
 3. JsonUtility를 사용할 경우 Dictionary·다차원 배열을 그대로 저장하지 않고 직렬화 가능한 항목 배열/리스트로 변환한다.
 4. 플레이 중 보드는 첫 출시 저장 대상에서 제외하고 완료 기록을 저장한다.
 5. Cloud 채택 시 진행도만 우선 동기화한다. 설정·백업·임시 파일은 의도 없이 함께 동기화하지 않는다.

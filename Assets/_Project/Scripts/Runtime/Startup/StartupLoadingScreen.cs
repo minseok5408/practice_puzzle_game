@@ -26,8 +26,6 @@ namespace PuzzleGame.Runtime.Startup
 
         private void Awake()
         {
-            // Restore the player's window before displaying the loading screen as well.
-            DisplaySettings.RestoreSavedDisplay();
             view.ResetLoading(); view.ApplyLayout();
         }
 

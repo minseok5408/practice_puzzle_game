@@ -6,7 +6,7 @@ namespace PuzzleGame.Core.Board
     internal static class SpecialEffectResolver
     {
         internal static List<GridPosition> Resolve(BoardState board, MatchResult matches,
-            ResolutionStep step, GridPosition? swapFrom, GridPosition? swapTo)
+            ResolutionStep step, GridPosition? swapFrom, GridPosition? swapTo, IEnumerable<GridPosition> initialHits=null)
         {
             var protectedPositions = new HashSet<GridPosition>();
             foreach (var creation in step.SpecialCreations) protectedPositions.Add(creation.Position);
@@ -24,7 +24,7 @@ namespace PuzzleGame.Core.Board
                 if (piece == null) return;
                 if (!affected.Contains(piece.Id)) affected.Add(piece.Id);
                 removed.Add(position);
-                if (piece.SpecialType != SpecialPieceType.None && queuedIds.Add(piece.Id)) queue.Enqueue(position);
+                if (!board.IsFrozen(position) && piece.SpecialType != SpecialPieceType.None && queuedIds.Add(piece.Id)) queue.Enqueue(position);
             }
 
             if (swapFrom.HasValue && swapTo.HasValue)
@@ -50,6 +50,7 @@ namespace PuzzleGame.Core.Board
                 }
             }
             foreach (var position in matches.Positions) Hit(position);
+            if(initialHits!=null)foreach(var position in initialHits)Hit(position);
             while (queue.Count > 0)
             {
                 GridPosition origin = queue.Dequeue();

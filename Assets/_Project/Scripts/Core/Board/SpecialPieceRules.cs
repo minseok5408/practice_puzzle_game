@@ -44,7 +44,7 @@ namespace PuzzleGame.Core.Board
         {
             if (!position.HasValue) return false;
             foreach (var matched in group.Positions)
-                if (matched == position.Value) return board.GetPiece(matched)?.SpecialType == SpecialPieceType.None;
+                if (matched == position.Value) return !board.IsFrozen(matched) && board.GetPiece(matched)?.SpecialType == SpecialPieceType.None;
             return false;
         }
     }

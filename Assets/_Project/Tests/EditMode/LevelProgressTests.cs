@@ -7,6 +7,19 @@ namespace PuzzleGame.Tests
     public class LevelProgressTests
     {
         [Test]
+        public void InstantCompletionFillsAllGoalsWithoutLosingScoreOrConsumingMoves()
+        {
+            var p=new LevelProgress(new LevelRules(20,10,10,new[]{2,0,0,0,0,0},1));
+            p.TryBeginMove();Assert.That(p.CompleteImmediately(),Is.False);
+            p.RecordRemovedPieces(new[]{1,2,3});p.CompleteMove();
+            Assert.That(p.CompleteImmediately(),Is.True);
+            Assert.That(p.Score,Is.EqualTo(30));Assert.That(p.MovesRemaining,Is.EqualTo(19));
+            Assert.That(p.GoalsMet,Is.True);Assert.That(p.Outcome,Is.EqualTo(LevelOutcome.Won));
+            Assert.That(p.CompleteImmediately(),Is.False);Assert.That(p.CancelMove(),Is.False);
+            Assert.That(p.TryBeginMove(),Is.False);
+        }
+
+        [Test]
         public void NewLevelHasZeroScoreAndFullMoves()
         {
             var p = new LevelProgress(new LevelRules(20, 600, 10));

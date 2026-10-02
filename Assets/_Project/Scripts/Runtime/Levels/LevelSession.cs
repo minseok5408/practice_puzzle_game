@@ -2,6 +2,7 @@ using System;
 using PuzzleGame.Core.Board;
 using PuzzleGame.Core.Levels;
 using PuzzleGame.Runtime.Board;
+using PuzzleGame.Runtime.Services;
 using UnityEngine;
 
 namespace PuzzleGame.Runtime.Levels
@@ -22,6 +23,30 @@ namespace PuzzleGame.Runtime.Levels
         public string DisplayName => definition ? definition.DisplayName : "1-1";
         public bool CanPlay => isActiveAndEnabled && Progress != null && !Progress.IsFinished && !Progress.IsResolving;
         public event Action Changed;
+        public int[] LastItemRewards { get; private set; } = new int[ItemRules.Count];
+        public int ItemsUsed { get; private set; }
+        public int PreviousBest { get; private set; }
+        public int EarnedStars { get; private set; }
+        public bool NewBest { get; private set; }
+        public bool WasAssistedClear { get; private set; }
+        public void RecordItemUse() => ItemsUsed++;
+        public int ItemCount(ItemType type) => Campaign?.ItemCount(type) ?? 0;
+        public bool TrySpendItem(ItemType type)
+        {
+            bool spent = CanPlay && campaignState && campaignState.TrySpendItem(type);
+            Changed?.Invoke(); return spent;
+        }
+        public void RefundItem(ItemType type) { if (campaignState) campaignState.RefundItem(type); Changed?.Invoke(); }
+        public bool BeginItem()
+        {
+            if (!CanPlay || !Progress.TryBeginItem()) return false;
+            Changed?.Invoke(); return true;
+        }
+        public bool AddItemMoves()
+        {
+            if (!CanPlay || !Progress.AddBonusMoves(ItemRules.BonusMoves)) return false;
+            Changed?.Invoke(); return true;
+        }
 
         public void Configure(BoardController controller, LevelDefinition level)
         { board = controller; definition = level; }
@@ -34,7 +59,7 @@ namespace PuzzleGame.Runtime.Levels
             {
                 campaignState = CampaignState.Ensure(catalog);
                 definition = catalog.Get(Campaign.selectedLevel);
-                board.ConfigureLevel(definition.Seed);
+                board.ConfigureLevel(definition);
             }
             board.GenerateBoard();
         }
@@ -44,7 +69,7 @@ namespace PuzzleGame.Runtime.Levels
             if (!catalog || Campaign == null || !Campaign.IsUnlocked(number) || board.IsBusy) return false;
             rulesOverride = null; definition = catalog.Get(number);
             campaignState.Select(number);
-            board.ConfigureLevel(definition.Seed); board.GenerateBoard();
+            board.ConfigureLevel(definition); board.GenerateBoard();
             return true;
         }
 
@@ -52,8 +77,13 @@ namespace PuzzleGame.Runtime.Levels
 
         public void ResetProgress()
         {
+            if (IsCampaignRun) PlaytestJournal.Finish(Progress, "restart");
             if (!definition && rulesOverride == null) throw new InvalidOperationException("A level definition is required.");
             Progress = new LevelProgress(rulesOverride ?? definition.CreateRules());
+            LastItemRewards = new int[ItemRules.Count];
+            ItemsUsed = EarnedStars = 0; NewBest = WasAssistedClear = false;
+            PreviousBest = IsCampaignRun && Campaign != null ? Campaign.bestScores[definition.Number - 1] : 0;
+            if (IsCampaignRun) PlaytestJournal.Begin(definition);
             Changed?.Invoke();
         }
 
@@ -70,12 +100,43 @@ namespace PuzzleGame.Runtime.Levels
             Changed?.Invoke();
         }
 
-        public void CompleteMove()
+        public void CompleteMove(bool noMoves = false)
         {
-            if (!Progress.CompleteMove()) return;
+            if (!Progress.CompleteMove(noMoves)) return;
+            PublishProgress();
+        }
+
+        internal bool CompleteForEasterEgg()
+        {
+            if(Progress==null || !Progress.CompleteImmediately())return false;
+            PublishProgress("easter_egg");
+            return true;
+        }
+
+        private void PublishProgress(string outcomeOverride=null)
+        {
+            WasAssistedClear = outcomeOverride == "easter_egg";
+            if (Progress.Outcome == LevelOutcome.Won && !WasAssistedClear)
+            {
+                EarnedStars = StageRating.Stars(Progress, ItemsUsed);
+                NewBest = Progress.Score > PreviousBest;
+            }
+            if (Progress.IsFinished)
+            {
+                bool won = Progress.Outcome == LevelOutcome.Won;
+                GameAudio.Play(won ? (IsCampaignRun && definition.Number == LevelCatalog.LevelCount ? "complete" : "win") : "lose");
+                if (IsCampaignRun) PlaytestJournal.Finish(Progress, outcomeOverride ?? (won ? "won" : "lost"));
+            }
             if (IsCampaignRun && Progress.Outcome == LevelOutcome.Won && Campaign != null)
             {
+                int previouslyUnlocked=Campaign.UnlockedThrough;
                 Campaign.RecordWin(definition.Number, Progress.Score);
+                if(Campaign.UnlockedThrough>previouslyUnlocked)campaignState.PendingUnlock=Campaign.UnlockedThrough;
+                if (outcomeOverride != "easter_egg")
+                {
+                    LastItemRewards = Campaign.ClaimItemReward(definition.Number);
+                    Campaign.RecordRating(definition.Number, Progress, ItemsUsed);
+                }
                 campaignState.Save();
             }
             Changed?.Invoke();
@@ -87,6 +148,13 @@ namespace PuzzleGame.Runtime.Levels
         }
 
         public void RestartLevel() => board.GenerateBoard();
+
+        private void Update()
+        {
+            if (IsCampaignRun && Progress != null && !Progress.IsFinished && !board.IsPaused && Application.isFocused)
+                PlaytestJournal.Tick(Time.deltaTime);
+        }
+        private void OnDestroy() { if (IsCampaignRun) PlaytestJournal.Finish(Progress, "exit"); }
 
         // Explicit runtime rules are useful for tutorials and deterministic result tests.
         public void StartWithRules(LevelRules rules)

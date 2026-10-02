@@ -1,4 +1,5 @@
 using PuzzleGame.Runtime.Levels;
+using PuzzleGame.Runtime.Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 namespace PuzzleGame.Runtime.UI
 {
-    public sealed class WorldMapView : MonoBehaviour
+    public sealed partial class WorldMapView : MonoBehaviour
     {
         [SerializeField] private LevelCatalog catalog;
         [SerializeField] private Image backdrop, surrounding;
@@ -25,6 +26,9 @@ namespace PuzzleGame.Runtime.UI
         public int World { get; private set; } = 1;
         public Button[] StageButtons => stageButtons;
         public Button ContinueButton => continueButton;
+        private void OnEnable() => GamePreferences.Changed += RefreshLanguage;
+        private void OnDisable() => GamePreferences.Changed -= RefreshLanguage;
+        private void RefreshLanguage() { if (campaign) ShowWorld(World); }
 
         public void Configure(LevelCatalog levels, Image background, Image outer, RectTransform layout,
             TMP_Text heading, TMP_Text progress, TMP_Text tag, Button[] worlds, Button[] stages,
@@ -40,38 +44,61 @@ namespace PuzzleGame.Runtime.UI
         private void Start()
         {
             campaign = CampaignState.Ensure(catalog);
+            BuildProgress();
+            CandyUIStyle.Button(continueButton,CandyButtonRole.Primary,null,26);
+            foreach(var button in stageButtons)
+                if(!button.GetComponent<CandyButtonMotion>())button.gameObject.AddComponent<CandyButtonMotion>();
             for (int i = 0; i < worldButtons.Length; i++) { int world = i + 1; worldButtons[i].onClick.AddListener(() => ShowWorld(world)); }
-            for (int i = 0; i < stageButtons.Length; i++) { int index = i; stageButtons[i].onClick.AddListener(() => Enter((World - 1) * LevelCatalog.StagesPerWorld + index + 1)); }
-            continueButton.onClick.AddListener(() => Enter(campaign.Progress.UnlockedThrough));
+            for (int i = 0; i < stageButtons.Length; i++) { int index = i; stageButtons[i].onClick.AddListener(() => Preview((World - 1) * LevelCatalog.StagesPerWorld + index + 1)); }
+            continueButton.onClick.AddListener(() => Preview(campaign.Progress.UnlockedThrough));
             sparkleOrigins = new Vector2[sparkles.Length];
             for (int i = 0; i < sparkles.Length; i++) sparkleOrigins[i] = sparkles[i].anchoredPosition;
             ShowWorld((campaign.Progress.UnlockedThrough - 1) / LevelCatalog.StagesPerWorld + 1);
+            if (campaign.LoadStatus == ProgressLoadStatus.Recovered || campaign.LoadStatus == ProgressLoadStatus.Damaged)
+            {
+                GetComponent<PlayerDialogs>()?.Message("map", Localization.Get(campaign.LoadStatus == ProgressLoadStatus.Recovered ? "recovered" : "damaged"));
+                campaign.AcknowledgeRecovery();
+            }
+        }
+
+        private void Preview(int number)
+        {
+            if (entering || !campaign) return;
+            var dialogs = GetComponent<PlayerDialogs>();
+            if (dialogs) dialogs.Preview(catalog.Get(number), campaign.Progress, () => Enter(number));
+            else Enter(number);
         }
 
         public void ShowWorld(int world)
         {
             if (world < 1 || world > 5 || entering || !campaign) return;
             World = world; backdrop.sprite = surrounding.sprite = catalog.MapArtwork(world);
-            title.text = catalog.WorldName(world); worldTag.text = "WORLD  " + world.ToString("00");
+            title.text = Localization.World(world); worldTag.text = "WORLD  " + world.ToString("00");
             var progress = campaign.Progress;
             int completedHere = 0; currentIndex = -1;
             for (int i = 0; i < worldButtons.Length; i++)
-                worldButtons[i].GetComponent<Image>().color = i + 1 == world ? new Color32(214, 66, 135, 255) : new Color32(131, 100, 146, 242);
+            {
+                CandyUIStyle.Button(worldButtons[i],i+1==world?CandyButtonRole.Primary:CandyButtonRole.Secondary,null,17,false);
+                worldButtons[i].GetComponentInChildren<TMP_Text>().text = (i + 1) + " " + Localization.World(i + 1);
+            }
             for (int i = 0; i < stageButtons.Length; i++)
             {
                 int number = (world - 1) * LevelCatalog.StagesPerWorld + i + 1;
                 bool unlocked = progress.IsUnlocked(number), complete = progress.IsComplete(number);
                 if (complete) completedHere++;
-                stageButtons[i].interactable = unlocked;
+                stageButtons[i].interactable = true;
                 stageButtons[i].GetComponent<Image>().sprite = complete ? completeMedal : unlocked ? availableMedal : lockedMedal;
                 stageButtons[i].transform.localScale = Vector3.one;
                 stageLabels[i].text = catalog.Get(number).Stage.ToString();
                 stageLabels[i].color = unlocked ? new Color32(255, 252, 234, 255) : new Color32(113, 87, 133, 255);
-                stateLabels[i].text = "";
+                stateLabels[i].text = complete ? ProgressWidgets.Stars(progress.StarsAt(number)) : "";
+                stateLabels[i].fontSize=stateLabels[i].fontSizeMax=20;stateLabels[i].fontSizeMin=16;
+                stateLabels[i].rectTransform.anchorMin=new Vector2(0,-.24f);stateLabels[i].rectTransform.anchorMax=new Vector2(1,.04f);
+                stateLabels[i].rectTransform.offsetMin=stateLabels[i].rectTransform.offsetMax=Vector2.zero;
                 if (number == progress.UnlockedThrough && !complete) currentIndex = i;
             }
-            summary.text = "이 월드 " + completedHere + " / 10    전체 " + progress.CompletedCount + " / 50";
-            continueButton.GetComponentInChildren<TMP_Text>().text = progress.CompletedCount == LevelCatalog.LevelCount ? "5-10 다시 하기" : catalog.Get(progress.UnlockedThrough).DisplayName + " 도전하기";
+            RefreshProgress(completedHere);
+            continueButton.GetComponentInChildren<TMP_Text>().text = progress.CompletedCount == LevelCatalog.LevelCount ? Localization.Get("replayFinal") : Localization.Get("challenge", catalog.Get(progress.UnlockedThrough).DisplayName);
             currentMarker.gameObject.SetActive(currentIndex >= 0); halo.gameObject.SetActive(currentIndex >= 0);
             if (currentIndex >= 0)
             {
@@ -79,6 +106,7 @@ namespace PuzzleGame.Runtime.UI
                 currentMarker.anchoredPosition = node.anchoredPosition + new Vector2(0, 45);
                 halo.anchoredPosition = node.anchoredPosition;
             }
+            StartUnlock();
         }
 
         public void Enter(int number)
@@ -92,9 +120,11 @@ namespace PuzzleGame.Runtime.UI
 
         private void LateUpdate()
         {
+            AnimateUnlock();
             var parent = (RectTransform)composition.parent;
             composition.localScale = Vector3.one * Mathf.Min(parent.rect.width / 1280f, parent.rect.height / 800f);
             float time = Time.unscaledTime;
+            if (GamePreferences.Current.reducedEffects) time = 0;
             if (currentIndex >= 0 && !entering)
             {
                 var node = (RectTransform)stageButtons[currentIndex].transform;

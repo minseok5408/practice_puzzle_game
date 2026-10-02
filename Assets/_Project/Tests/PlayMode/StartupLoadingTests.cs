@@ -44,7 +44,7 @@ namespace PuzzleGame.Tests
             try { yield return SceneManager.LoadSceneAsync("Boot", LoadSceneMode.Single); }
             finally { SceneManager.sceneLoaded -= Loaded; }
             yield return null; yield return null;
-            Assert.That(screen.IsLoading, Is.True);
+            if (controlled) Assert.That(screen.IsLoading, Is.True);
         }
 
         [UnityTearDown]
@@ -62,17 +62,17 @@ namespace PuzzleGame.Tests
         }
 
         [UnityTest]
-        public IEnumerator DefaultPrototypeWaitsFiveRealSecondsAndRestartDoesNotReload()
+        public IEnumerator LocalProviderPreparesCampaignAndRestartDoesNotReload()
         {
             float began = Time.realtimeSinceStartup;
             yield return Boot(false);
-            Assert.That(((PrototypeStartupLoader)screen.DataLoader).DurationSeconds, Is.EqualTo(5));
+            Assert.That(screen.DataLoader, Is.TypeOf<LocalStartupLoader>());
             Time.timeScale = 0;
             yield return new WaitForSecondsRealtime(.2f);
-            Assert.That(screen.View.Progress, Is.GreaterThan(0));
+            if (screen) Assert.That(screen.View.Progress, Is.GreaterThan(0));
             Assert.That(Object.FindFirstObjectByType<BoardController>(), Is.Null);
             yield return WaitForMap();
-            Assert.That(Time.realtimeSinceStartup - began, Is.GreaterThanOrEqualTo(5));
+            Assert.That(PuzzleGame.Runtime.Levels.CampaignState.Instance, Is.Not.Null);
             Time.timeScale = 1;
             Object.FindFirstObjectByType<WorldMapView>().Enter(1);
             float gameDeadline = Time.realtimeSinceStartup + 10;

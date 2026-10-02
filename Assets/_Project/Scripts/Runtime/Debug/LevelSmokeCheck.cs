@@ -54,7 +54,7 @@ namespace PuzzleGame.Runtime.Diagnostics
                 session = board.Session;
                 hud = FindFirstObjectByType<HUDView>();
                 popup = FindFirstObjectByType<ResultPopup>();
-                if (session.Progress.MovesRemaining != 20 || session.Progress.Score != 0 || session.Progress.Rules.TargetScore != 1000)
+                if (session.Progress.MovesRemaining != session.Definition.CreateRules().StartingMoves || session.Progress.Score != 0 || session.Progress.Rules.TargetScore != session.Definition.CreateRules().TargetScore)
                     throw new InvalidOperationException("Initial level rules are incorrect.");
                 InputSystem.settings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
                 mouse = InputSystem.AddDevice<Mouse>();
@@ -120,6 +120,9 @@ namespace PuzzleGame.Runtime.Diagnostics
                     if (MatchFinder.FindMatches(board.Model).Count != 0 || view.PieceCount != 64)
                         throw new InvalidOperationException("Result board is not stable.");
                 })) yield break;
+                yield return new WaitForSecondsRealtime(.18f);
+                if(winning)yield return Capture("VictoryEntering.png");
+                yield return new WaitForSecondsRealtime(1.1f);
                 yield return Capture(winning ? "LevelWon.png" : "LevelLost.png");
                 if (failed) yield break;
                 Vector2 button = RectTransformUtility.WorldToScreenPoint(null, popup.RestartButton.transform.position);

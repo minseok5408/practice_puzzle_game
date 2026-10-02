@@ -1,6 +1,6 @@
 # 에셋 출처
 
-기록일: 2026-10-01
+기록일: 2026-10-02
 
 | 에셋 | 출처·조건 | 보관 위치 |
 | --- | --- | --- |
@@ -15,6 +15,8 @@
 | 일러스트 지도 5종·스테이지 보석 메달 3종 | 기존 게임의 재질·테마를 참고해 내장 image_gen으로 생성, 초록 메달 하단 재수정, [최종 프롬프트](world-map-art-prompts.md) | `Art/WorldMaps` |
 | 사탕 발판 3종 | 지도 시점·조명을 참고해 내장 image_gen으로 생성, [최종 프롬프트](world-map-platform-prompts.md) | `Art/WorldMaps/StagePlatformReady.png`, `StagePlatformLocked.png`, `StagePlatformComplete.png` |
 | 특수 캔디 19종 | 기존 사탕 시트를 참고해 내장 image_gen으로 새로 그린 파생 이미지, [프롬프트·파일 기록](generated-assets.md) | `Art/Sprites/Candies/CandyRowAtlas.png`, `CandyColumnAtlas.png`, `CandyWrappedAtlas.png`, `CandyRainbow.png` |
+| 입체 얼음 3종·결과 배지 3종 | 내장 image_gen으로 생성, 얼음 피해 상태는 원본 편집. [최종 프롬프트·경로](generated-assets.md) | `Art/Sprites/Frost`, `Art/UI/Results` |
+| 소비형 아이템 4종 | 내장 image_gen 개별 생성, 투명 RGBA 원본 사용. [최종 프롬프트·경로](generated-assets.md) | `Art/UI/Items/Hammer.png`, `Bomb.png`, `Shuffle.png`, `ExtraMoves.png` |
 | 둥근 패널·원·별 | 프로젝트 코드로 생성 | `UI/Theme` |
 | 블록·셀 임시 그림 | 프로젝트에서 절차적으로 생성 | `Assets/_Project/Art/Sprites` |
 
@@ -25,3 +27,7 @@ Windows 빌드에는 `Font-LICENSE.txt`와 `ThirdPartyNotices`를 함께 복사�
 원본 TTF SHA-256: `76f45ef4a6bcff344c837c95a7dcc26e017e38b5846d5ae0cdcb5b86be2e2d31`
 
 Bagel Fat One은 제목, Jua는 점수·버튼·설명에 사용한다. 원본 TTF는 수정하지 않았으며 TMP 에셋은 렌더링용이다. 유료 게임 배포에도 각 저작권 고지와 OFL 라이선스를 동봉한다. Windows 빌드의 `ThirdPartyNotices/BagelFatOne-OFL.txt`, `Jua-OFL.txt`로 복사한다.
+
+## 0.10.0 자체 소리
+
+GameAudio.cs의 Bell Walk 배경곡과 8개 효과음은 프로젝트 코드로 작곡·합성한다. 외부 음원이나 샘플을 사용하지 않으며 추가 음원 라이선스는 없다. Frost는 생성한 입체 얼음 스프라이트를 사용한다. 결과창 캔디 입자는 기존 일반 캔디 그림을 재사용한다.

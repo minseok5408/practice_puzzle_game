@@ -13,13 +13,21 @@ namespace PuzzleGame.Runtime.Board
         [SerializeField] private CellView cellPrefab;
         [SerializeField] private PieceCatalog catalog;
         [SerializeField] private Camera boardCamera;
+        [SerializeField] private TMPro.TMP_FontAsset colorLabelFont;
+        [SerializeField] private Sprite colorLabelBadge;
+        public void ConfigureColorLabels(TMPro.TMP_FontAsset font,Sprite badge){colorLabelFont=font;colorLabelBadge=badge;}
+        private void OnEnable()=>PuzzleGame.Runtime.Services.GamePreferences.Changed+=RefreshColorLabels;
+        private void RefreshColorLabels()
+        {foreach(var piece in pieces.Values)piece.ShowColorLabel(PuzzleGame.Runtime.Services.GamePreferences.Current.colorLabels,colorLabelFont,colorLabelBadge);}
         private readonly Dictionary<int, PieceView> pieces = new Dictionary<int, PieceView>();
+        private readonly Dictionary<GridPosition, CellView> cells = new Dictionary<GridPosition, CellView>();
         [SerializeField, Range(0f, 0.4f)] private float topInset = 0.23f;
         [SerializeField, Range(0f, 0.25f)] private float bottomInset = 0.12f;
         [SerializeField] private bool usePlayableArea;
         [SerializeField] private Rect playableArea = new Rect(0, 0, 1, 1);
         private Transform content;
         private BoardEffects effects;
+        private BoardHintView hint;
         public BoardEffects Effects => effects;
         private int boardWidth;
         private int boardHeight;
@@ -36,6 +44,7 @@ namespace PuzzleGame.Runtime.Board
             if (!piecePrefab || !cellPrefab || !catalog || !boardCamera)
                 throw new InvalidOperationException("BoardView is missing a prefab, catalog, or camera reference.");
             if (effects) effects.Clear();
+            if (hint) hint.Hide();
             if (content != null)
             {
                 content.gameObject.SetActive(false);
@@ -43,6 +52,7 @@ namespace PuzzleGame.Runtime.Board
                 else DestroyImmediate(content.gameObject);
             }
             pieces.Clear();
+            cells.Clear();
             content = new GameObject("GridContent").transform;
             content.SetParent(transform, false);
             boardWidth = board.Width;
@@ -54,6 +64,8 @@ namespace PuzzleGame.Runtime.Board
                     CellView cell = Instantiate(cellPrefab, content);
                     cell.transform.localPosition = CellToLocal(position);
                     cell.Initialize(position);
+                    cell.ShowFrost(board.GetCell(position).FrostHealth);
+                    cells.Add(position, cell);
                     PieceState piece = board.GetPiece(position);
                     if (piece != null) CreatePiece(piece, position, position);
                 }
@@ -70,13 +82,33 @@ namespace PuzzleGame.Runtime.Board
             PieceView result = Instantiate(piecePrefab, content);
             result.transform.localPosition = CellToLocal(start);
             result.Initialize(piece, position, catalog.Get(piece));
+            result.ShowColorLabel(PuzzleGame.Runtime.Services.GamePreferences.Current.colorLabels,colorLabelFont,colorLabelBadge);
             pieces.Add(piece.Id, result);
             return result;
         }
 
         public void ShowSelection(GridPosition? position)
         {
+            if(hint)hint.Hide();
+            foreach(var cell in cells.Values)cell.ShowItemTarget(false);
             foreach (var piece in pieces.Values) piece.SetSelected(position == piece.Position);
+        }
+
+        public void ShowHint(GridPosition? first, GridPosition? second)
+        {
+            if(!first.HasValue || !second.HasValue){if(hint)hint.Hide();return;}
+            foreach(var piece in pieces.Values)piece.SetSelected(false);
+            if(!hint){hint=new GameObject("MoveHint").AddComponent<BoardHintView>();hint.transform.SetParent(transform,false);}
+            hint.Show(CellToLocal(first.Value),CellToLocal(second.Value));
+        }
+
+        public void ShowItemTarget(GridPosition? target, int radius)
+        {
+            if (hint) hint.Hide();
+            foreach(var cell in cells.Values)
+                cell.ShowItemTarget(target.HasValue && Mathf.Abs(cell.Position.X-target.Value.X)<=radius && Mathf.Abs(cell.Position.Y-target.Value.Y)<=radius);
+            foreach (var piece in pieces.Values)
+                piece.SetSelected(target.HasValue && Mathf.Abs(piece.Position.X-target.Value.X)<=radius && Mathf.Abs(piece.Position.Y-target.Value.Y)<=radius);
         }
 
         public void ShowSpecialCreations(ResolutionStep step)
@@ -103,8 +135,9 @@ namespace PuzzleGame.Runtime.Board
         {
             var starts = new Dictionary<int, Vector3>();
             var spawnStarts = new Dictionary<int, GridPosition>();
+            var pocketSpawns = new HashSet<int>();
             if (step != null)
-                foreach (var spawn in step.Spawns) spawnStarts.Add(spawn.PieceId, spawn.From);
+                foreach (var spawn in step.Spawns) { spawnStarts.Add(spawn.PieceId, spawn.From); if(spawn.From==spawn.To)pocketSpawns.Add(spawn.PieceId); }
             for (int y = 0; y < board.Height; y++)
                 for (int x = 0; x < board.Width; x++)
                 {
@@ -119,13 +152,14 @@ namespace PuzzleGame.Runtime.Board
             float elapsed = 0;
             while (elapsed < duration)
             {
-                elapsed += Time.deltaTime;
+                elapsed += Time.deltaTime * PuzzleGame.Runtime.Services.GamePreferences.Current.animationSpeed;
                 float progress = Mathf.Clamp01(elapsed / duration);
                 float t = step == null ? Mathf.SmoothStep(0, 1, progress) : progress * progress;
                 foreach (var pair in starts)
                 {
                     PieceView piece = pieces[pair.Key];
                     piece.transform.localPosition = Vector3.Lerp(pair.Value, CellToLocal(piece.Position), t);
+                    if(pocketSpawns.Contains(pair.Key))piece.SetSpawnProgress(progress);
                 }
                 yield return null;
             }
@@ -135,7 +169,7 @@ namespace PuzzleGame.Runtime.Board
                 elapsed = 0;
                 while (elapsed < .12f)
                 {
-                    elapsed += Time.deltaTime;
+                    elapsed += Time.deltaTime * PuzzleGame.Runtime.Services.GamePreferences.Current.animationSpeed;
                     foreach (var pair in starts)
                     {
                         PieceView piece = pieces[pair.Key];
@@ -150,18 +184,23 @@ namespace PuzzleGame.Runtime.Board
 
         public IEnumerator AnimateResolution(ResolutionStep step)
         {
-            effects.Begin(step, pieces, boardWidth, boardHeight);
+            bool reduced = PuzzleGame.Runtime.Services.GamePreferences.Current.reducedEffects;
+            if (!reduced) effects.Begin(step, pieces, boardWidth, boardHeight);
             float elapsed = 0;
-            while (elapsed < effects.Duration)
+            float duration = reduced ? .16f : effects.Duration;
+            while (elapsed < duration)
             {
-                elapsed += Time.deltaTime;
-                effects.Sample(elapsed);
+                elapsed += Time.deltaTime * PuzzleGame.Runtime.Services.GamePreferences.Current.animationSpeed;
+                if (!reduced) effects.Sample(elapsed);
                 foreach (int id in step.RemovedIds)
-                    pieces[id].SetRemovalProgress((elapsed - effects.HitTime(id)) / BoardEffects.PopDuration);
+                    pieces[id].SetRemovalProgress(reduced ? elapsed / duration : (elapsed - effects.HitTime(id)) / BoardEffects.PopDuration);
                 foreach (var creation in step.SpecialCreations)
                     pieces[creation.Piece.Id].SetFormationProgress(elapsed / .6f);
+                foreach (var damage in step.FrostDamage)
+                    cells[damage.Position].DamageProgress(damage.RemainingHealth, (elapsed - duration + .18f) / .18f, reduced);
                 yield return null;
             }
+            foreach (var damage in step.FrostDamage) cells[damage.Position].ShowFrost(damage.RemainingHealth);
             effects.Clear();
             foreach (var creation in step.SpecialCreations) pieces[creation.Piece.Id].ResetMotion();
             foreach (int id in step.RemovedIds)
@@ -231,6 +270,6 @@ namespace PuzzleGame.Runtime.Board
             if (boardCamera && !Mathf.Approximately(previousAspect, boardCamera.aspect)) FitCamera();
         }
 
-        private void OnDisable() { if (effects) effects.Clear(); }
+        private void OnDisable() { PuzzleGame.Runtime.Services.GamePreferences.Changed-=RefreshColorLabels;if (effects) effects.Clear(); }
     }
 }

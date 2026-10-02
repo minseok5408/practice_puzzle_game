@@ -37,6 +37,8 @@ namespace PuzzleGame.Core.Board
                     }
                 }
                 var ordered = new List<GridPosition>(positions);
+                // Fixed, entirely frozen matches cannot repeatedly hit themselves without a new action.
+                if (!ordered.Exists(p => !board.IsFrozen(p))) continue;
                 ordered.Sort(MatchResult.Compare);
                 groups.Add(new MatchGroup(connected, ordered));
                 allPositions.UnionWith(positions);

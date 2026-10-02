@@ -38,7 +38,7 @@ namespace PuzzleGame.Runtime.Diagnostics
             if (!Check(() => Require(!string.IsNullOrEmpty(Argument("-puzzleProgressPath")), "Use an isolated progress path."))) yield break;
             yield return WaitScene("WorldMap"); if (failed) yield break;
             var map = FindFirstObjectByType<WorldMapView>();
-            if (!Check(() => { Require(Time.realtimeSinceStartup - began >= 4.8f, "Prototype delay missing."); Require(!FindFirstObjectByType<BoardController>(), "Board loaded before map selection."); })) yield break;
+            if (!Check(() => { Require(CampaignState.Instance, "Local campaign was not prepared."); Require(!FindFirstObjectByType<BoardController>(), "Board loaded before map selection."); })) yield break;
             InputSystem.settings.backgroundBehavior = InputSettings.BackgroundBehavior.IgnoreFocus;
             mouse = InputSystem.AddDevice<Mouse>(); keyboard = InputSystem.AddDevice<Keyboard>();
             InputSystem.EnableDevice(mouse); InputSystem.EnableDevice(keyboard);
@@ -62,11 +62,11 @@ namespace PuzzleGame.Runtime.Diagnostics
             {
                 if (!Check(() => {
                     Require(CampaignState.Instance.Progress.CompletedCount == 1 && CampaignState.Instance.Progress.UnlockedThrough == 2, "Restart lost progress.");
-                    Require(CampaignState.Instance.Progress.bestScores[0] >= 1000 && CampaignState.Instance.Progress.selectedLevel == 2, "Restart lost score/selection.");
+                    Require(CampaignState.Instance.Progress.bestScores[0] >= CampaignState.Instance.Catalog.Get(1).CreateRules().TargetScore && CampaignState.Instance.Progress.selectedLevel == 2, "Restart lost score/selection.");
                     Require(map.StageButtons[1].interactable && !map.StageButtons[2].interactable, "Restart locks incorrect.");
                 })) yield break;
                 yield return Capture("RestoredMap.png");
-                yield return Click(map.ContinueButton); yield return WaitScene("Game"); if (failed) yield break;
+                yield return Click(map.ContinueButton); yield return ConfirmPreview(); yield return WaitScene("Game"); if (failed) yield break;
                 if (!Check(() => Require(FindFirstObjectByType<LevelSession>().DisplayName == "1-2", "Continue did not enter 1-2."))) yield break;
                 Finish(0, "PASS: independent process restored completed stage 1, best score, selected stage 2; Continue entered 1-2."); yield break;
             }
@@ -76,7 +76,7 @@ namespace PuzzleGame.Runtime.Diagnostics
             yield return Click(map.StageButtons[1]);
             if (!Check(() => Require(SceneManager.GetActiveScene().name == "WorldMap", "Locked stage entered."))) yield break;
             // The visible stone is narrower than this offset; its padded hit area must still work.
-            yield return Click(map.StageButtons[0], new Vector2(45, 0)); yield return WaitScene("Game"); if (failed) yield break;
+            yield return Click(map.StageButtons[0], new Vector2(45, 0)); yield return ConfirmPreview(); yield return WaitScene("Game"); if (failed) yield break;
             var board = FindFirstObjectByType<BoardController>();
             yield return Capture("Stage1-1.png");
             string route = null;
@@ -105,6 +105,15 @@ namespace PuzzleGame.Runtime.Diagnostics
             if (!Check(() => Require(map.StageButtons[1].interactable && !map.StageButtons[2].interactable, "Clear did not unlock next node."))) yield break;
             yield return Capture("UnlockedMap.png");
             Finish(0, "PASS: Boot -> map, ESC settings, locked node ignores real mouse, 1-1 mouse selection, actual winning route, save, next stage, unlocked map.");
+        }
+
+        private IEnumerator ConfirmPreview()
+        {
+            yield return null;
+            var dialogs = FindFirstObjectByType<PlayerDialogs>();
+            if (!Check(() => Require(dialogs && dialogs.IsVisible, "Stage preview did not open."))) yield break;
+            yield return Capture("StagePreview.png");
+            yield return Click(dialogs.transform.Find("PlayerDialog/Card/Footer/start").GetComponent<Button>());
         }
 
         private IEnumerator WaitScene(string name)

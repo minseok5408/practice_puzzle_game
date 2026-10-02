@@ -52,6 +52,48 @@ namespace PuzzleGame.Tests
         }
 
         [UnityTest]
+        public IEnumerator KeyboardSwapsOneMoveAndItemShortcutOnlyOpensDetails()
+        {
+            var keyboard=InputSystem.AddDevice<Keyboard>();
+            MoveFinder.TryFindMove(controller.Model,out var a,out var b);
+            yield return KeyStroke(keyboard,Key.LeftArrow);
+            var input=controller.GetComponent<BoardInput>();Assert.That(input.KeyboardActive,Is.True);
+            while(input.KeyboardCell.X<a.X)yield return KeyStroke(keyboard,Key.RightArrow);
+            while(input.KeyboardCell.Y<a.Y)yield return KeyStroke(keyboard,Key.UpArrow);
+            yield return KeyStroke(keyboard,Key.Enter);Assert.That(controller.SelectedPosition,Is.EqualTo(a));
+            yield return KeyStroke(keyboard,b.X>a.X?Key.RightArrow:Key.UpArrow);
+            yield return KeyStroke(keyboard,Key.Enter);yield return WaitForIdle();
+            Assert.That(controller.CompletedMoves,Is.EqualTo(1));
+            int stock=controller.Session.ItemCount(PuzzleGame.Core.Levels.ItemType.Hammer);
+            yield return KeyStroke(keyboard,Key.Digit1);
+            var dialogs=Object.FindFirstObjectByType<PlayerDialogs>();Assert.That(dialogs.IsVisible,Is.True);
+            yield return KeyStroke(keyboard,Key.RightArrow);Assert.That(controller.CompletedMoves,Is.EqualTo(1));
+            Assert.That(controller.Session.ItemCount(PuzzleGame.Core.Levels.ItemType.Hammer),Is.EqualTo(stock));
+            yield return KeyStroke(keyboard,Key.Escape);Assert.That(dialogs.IsVisible,Is.False);
+            yield return KeyStroke(keyboard,Key.H);Assert.That(controller.GetComponent<BoardGuidance>().HintVisible,Is.True);
+        }
+        private static IEnumerator KeyStroke(Keyboard keyboard,Key key)
+        {InputSystem.QueueStateEvent(keyboard,new KeyboardState(key));yield return null;yield return null;InputSystem.QueueStateEvent(keyboard,new KeyboardState());yield return null;yield return null;}
+
+        [UnityTest]
+        public IEnumerator FrozenCandyRejectsDraggingAndIncomingSwapButAcceptsHammerTarget()
+        {
+            var at=new GridPosition(3,3);var neighbour=new GridPosition(4,3);int id=controller.Model.GetPiece(at).Id;
+            controller.Model.SetCell(at,new CellState(2));view.Rebuild(controller.Model);yield return null;
+            var frozen=FindPiece(at);Vector3 origin=frozen.transform.localPosition;int moves=controller.Session.Progress.MovesRemaining;
+            yield return MouseAt(Screen(at),true);yield return MouseAt(Screen(neighbour),true);
+            Assert.That(frozen.transform.localPosition,Is.EqualTo(origin));Assert.That(controller.SelectedPosition,Is.Null);
+            yield return MouseAt(Screen(neighbour),false);Assert.That(controller.TrySwap(at,neighbour),Is.False);
+            yield return MouseAt(Screen(neighbour),true);yield return MouseAt(Screen(at),false);
+            Assert.That(controller.IsBusy,Is.False);Assert.That(controller.Model.GetPiece(at).Id,Is.EqualTo(id));
+            Assert.That(controller.Session.Progress.MovesRemaining,Is.EqualTo(moves));
+            Assert.That(controller.ArmItem(PuzzleGame.Core.Levels.ItemType.Hammer),Is.True);
+            yield return MouseAt(Screen(at),true);yield return MouseAt(Screen(at),false);yield return WaitForIdle();
+            Assert.That(controller.Model.GetCell(at).FrostHealth,Is.EqualTo(1));Assert.That(controller.Model.GetPiece(at).Id,Is.EqualTo(id));
+            Assert.That(controller.Session.Progress.Score,Is.Zero);Assert.That(controller.Session.Progress.MovesRemaining,Is.EqualTo(moves));
+        }
+
+        [UnityTest]
         public IEnumerator ValidDragFollowsPointerThenResolvesAndAcceptsAnotherMove()
         {
             for (int turn = 0; turn < 2; turn++)
@@ -195,6 +237,9 @@ namespace PuzzleGame.Tests
                 yield return null;
                 yield return null;
                 Assert.That(controller.SelectedPosition, Is.Null);
+                Assert.That(Object.FindFirstObjectByType<SettingsPopup>().IsVisible, Is.False);
+                InputSystem.QueueStateEvent(keyboard,new KeyboardState());yield return null;yield return null;
+                yield return KeyStroke(keyboard,Key.Escape);
                 Assert.That(Object.FindFirstObjectByType<SettingsPopup>().IsVisible, Is.True);
             }
             finally { InputSystem.RemoveDevice(keyboard); }

@@ -8,13 +8,14 @@ using UnityEngine.UI;
 
 namespace PuzzleGame.Runtime.Board
 {
+    [DefaultExecutionOrder(-50)]
     [RequireComponent(typeof(BoardController), typeof(BoardView))]
-    public sealed class BoardInput : MonoBehaviour
+    public sealed partial class BoardInput : MonoBehaviour
     {
         [SerializeField] private InputActionAsset inputActions;
         [SerializeField, Range(0.1f, 0.8f)] private float minimumDragCells = 0.25f;
         private InputActionAsset instance;
-        private InputAction point, press, cancel;
+        private InputAction point, press, cancel, instantClear;
         private BoardController controller;
         private BoardView view;
         private bool tracking;
@@ -40,6 +41,8 @@ namespace PuzzleGame.Runtime.Board
             press = instance.FindAction("Board/Press", true);
             cancel = instance.FindAction("Board/Cancel", true);
             instance.Enable();
+            instantClear=new InputAction("EasterEggClear",InputActionType.Button,"<Keyboard>/p");
+            instantClear.Enable();
         }
 
         private void Update()
@@ -47,11 +50,31 @@ namespace PuzzleGame.Runtime.Board
             if (!controller || !controller.isActiveAndEnabled || controller.Model == null) return;
             if (controller.IsPaused) { tracking = false; return; }
             if (cancel.WasPressedThisFrame()) { CancelGesture(); return; }
+            if(instantClear.WasPressedThisFrame())
+            {
+                CancelGesture();controller.CompleteStageForEasterEgg();return;
+            }
             if (controller.IsBusy) { tracking = false; return; }
+            if (HandleKeyboard()) { tracking = false; return; }
             if (tracking && pressedBoard != controller.Model) { CancelGesture(); return; }
             Vector2 screen = point.ReadValue<Vector2>();
+            if (controller.SelectedItem.HasValue)
+            {
+                tracking = false;
+                if (KeyboardActive)
+                {
+                    view.ShowItemTarget(keyboardCell,controller.SelectedItem.Value==PuzzleGame.Core.Levels.ItemType.Bomb?1:0);
+                    if (!press.WasPressedThisFrame() && point.ReadValue<Vector2>() == keyboardPointer) return;
+                    HideKeyboardCursor();
+                }
+                GridPosition? target = !IsOverUI(screen) && view.TryScreenToCell(screen,out var cell) ? cell : (GridPosition?)null;
+                view.ShowItemTarget(target,controller.SelectedItem.Value==PuzzleGame.Core.Levels.ItemType.Bomb?1:0);
+                if (press.WasPressedThisFrame() && target.HasValue) controller.TryUseItem(controller.SelectedItem.Value,target);
+                return;
+            }
             if (press.WasPressedThisFrame())
             {
+                HideKeyboardCursor();
                 tracking = false;
                 if (IsOverUI(screen) || !view.TryScreenToCell(screen, out pressedCell)
                     || !controller.CanSelect(pressedCell)) return;
@@ -101,7 +124,9 @@ namespace PuzzleGame.Runtime.Board
 
         public void CancelGesture()
         {
+            HideKeyboardCursor();
             tracking = false;
+            if (controller) controller.CancelItem();
             if (controller && !controller.IsBusy) controller.SetSelection(null);
         }
 
@@ -109,8 +134,10 @@ namespace PuzzleGame.Runtime.Board
         private void OnDisable()
         {
             CancelGesture();
+            instantClear?.Dispose();instantClear=null;
             if (instance) { instance.Disable(); Destroy(instance); }
             instance = null;
         }
+        private void OnDestroy() { if(cursorMaterial)Destroy(cursorMaterial); }
     }
 }

@@ -9,15 +9,18 @@ namespace PuzzleGame.Core.Levels
         public int StartingMoves { get; }
         public int TargetScore { get; }
         public int PointsPerPiece { get; }
+        public int FrostTarget { get; }
         private readonly int[] collectionTargets = new int[6];
         public int CollectionTarget(PieceColor color) => color >= PieceColor.Red && color <= PieceColor.Purple
             ? collectionTargets[(int)color - 1] : 0;
 
-        public LevelRules(int startingMoves, int targetScore, int pointsPerPiece, IReadOnlyList<int> targets = null)
+        public LevelRules(int startingMoves, int targetScore, int pointsPerPiece, IReadOnlyList<int> targets = null, int frostTarget = 0)
         {
             if (startingMoves < 1) throw new ArgumentOutOfRangeException(nameof(startingMoves));
             if (targetScore < 1) throw new ArgumentOutOfRangeException(nameof(targetScore));
             if (pointsPerPiece < 1) throw new ArgumentOutOfRangeException(nameof(pointsPerPiece));
+            if (frostTarget < 0) throw new ArgumentOutOfRangeException(nameof(frostTarget));
+            FrostTarget = frostTarget;
             StartingMoves = startingMoves;
             TargetScore = targetScore;
             PointsPerPiece = pointsPerPiece;

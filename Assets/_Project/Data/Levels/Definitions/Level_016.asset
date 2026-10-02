@@ -16,7 +16,40 @@ MonoBehaviour:
   displayName: 2-6
   number: 16
   seed: 203383
-  collectionTargets: 00000000000000000f000000000000000000000000000000
-  startingMoves: 20
-  targetScore: 1150
+  collectionTargets: 00000000000000000e000000000000000000000000000000
+  startingMoves: 24
+  targetScore: 1037
   pointsPerPiece: 10
+  frostCells:
+  - x: 0
+    y: 6
+    health: 1
+  - x: 5
+    y: 7
+    health: 1
+  - x: 2
+    y: 1
+    health: 1
+  - x: 7
+    y: 2
+    health: 1
+  - x: 4
+    y: 4
+    health: 1
+  - x: 1
+    y: 6
+    health: 1
+  - x: 6
+    y: 7
+    health: 1
+  - x: 3
+    y: 1
+    health: 1
+  - x: 0
+    y: 3
+    health: 1
+  - x: 5
+    y: 4
+    health: 1
+  initialColors:
+  frostTarget: 7

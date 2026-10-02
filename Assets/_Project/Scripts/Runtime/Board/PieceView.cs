@@ -11,6 +11,22 @@ namespace PuzzleGame.Runtime.Board
         private Vector3 baseScale;
         private Color baseColor;
         private Color shadowColor;
+        private GameObject colorLabel;
+        public bool ColorLabelVisible=>colorLabel && colorLabel.activeSelf;
+        public void ShowColorLabel(bool show,TMPro.TMP_FontAsset font,Sprite badge)
+        {
+            show&=CandyColor!=PieceColor.None;
+            if(show && !colorLabel && font && badge)
+            {
+                colorLabel=new GameObject("ColorLabel");colorLabel.transform.SetParent(transform,false);colorLabel.transform.localPosition=new Vector3(.33f,-.32f,-.05f);
+                var plate=new GameObject("Plate").AddComponent<SpriteRenderer>();plate.transform.SetParent(colorLabel.transform,false);
+                plate.sprite=badge;plate.color=new Color32(70,35,83,255);plate.sortingOrder=8;plate.transform.localScale=Vector3.one*(.31f/badge.bounds.size.x);
+                var text=new GameObject("Number").AddComponent<TMPro.TextMeshPro>();text.transform.SetParent(colorLabel.transform,false);
+                text.font=font;text.fontSize=2.7f;text.text=((int)CandyColor).ToString();text.color=Color.white;text.alignment=TMPro.TextAlignmentOptions.Center;
+                text.rectTransform.sizeDelta=new Vector2(.31f,.31f);text.textWrappingMode=TMPro.TextWrappingModes.NoWrap;text.GetComponent<MeshRenderer>().sortingOrder=9;
+            }
+            if(colorLabel)colorLabel.SetActive(show);
+        }
         public PieceColor CandyColor { get; private set; }
         public Material FaceMaterial => face.sharedMaterial;
         public int PieceId { get; private set; }
@@ -42,6 +58,11 @@ namespace PuzzleGame.Runtime.Board
             face.color = appearance.tint;
             shadow.sprite = appearance.sprite;
             shadow.sharedMaterial = appearance.material;
+            if(colorLabel)
+            {
+                colorLabel.GetComponentInChildren<TMPro.TextMeshPro>(true).text=((int)CandyColor).ToString();
+                colorLabel.SetActive(CandyColor!=PieceColor.None && Services.GamePreferences.Current.colorLabels);
+            }
         }
 
         public void SetPosition(GridPosition position)
@@ -67,6 +88,14 @@ namespace PuzzleGame.Runtime.Board
             float alpha = 1 - Mathf.Clamp01((t-.32f)/.48f);
             face.color = new Color(baseColor.r, baseColor.g, baseColor.b, alpha);
             shadow.color = new Color(shadowColor.r, shadowColor.g, shadowColor.b, shadowColor.a * alpha);
+        }
+
+        public void SetSpawnProgress(float progress)
+        {
+            float t=Mathf.Clamp01(progress);
+            transform.localScale=baseScale*(Services.GamePreferences.Current.reducedEffects?1:.6f+.4f*t);
+            face.color=new Color(baseColor.r,baseColor.g,baseColor.b,baseColor.a*t);
+            shadow.color=new Color(shadowColor.r,shadowColor.g,shadowColor.b,shadowColor.a*t);
         }
 
         public void SetFormationProgress(float progress)

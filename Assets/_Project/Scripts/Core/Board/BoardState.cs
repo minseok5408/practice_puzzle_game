@@ -24,6 +24,7 @@ namespace PuzzleGame.Core.Board
 
         public bool Contains(GridPosition position) =>
             position.X >= 0 && position.X < Width && position.Y >= 0 && position.Y < Height;
+        public bool IsFrozen(GridPosition position) => Contains(position) && GetCell(position).FrostHealth > 0;
 
         public PieceState GetPiece(GridPosition position)
         {
@@ -43,10 +44,17 @@ namespace PuzzleGame.Core.Board
             pieces[position.X, position.Y] = piece;
         }
 
+        public void SetCell(GridPosition position, CellState cell)
+        {
+            Validate(position);
+            cells[position.X, position.Y] = cell ?? throw new ArgumentNullException(nameof(cell));
+        }
+
         public void SwapPieces(GridPosition first, GridPosition second)
         {
             Validate(first);
             Validate(second);
+            if (IsFrozen(first) || IsFrozen(second)) throw new InvalidOperationException("Frozen candies cannot be swapped.");
             PieceState previous = pieces[first.X, first.Y];
             pieces[first.X, first.Y] = pieces[second.X, second.Y];
             pieces[second.X, second.Y] = previous;

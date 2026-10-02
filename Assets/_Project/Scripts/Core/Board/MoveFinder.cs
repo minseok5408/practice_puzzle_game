@@ -27,6 +27,7 @@ namespace PuzzleGame.Core.Board
         {
             if (board == null) throw new ArgumentNullException(nameof(board));
             if (!board.Contains(first) || !board.Contains(second) || !first.IsAdjacentTo(second)) return false;
+            if (board.IsFrozen(first) || board.IsFrozen(second)) return false;
             PieceState a = board.GetPiece(first);
             PieceState b = board.GetPiece(second);
             if (a == null || b == null) return false;

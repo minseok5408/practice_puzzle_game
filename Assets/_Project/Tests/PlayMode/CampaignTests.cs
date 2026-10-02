@@ -69,7 +69,7 @@ namespace PuzzleGame.Tests
             string path = Path.Combine(directory, "progress.json");
             var progress = new CampaignProgress { version = 99 };
             File.WriteAllText(path, JsonUtility.ToJson(progress));
-            Assert.That(CampaignProgress.Load(path).version, Is.EqualTo(2));
+            Assert.That(CampaignProgress.Load(path).version, Is.EqualTo(4));
             progress.version = 2; progress.completed[25] = true;
             File.WriteAllText(path, JsonUtility.ToJson(progress));
             Assert.That(CampaignProgress.Load(path).CompletedCount, Is.Zero);
@@ -101,7 +101,7 @@ namespace PuzzleGame.Tests
             string path = Path.Combine(directory, "progress.json");
             File.WriteAllText(path, JsonUtility.ToJson(old));
             var migrated = CampaignProgress.Load(path);
-            Assert.That(migrated.version, Is.EqualTo(2));
+            Assert.That(migrated.version, Is.EqualTo(4));
             Assert.That(migrated.completed.Length, Is.EqualTo(50));
             Assert.That(migrated.CompletedCount, Is.EqualTo(newClears));
             Assert.That(migrated.IsUnlocked(migrated.selectedLevel), Is.True);
@@ -117,14 +117,20 @@ namespace PuzzleGame.Tests
             var map = Object.FindFirstObjectByType<WorldMapView>();
             Assert.That(map.StageButtons.Length, Is.EqualTo(10));
             Assert.That(map.StageButtons[0].interactable, Is.True);
-            Assert.That(map.StageButtons[1].interactable, Is.False);
+            Assert.That(map.StageButtons[1].interactable, Is.True);
+            map.StageButtons[1].onClick.Invoke();yield return null;
+            Assert.That(map.transform.Find("PlayerDialog/Card/Footer/stageLocked").GetComponent<UnityEngine.UI.Button>().interactable,Is.False);
+            map.GetComponent<PlayerDialogs>().Close();
             map.Enter(2); yield return null;
             Assert.That(SceneManager.GetActiveScene().name, Is.EqualTo("WorldMap"));
             map.ShowWorld(5);
-            foreach (var button in map.StageButtons) Assert.That(button.interactable, Is.False);
+            foreach (var button in map.StageButtons) Assert.That(button.interactable, Is.True);
             var settings = Object.FindFirstObjectByType<SettingsPopup>(); settings.Open();
             Assert.That(settings.IsVisible, Is.True); settings.Close();
             map.ShowWorld(1); map.StageButtons[0].onClick.Invoke();
+            yield return null;
+            Assert.That(map.GetComponent<PlayerDialogs>().IsVisible, Is.True);
+            map.transform.Find("PlayerDialog/Card/Footer/start").GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
             yield return WaitForGame();
             var session = Object.FindFirstObjectByType<LevelSession>();
             Assert.That(session.DisplayName, Is.EqualTo("1-1"));
@@ -144,7 +150,8 @@ namespace PuzzleGame.Tests
             yield return null;
             map = Object.FindFirstObjectByType<WorldMapView>();
             Assert.That(map.StageButtons[1].interactable, Is.True);
-            Assert.That(map.StageButtons[2].interactable, Is.False);
+            Assert.That(map.StageButtons[2].interactable, Is.True);
+            Assert.That(CampaignState.Instance.Progress.IsUnlocked(3),Is.False);
         }
 
         [UnityTest]
@@ -157,8 +164,9 @@ namespace PuzzleGame.Tests
             {
                 var level = session.Catalog.Get(i); var rules = level.CreateRules();
                 Assert.That(level.DisplayName, Is.EqualTo(((i - 1) / 10 + 1) + "-" + ((i - 1) % 10 + 1)));
-                float pressure = (float)rules.TargetScore / rules.StartingMoves;
-                Assert.That(pressure, Is.GreaterThan(previous)); previous = pressure;
+                Assert.That(rules.TargetScore, Is.GreaterThanOrEqualTo(previous)); previous = rules.TargetScore;
+                Assert.That(level.CreateBoard(), Is.Not.Null);
+                Assert.That(rules.FrostTarget, Is.LessThanOrEqualTo(level.FrostCount));
                 Assert.That(session.Catalog.Background(level.World), Is.Not.Null);
                 if (i < 50) session.Campaign.RecordWin(i, 2000);
             }
@@ -166,6 +174,7 @@ namespace PuzzleGame.Tests
             Assert.That(session.BeginMove(), Is.True);
             var step = new ResolutionStep();
             for (int i = 1; i <= 300; i++) { step.RemovedIds.Add(i); step.RemovedPieces.Add(new RemovedPiece(i, (PieceColor)(i % 6 + 1))); }
+            for (int i = 0; i < session.Progress.Rules.FrostTarget; i++) step.FrostDamage.Add(new FrostDamage(new GridPosition(i % 8, i / 8), 0));
             session.ApplyRemoval(step); session.CompleteMove();
             Assert.That(session.Progress.Outcome, Is.EqualTo(LevelOutcome.Won));
             Assert.That(session.Campaign.CompletedCount, Is.EqualTo(50));

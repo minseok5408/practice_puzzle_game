@@ -15,6 +15,7 @@ namespace PuzzleGame.Runtime.UI
         public void ConfigureCampaign(RectTransform world, RectTransform goals) { worldTitle = world; collectionGoals = goals; }
         public void ConfigureSettings(RectTransform button) => settings = button;
         private float previousAspect = -1f;
+        private bool previousTutorial;
 
         public void Configure(BoardView view, SpriteRenderer background, RectTransform heading,
             RectTransform panel, RectTransform moveGroup, RectTransform scoreGroup, RectTransform goalGroup,
@@ -30,7 +31,7 @@ namespace PuzzleGame.Runtime.UI
         private void LateUpdate()
         {
             if (!board || !board.BoardCamera) return;
-            if (!Mathf.Approximately(previousAspect, board.BoardCamera.aspect)) ApplyLayout();
+            if (!Mathf.Approximately(previousAspect, board.BoardCamera.aspect) || previousTutorial != (board.GetComponent<BoardGuidance>()?.ReservesTutorialSpace == true)) ApplyLayout();
             FitBackdrop();
         }
 
@@ -39,17 +40,20 @@ namespace PuzzleGame.Runtime.UI
             if (!board || !board.BoardCamera) return;
             float aspect = board.BoardCamera.aspect;
             bool wide = aspect >= 1.25f;
-            board.SetPlayableArea(wide ? new Rect(.33f, .015f, .665f, .97f)
-                                       : new Rect(.015f, .015f, .97f, .72f));
+            bool tutorial = board.GetComponent<BoardGuidance>()?.ReservesTutorialSpace == true;
+            var items=sidebar.Find("ItemBar") as RectTransform;
+            float bottom=tutorial?.15f:items?.115f:.015f;
+            board.SetPlayableArea(wide ? new Rect(.33f,bottom,.665f,.985f-bottom)
+                                       : new Rect(.015f,bottom,.97f,(items?.665f:.735f)-bottom));
             // Project the actual board frame so both panels stay aligned when the window changes.
             Rect panelArea = wide ? new Rect(.055f, .053f, .255f, .894f)
-                                  : new Rect(.045f, .742f, .91f, .24f);
+                                  : new Rect(.045f, items?.67f:.742f, .91f, items?.312f:.24f);
             if (wide && boardFrame)
             {
                 Bounds bounds = boardFrame.bounds;
-                float bottom = board.BoardCamera.WorldToViewportPoint(bounds.min).y;
+                float panelBottom = board.BoardCamera.WorldToViewportPoint(bounds.min).y;
                 float top = board.BoardCamera.WorldToViewportPoint(bounds.max).y;
-                panelArea = new Rect(.055f, bottom, .255f, top - bottom);
+                panelArea = new Rect(.055f, panelBottom, .255f, top - panelBottom);
             }
             Place(sidebar, panelArea);
             if (header.parent != sidebar) header.SetParent(sidebar, false);
@@ -79,6 +83,52 @@ namespace PuzzleGame.Runtime.UI
                 Place(itemSlots, wide ? new Rect(.075f,.105f,.85f,.065f) : new Rect(.22f,.015f,.58f,.07f));
             }
             previousAspect = aspect;
+            previousTutorial = tutorial;
+            var frost = sidebar.Find("FrostProgress") as RectTransform;
+            if (frost) Place(frost, wide ? new Rect(.08f,.105f,.84f,.065f) : new Rect(.30f,.015f,.63f,.08f));
+            var targets=sidebar.Find("GoalPanel") as RectTransform;
+            if(targets && targets.gameObject.activeSelf)
+            {
+                Place(moves,wide?new Rect(.20f,.59f,.60f,.15f):new Rect(.02f,.32f,.25f,.30f));
+                Place(score,wide?new Rect(.09f,.455f,.82f,.12f):new Rect(.30f,.36f,.29f,.25f));
+                Place(goal,wide?new Rect(.09f,.387f,.82f,.06f):new Rect(.64f,.47f,.32f,.15f));
+                Place(progress,wide?new Rect(.12f,.365f,.76f,.018f):new Rect(.31f,.31f,.28f,.025f));
+                Place(targets,wide?new Rect(.07f,.115f,.86f,.235f):new Rect(.25f,.025f,.71f,.25f));
+                if(!wide)Place(restart,new Rect(.64f,.305f,.32f,.135f));
+            }
+            if(items)
+            {
+                if(itemSlots)itemSlots.gameObject.SetActive(false);
+                Place(moves,wide?new Rect(.20f,.60f,.60f,.14f):new Rect(.02f,.43f,.25f,.24f));
+                Place(score,wide?new Rect(.09f,.48f,.82f,.11f):new Rect(.30f,.48f,.29f,.19f));
+                Place(goal,wide?new Rect(.09f,.413f,.82f,.055f):new Rect(.64f,.52f,.32f,.15f));
+                Place(progress,wide?new Rect(.12f,.39f,.76f,.018f):new Rect(.31f,.44f,.28f,.018f));
+                if(targets)Place(targets,wide?new Rect(.07f,.225f,.86f,.15f):new Rect(.25f,.245f,.71f,.17f));
+                Place(items,wide?new Rect(.065f,.11f,.87f,.10f):new Rect(.25f,.025f,.71f,.19f));
+                if(!wide)
+                {
+                    Place(worldTitle,new Rect(.02f,.715f,.25f,.08f));Place(stage,new Rect(.30f,.70f,.65f,.10f));
+                    Place(restart,new Rect(.025f,.245f,.19f,.14f));Place(settings,new Rect(.025f,.025f,.19f,.14f));
+                }
+            }
+            var tools=GetComponent<HUDTools>();
+            if(tools)
+            {
+                Place(header,wide?new Rect(.065f,.93f,.87f,.045f):new Rect(.07f,.85f,.86f,.13f));
+                Place(worldTitle,wide?new Rect(.08f,.875f,.84f,.035f):new Rect(.02f,.72f,.25f,.08f));
+                Place(stage,wide?new Rect(.67f,.80f,.265f,.06f):new Rect(.75f,.70f,.20f,.10f));
+                if(wide)
+                {
+                    Place(moves,new Rect(.15f,.65f,.70f,.13f));Place(score,new Rect(.09f,.55f,.82f,.095f));
+                    Place(goal,new Rect(.09f,.478f,.82f,.065f));Place(progress,new Rect(.12f,.464f,.76f,.012f));
+                    if(targets)Place(targets,new Rect(.07f,.295f,.86f,.15f));
+                }
+                else
+                {
+                    Place(restart,new Rect(.025f,.31f,.19f,.11f));Place(settings,new Rect(.025f,.025f,.19f,.10f));
+                }
+                tools.Layout(wide);
+            }
             FitBackdrop();
         }
 

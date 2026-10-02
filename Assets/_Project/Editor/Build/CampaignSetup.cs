@@ -39,7 +39,7 @@ namespace PuzzleGame.Editor
             circle = AssetDatabase.LoadAssetAtPath<Sprite>(Root + "/UI/Theme/Circle.png");
             const string text = "0123456789-/ 월드 사탕 정원 오렌지 과수원 얼음 소다 포도 밤정원 무지개 궁전 맵 보기"
                 + "완료 도전 잠김 클리어하면 다음 스테이지가 열려요 이어하기 마지막 스테이지 다시 하기 모든 목표를 달성했어요"
-                + "100개 스테이지를 모두 클리어했어요 진행 기록을 저장하지 못했어요 로드맵";
+                + "100개 스테이지를 모두 클리어했어요 진행 기록을 저장하지 못했어요 로드맵 뒤로 가기";
             if (!font.TryAddCharacters(text, out string missing)) throw new InvalidOperationException("Missing campaign glyphs: " + missing);
             foreach (var texture in font.atlasTextures) if (!AssetDatabase.Contains(texture)) AssetDatabase.AddObjectToAsset(texture, font);
             EditorUtility.SetDirty(font);
@@ -127,8 +127,8 @@ namespace PuzzleGame.Editor
             var card = canvas.transform.Find("ResultOverlay/ResultCard");
             Remove(card.Find("NextStage")); Remove(card.Find("WorldMap"));
             var again = (RectTransform)card.Find("PlayAgain"); Place(again, .06f, .045f, .47f, .16f);
-            var next = Button("NextStage", card, .12f, .18f, .88f, .29f, "다음 스테이지", Pink);
-            var toMap = Button("WorldMap", card, .53f, .045f, .94f, .16f, "로드맵", Purple);
+            var next = Button("NextStage", card, .06f, .18f, .94f, .29f, "다음 스테이지", Pink);
+            var toMap = Button("WorldMap", card, .53f, .045f, .94f, .16f, "뒤로 가기", Purple);
             Place((RectTransform)card.Find("ResultMessage"), .06f, .30f, .94f, .43f);
             canvas.GetComponent<ResultPopup>().ConfigureNavigation(next, toMap);
             EditorSceneManager.SaveScene(scene);

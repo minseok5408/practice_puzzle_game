@@ -3283,6 +3283,7 @@ GameObject:
   - component: {fileID: 334870930}
   - component: {fileID: 334870932}
   - component: {fileID: 334870931}
+  - component: {fileID: 334870933}
   m_Layer: 0
   m_Name: Label
   m_TagString: Untagged
@@ -3409,6 +3410,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334870929}
   m_CullTransparentMesh: 1
+--- !u!114 &334870933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334870929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13568ecbad0af2d45b0e3397785fc5ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PuzzleGame.Runtime::PuzzleGame.Runtime.UI.LocalizedText
+  key: resume
 --- !u!1 &382647861
 GameObject:
   m_ObjectHideFlags: 0
@@ -3420,6 +3434,7 @@ GameObject:
   - component: {fileID: 382647862}
   - component: {fileID: 382647864}
   - component: {fileID: 382647863}
+  - component: {fileID: 382647865}
   m_Layer: 0
   m_Name: Label
   m_TagString: Untagged
@@ -3546,6 +3561,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382647861}
   m_CullTransparentMesh: 1
+--- !u!114 &382647865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382647861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13568ecbad0af2d45b0e3397785fc5ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PuzzleGame.Runtime::PuzzleGame.Runtime.UI.LocalizedText
+  key: settings
 --- !u!1 &406531830
 GameObject:
   m_ObjectHideFlags: 0
@@ -3802,6 +3830,7 @@ GameObject:
   - component: {fileID: 513516544}
   - component: {fileID: 513516546}
   - component: {fileID: 513516545}
+  - component: {fileID: 513516547}
   m_Layer: 0
   m_Name: Label
   m_TagString: Untagged
@@ -3928,6 +3957,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 513516543}
   m_CullTransparentMesh: 1
+--- !u!114 &513516547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513516543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13568ecbad0af2d45b0e3397785fc5ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PuzzleGame.Runtime::PuzzleGame.Runtime.UI.LocalizedText
+  key: currentPosition
 --- !u!1 &524752384
 GameObject:
   m_ObjectHideFlags: 0
@@ -4243,6 +4285,7 @@ GameObject:
   - component: {fileID: 634120669}
   - component: {fileID: 634120671}
   - component: {fileID: 634120670}
+  - component: {fileID: 634120672}
   m_Layer: 0
   m_Name: ResolutionLabel
   m_TagString: Untagged
@@ -4369,6 +4412,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 634120668}
   m_CullTransparentMesh: 1
+--- !u!114 &634120672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634120668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13568ecbad0af2d45b0e3397785fc5ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PuzzleGame.Runtime::PuzzleGame.Runtime.UI.LocalizedText
+  key: resolution
 --- !u!114 &684522435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5400,6 +5456,7 @@ GameObject:
   - component: {fileID: 939900409}
   - component: {fileID: 939900408}
   - component: {fileID: 939900407}
+  - component: {fileID: 939900413}
   m_Layer: 0
   m_Name: WorldMapCanvas
   m_TagString: Untagged
@@ -5594,6 +5651,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &939900413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939900406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffd9f7cd97d68a447a59ca3e747f14d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PuzzleGame.Runtime::PuzzleGame.Runtime.UI.PlayerDialogs
+  guideItems:
+  - {fileID: 21300000, guid: 0bee020ac9aeff04592bbc58e44e5974, type: 3}
+  - {fileID: 21300000, guid: 43562956a937501418d582dd655ba880, type: 3}
+  - {fileID: 21300000, guid: 18a6d53ab05bbe34186bf36fcbe23866, type: 3}
+  - {fileID: 21300000, guid: 70f2be89c2b661e4b99a8cd79c513693, type: 3}
+  pieces: {fileID: 11400000, guid: 5dd1ebb119c127040a43ac0d7a8772cc, type: 2}
+  frostIcon: {fileID: 979797502391311402, guid: a256c1843bce8ee44b56ebafa3eae193, type: 3}
+  font: {fileID: 11400000, guid: 31d876ca02a920347b7a320663977c5f, type: 2}
+  rounded: {fileID: 21300000, guid: d899960c20252ff46909fc1af0207456, type: 3}
 --- !u!1 &945381295
 GameObject:
   m_ObjectHideFlags: 0
@@ -7448,6 +7526,7 @@ GameObject:
   - component: {fileID: 1254039637}
   - component: {fileID: 1254039639}
   - component: {fileID: 1254039638}
+  - component: {fileID: 1254039640}
   m_Layer: 0
   m_Name: WindowHint
   m_TagString: Untagged
@@ -7575,6 +7654,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1254039636}
   m_CullTransparentMesh: 1
+--- !u!114 &1254039640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254039636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13568ecbad0af2d45b0e3397785fc5ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PuzzleGame.Runtime::PuzzleGame.Runtime.UI.LocalizedText
+  key: windowHint
 --- !u!1 &1297737449
 GameObject:
   m_ObjectHideFlags: 0
@@ -8300,6 +8392,7 @@ GameObject:
   - component: {fileID: 1369712188}
   - component: {fileID: 1369712190}
   - component: {fileID: 1369712189}
+  - component: {fileID: 1369712191}
   m_Layer: 0
   m_Name: DisplayLabel
   m_TagString: Untagged
@@ -8426,6 +8519,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369712187}
   m_CullTransparentMesh: 1
+--- !u!114 &1369712191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369712187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13568ecbad0af2d45b0e3397785fc5ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PuzzleGame.Runtime::PuzzleGame.Runtime.UI.LocalizedText
+  key: display
 --- !u!1 &1401942039
 GameObject:
   m_ObjectHideFlags: 0
@@ -11296,6 +11402,7 @@ GameObject:
   - component: {fileID: 1835044338}
   - component: {fileID: 1835044340}
   - component: {fileID: 1835044339}
+  - component: {fileID: 1835044341}
   m_Layer: 0
   m_Name: Label
   m_TagString: Untagged
@@ -11422,6 +11529,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835044337}
   m_CullTransparentMesh: 1
+--- !u!114 &1835044341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1835044337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13568ecbad0af2d45b0e3397785fc5ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PuzzleGame.Runtime::PuzzleGame.Runtime.UI.LocalizedText
+  key: apply
 --- !u!1 &1838342113
 GameObject:
   m_ObjectHideFlags: 0
@@ -12323,6 +12443,7 @@ GameObject:
   - component: {fileID: 2003132676}
   - component: {fileID: 2003132678}
   - component: {fileID: 2003132677}
+  - component: {fileID: 2003132679}
   m_Layer: 0
   m_Name: Label
   m_TagString: Untagged
@@ -12449,6 +12570,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2003132675}
   m_CullTransparentMesh: 1
+--- !u!114 &2003132679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003132675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13568ecbad0af2d45b0e3397785fc5ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PuzzleGame.Runtime::PuzzleGame.Runtime.UI.LocalizedText
+  key: windowed
 --- !u!1 &2005841803
 GameObject:
   m_ObjectHideFlags: 0
@@ -12611,6 +12745,7 @@ GameObject:
   - component: {fileID: 2072621645}
   - component: {fileID: 2072621647}
   - component: {fileID: 2072621646}
+  - component: {fileID: 2072621648}
   m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
@@ -12737,6 +12872,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2072621644}
   m_CullTransparentMesh: 1
+--- !u!114 &2072621648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072621644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13568ecbad0af2d45b0e3397785fc5ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PuzzleGame.Runtime::PuzzleGame.Runtime.UI.LocalizedText
+  key: settings
 --- !u!1 &2085785649
 GameObject:
   m_ObjectHideFlags: 0
@@ -13176,6 +13324,7 @@ GameObject:
   - component: {fileID: 2120269522}
   - component: {fileID: 2120269524}
   - component: {fileID: 2120269523}
+  - component: {fileID: 2120269525}
   m_Layer: 0
   m_Name: Label
   m_TagString: Untagged
@@ -13302,6 +13451,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2120269521}
   m_CullTransparentMesh: 1
+--- !u!114 &2120269525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120269521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13568ecbad0af2d45b0e3397785fc5ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PuzzleGame.Runtime::PuzzleGame.Runtime.UI.LocalizedText
+  key: quit
 --- !u!1 &2130311109
 GameObject:
   m_ObjectHideFlags: 0

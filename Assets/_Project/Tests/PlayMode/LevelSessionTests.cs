@@ -70,7 +70,7 @@ namespace PuzzleGame.Tests
         {
             Assert.That(session.Progress.Score, Is.Zero);
             Assert.That(session.Progress.MovesRemaining, Is.EqualTo(20));
-            Assert.That(session.Progress.Rules.TargetScore, Is.EqualTo(1000));
+            Assert.That(session.Progress.Rules.TargetScore, Is.EqualTo(session.Definition.CreateRules().TargetScore));
             Assert.That(hud.ScoreText, Is.EqualTo("0"));
             Assert.That(hud.MovesText, Is.EqualTo("20"));
             Assert.That(popup.IsVisible, Is.False);
@@ -162,6 +162,8 @@ namespace PuzzleGame.Tests
             yield return Idle();
             Assert.That(session.Progress.Score, Is.GreaterThan(0));
             yield return Click(RectTransformUtility.WorldToScreenPoint(null, hud.RestartButton.transform.position));
+            var confirm=Object.FindFirstObjectByType<PlayerDialogs>();Assert.That(confirm.IsVisible,Is.True);
+            confirm.transform.Find("PlayerDialog/Card/Footer/restartAction").GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
             Assert.That(session.Progress.Score, Is.Zero);
             Assert.That(session.Progress.MovesRemaining, Is.EqualTo(20));
             Assert.That(board.SelectedPosition, Is.Null);
@@ -366,7 +368,9 @@ namespace PuzzleGame.Tests
             Assert.That(settings.AvailableResolutions.Count, Is.GreaterThan(1));
             Assert.That(settings.QuitButton.interactable, Is.True);
             var view = board.GetComponent<BoardView>();
-            yield return Click(view.BoardCamera.WorldToScreenPoint(view.transform.TransformPoint(view.CellToLocal(new GridPosition(0,0)))));
+            // Use a board cell outside the settings card so the click tests its backdrop,
+            // rather than a settings control occupying the same screen coordinates.
+            yield return Click(view.BoardCamera.WorldToScreenPoint(view.transform.TransformPoint(view.CellToLocal(new GridPosition(7,7)))));
             Assert.That(board.SelectedPosition, Is.Null);
             yield return Escape();
             Assert.That(settings.IsVisible, Is.False);
@@ -387,10 +391,11 @@ namespace PuzzleGame.Tests
             InputSystem.QueueStateEvent(mouse,new MouseState {position=start+Vector2.right*20}.WithButton(MouseButton.Left,true));
             yield return null; yield return null;
             yield return Escape();
-            Assert.That(settings.IsVisible, Is.True);
+            Assert.That(settings.IsVisible, Is.False);
             Assert.That(board.SelectedPosition, Is.Null);
             InputSystem.QueueStateEvent(mouse,new MouseState {position=start});
             yield return null; yield return null;
+            yield return Escape();Assert.That(settings.IsVisible,Is.True);
             settings.ResolutionDropdown.Show();
             yield return null;
             Assert.That(settings.ResolutionDropdown.IsExpanded, Is.True);
@@ -450,6 +455,68 @@ namespace PuzzleGame.Tests
             Assert.That(settings.IsVisible, Is.False);
             Time.timeScale=1;
             yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator PKeyCompletesCollectionAndFrostGoalsAndHoldingItDoesNotSkipNextStage()
+        {
+            for(int i=1;i<5;i++)session.Campaign.RecordWin(i,2000);
+            Assert.That(session.SelectLevel(5),Is.True);
+            var keyboard=InputSystem.AddDevice<Keyboard>();
+            var settings=Object.FindFirstObjectByType<SettingsPopup>();settings.Open();
+            yield return PressP(keyboard);
+            Assert.That(session.Progress.IsFinished,Is.False);
+            settings.Close();
+            int moves=session.Progress.MovesRemaining;
+            InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.P));yield return null;yield return null;
+            Assert.That(session.Progress.Outcome,Is.EqualTo(LevelOutcome.Won));
+            Assert.That(session.Progress.GoalsMet,Is.True);Assert.That(session.Progress.MovesRemaining,Is.EqualTo(moves));
+            Assert.That(session.Campaign.IsUnlocked(6),Is.True);Assert.That(popup.IsVisible,Is.True);
+            for(int y=0;y<8;y++)for(int x=0;x<8;x++)Assert.That(board.Model.GetCell(new GridPosition(x,y)).FrostHealth,Is.Zero);
+            popup.NextButton.onClick.Invoke();yield return null;yield return null;
+            Assert.That(session.Definition.Number,Is.EqualTo(6));Assert.That(session.Progress.IsFinished,Is.False);
+            InputSystem.QueueStateEvent(keyboard,new KeyboardState());yield return null;
+            session.SelectLevel(1);
+        }
+
+        [UnityTest]
+        public IEnumerator PKeyDuringCascadeStopsEffectsAndKeepsResultStable()
+        {
+            Assert.That(session.SelectLevel(1),Is.True);
+            var keyboard=InputSystem.AddDevice<Keyboard>();
+            MoveFinder.TryFindMove(board.Model,out var a,out var b);Assert.That(board.TrySwap(a,b),Is.True);
+            var view=board.GetComponent<BoardView>();float end=Time.realtimeSinceStartup+5;
+            while(!view.Effects.IsPlaying && Time.realtimeSinceStartup<end)yield return null;
+            Assert.That(board.IsBusy,Is.True);
+            yield return PressP(keyboard);
+            Assert.That(board.IsBusy,Is.False);Assert.That(session.Progress.IsResolving,Is.False);
+            Assert.That(session.Progress.Outcome,Is.EqualTo(LevelOutcome.Won));Assert.That(view.Effects.IsPlaying,Is.False);
+            Assert.That(view.PieceCount,Is.EqualTo(64));Assert.That(MatchFinder.FindMatches(board.Model),Is.Empty);
+            int score=session.Progress.Score;
+            yield return new WaitForSecondsRealtime(.8f);
+            Assert.That(session.Progress.Score,Is.EqualTo(score));Assert.That(popup.IsVisible,Is.True);
+            session.SelectLevel(1);
+        }
+
+        [UnityTest]
+        public IEnumerator PKeyOnFinalStageUsesCompletionResultAndRestartRestoresGoals()
+        {
+            for(int i=1;i<50;i++)session.Campaign.RecordWin(i,2000);
+            Assert.That(session.SelectLevel(50),Is.True);
+            var keyboard=InputSystem.AddDevice<Keyboard>();yield return PressP(keyboard);
+            Assert.That(session.Campaign.CompletedCount,Is.EqualTo(50));
+            Assert.That(popup.NextButton.gameObject.activeSelf,Is.False);
+            Assert.That(popup.Presentation.BadgeSprite.name,Is.EqualTo("CompletionCrown"));
+            popup.RestartButton.onClick.Invoke();yield return null;
+            Assert.That(session.Progress.IsFinished,Is.False);Assert.That(session.Progress.Score,Is.Zero);
+            Assert.That(session.Progress.FrostCleared,Is.Zero);Assert.That(popup.IsVisible,Is.False);
+            session.SelectLevel(1);
+        }
+
+        private static IEnumerator PressP(Keyboard keyboard)
+        {
+            InputSystem.QueueStateEvent(keyboard,new KeyboardState(Key.P));yield return null;yield return null;
+            InputSystem.QueueStateEvent(keyboard,new KeyboardState());yield return null;yield return null;
         }
 
         private IEnumerator Escape()

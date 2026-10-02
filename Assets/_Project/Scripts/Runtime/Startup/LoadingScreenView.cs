@@ -1,4 +1,6 @@
 using TMPro;
+using PuzzleGame.Runtime.Services;
+using PuzzleGame.Runtime.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,6 +32,12 @@ namespace PuzzleGame.Runtime.Startup
             failed = false; recovery.SetActive(false); SetProgress(0);
         }
 
+        private void Start()
+        {
+            CandyUIStyle.Button(retryButton,CandyButtonRole.Primary);
+            CandyUIStyle.Button(quitButton,CandyButtonRole.Danger);
+        }
+
         public void SetProgress(float value)
         {
             progress = Mathf.Clamp01(value);
@@ -41,7 +49,7 @@ namespace PuzzleGame.Runtime.Startup
 
         public void ShowFailure()
         {
-            failed = true; label.text = "불러오지 못했어요. 다시 시도해 주세요.";
+            failed = true; label.text = Localization.Get("loadFailed");
             sparkle.gameObject.SetActive(false); recovery.SetActive(true);
         }
 
@@ -49,8 +57,8 @@ namespace PuzzleGame.Runtime.Startup
         {
             ApplyLayout();
             if (failed) return;
-            label.text = messages[(int)(Time.unscaledTime * 2.5f) % messages.Length];
-            sparkle.localScale = Vector3.one * (1 + .18f * Mathf.Sin(Time.unscaledTime * 5));
+            label.text = Localization.Get("loading") + new string('.', (int)(Time.unscaledTime * 2.5f) % 4);
+            sparkle.localScale = Vector3.one * (GamePreferences.Current.reducedEffects ? 1 : 1 + .18f * Mathf.Sin(Time.unscaledTime * 5));
         }
 
         public void ApplyLayout()

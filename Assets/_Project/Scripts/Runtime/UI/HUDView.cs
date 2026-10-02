@@ -1,5 +1,6 @@
 using System.Globalization;
 using PuzzleGame.Runtime.Levels;
+using PuzzleGame.Runtime.Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,6 +27,7 @@ namespace PuzzleGame.Runtime.UI
         private void OnEnable()
         {
             session.Changed += Refresh;
+            GamePreferences.Changed += Refresh;
             restartButton.onClick.AddListener(Restart);
             Refresh();
         }
@@ -33,23 +35,27 @@ namespace PuzzleGame.Runtime.UI
         private void OnDisable()
         {
             if (session) session.Changed -= Refresh;
+            GamePreferences.Changed -= Refresh;
             if (restartButton) restartButton.onClick.RemoveListener(Restart);
         }
 
-        private void Restart() => session.RestartLevel();
+        private void Restart()
+        {var dialogs=GetComponent<PlayerDialogs>();if(dialogs)dialogs.ConfirmAbandon(true,session.RestartLevel);else session.RestartLevel();}
 
         private void Refresh()
         {
             var p = session.Progress;
             if (p == null) return;
-            titleText.text = session.Catalog ? session.DisplayName + " / 맵 보기" : session.DisplayName;
+            titleText.text = session.Catalog ? Localization.Get("mapShort") : session.DisplayName;
             scoreText.text = p.Score.ToString("N0", CultureInfo.InvariantCulture);
             targetText.text = p.Rules.TargetScore.ToString("N0", CultureInfo.InvariantCulture);
             movesText.text = p.MovesRemaining.ToString();
             movesText.color = p.MovesRemaining <= 5 ? new Color32(255, 224, 112, 255) : Color.white;
             progressFill.anchorMax = new Vector2(Mathf.Clamp01((float)p.Score / p.Rules.TargetScore), 1);
-            if (statusText) statusText.text = p.IsResolving ? "블록을 정리하는 중..." :
-                p.IsFinished ? "아래 결과를 확인하세요" : "블록을 누른 채 옆으로 끌어 놓으세요";
+            bool scoreComplete=p.Score>=p.Rules.TargetScore;
+            targetText.color=scoreComplete?new Color32(47,112,82,255):CandyUIStyle.Pink;
+            progressFill.GetComponent<Image>().color=scoreComplete?new Color32(86,167,119,255):CandyUIStyle.Pink;
+            if (statusText) statusText.text = Localization.Get(p.IsResolving ? "resolving" : p.IsFinished ? "resultHint" : "dragHint");
             restartButton.interactable = !p.IsResolving && !p.IsFinished;
         }
     }
